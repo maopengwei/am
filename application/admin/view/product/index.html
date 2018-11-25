@@ -1,0 +1,126 @@
+{include file="public/_meta" /}
+<title></title>
+<style>	
+		input{
+			width:30px;
+			border:none;
+		}
+
+</style>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>会员管理 <span class="c-gray en">&gt;</span> 会员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="text-c">
+	<form class="Huiform" method="get" action="">
+		状态：
+		<span class="select-box inline">
+			<select name="pd_status" class="select">
+				<option value="">全部</option> 
+				<option value="2">正常</option> 
+				<option value="1">下架</option>
+				<option value="0" style="color:red;">仓库</option>
+			</select>
+		</span>
+		<input type="text" class="input-text" style="width:150px" placeholder="门店编号，名称" name="keywords" value="{$Request.get.keywords|default=''}">
+		<input type="text" class="input-text" style="width:150px" placeholder="产品名称" name="pd_name" value="{$Request.get.pd_name|default=''}">
+		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</form>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a href="javascript:;" onclick="create(0,'add','添加商品')" class="btn btn-primary radius">
+			<i class="Hui-iconfont">&#xe600;</i> 商品</a>
+		</span> 
+		<span class="r">共有数据：<strong>{$list->total()}</strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border  table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">				
+				<th>产品名称</th>
+				<th>产品主图</th>
+				<th>产品价格</th>
+				<th>门店名称</th>
+				<th>分类名称</th>
+				<th>产品库存</th>
+				<th>产品销量</th>
+				<th>状态</th>
+				<th>添加时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name='list' id="vo"}
+				<tr class="text-c">
+					<td>{$vo.pd_name}</td>
+					<td><img src="{$vo.pd_pic}" style="width:60px;height:60px" alt=""></td>
+					<td>{$vo.pd_price}</td>					
+					<td>{$vo.st_name}</td>					
+					<td>{$vo.ca_name}</td>					
+					<td><input type="text" value="{$vo.pd_inventory}" onchange="change({$vo.id},$(this).val(),'pd_inventory')"></td>			
+					<td><input type="text" value="{$vo.pd_sales}" onchange="change({$vo.id},$(this).val(),'pd_sales')"></td>			
+					<td><select onchange="change({$vo.id},$(this).val(),'pd_status')">
+								<option value="2" {if condition="$vo.pd_status eq 2"}selected{/if}>上架</option>
+								<option value="1" {if condition="$vo.pd_status eq 1"}selected{/if}>下架</option>
+								<option value="0" {if condition="$vo.pd_status eq 0"}selected{/if}>仓库</option>
+						</select>
+					</td>
+					<td>{$vo.pd_add_time}</td>								
+					<td class="td-manage">
+						<a style="text-decoration:none" onclick="record({$vo.id},'caiwu','财务记录')" title="财务记录"><i class="Hui-iconfont">&#xe6d2;</i></a>
+						<a style="text-decoration:none" class="ml-5" onClick="resetpwd(this,{$vo.id})" href="javascript:;" title="重置密码"><i class="Hui-iconfont">&#xe63f;</i></a>
+						<a title="编辑" href="javascript:;" onclick="create({$vo.id},'edit','修改用户')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+						<a style="text-decoration:none" onclick="del({$vo.id})" title="删除"><i class="Hui-iconfont">&#xe706;</i></a>
+						<a href="{:url('excel')}" title="下载"><i class="Hui-iconfont">&#xe706;</i></a>
+					</td>
+				</tr>
+			{/volist}
+		</tbody>
+	</table>
+	<div class="pages" style="margin:20px;float: right; ">{$list|raw}</div>
+</div>
+{include file="public/_footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	$('select[name="pd_status"]').val({$Request.get.pd_status});
+function create(id,url,key){
+	var url = "{:url('"+url+"')}?id="+id;
+	creatIframe(url,key);
+}
+function change(id,value,key){
+	layer.confirm('确定要更改么？', {
+	      btn: ['确定', '取消']
+	    }, function(index, layero){
+	        $.ajax({
+	            type: "post",
+	            url: "{:url('index')}",
+	            data: {id:id,value:value,key:key},
+	            success: function(data) {
+	            	layer.msg(data.msg);
+	            }
+	        });
+	    });
+}
+
+function del(id,key){
+    layer.confirm('确定要删除么？', {
+      btn: ['确定', '取消']
+    }, function(index, layero){
+        $.ajax({
+            type: "post",
+            url: "{:url('Every/allDel')}",
+            data: {id:id,key,key},
+            success: function(data) {
+                layer.msg(data.msg);
+                if(data.code==1){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000);
+                }
+            }
+        });
+    });
+}	
+</script> 
+</body>
+</html>

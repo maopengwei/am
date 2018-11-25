@@ -1,0 +1,162 @@
+{include file="public/_meta" /}
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 
+        <span class="c-gray en">&gt;</span>门店管理 
+        <span class="c-gray en">&gt;</span> 门店详细 
+        <a class="btn btn-success radius r" style="margin-left:2px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <form class="form form-horizontal" id="form-article-add">
+
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">关联账户：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="用户名称" value="{$info.us_text}" style="width:20%" disabled>
+                </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="门店名称" name="mer_name" value="{$info.mer_name}" style="width:20%">
+                </div>
+            </div>
+            
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店logo：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                        <img src="{$info.mer_pic}" alt="" class="logo" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                        <input type="file" name="file" onchange="eee($(this))" class="input-text" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0;">
+                    </div>
+                </div>
+            </div>
+                       
+            <div style="display:none" class="ttt">
+                <input type="text" name="mer_pic" value="{$info.mer_pic}" class="mer_pic">
+                <input type="text" name="id" value="{$info.id}">
+                <input type="text" name="us_id" value="{$info.us_id}">
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">商铺电话：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="mer_tel" value="{$info.mer_tel}" style="width:35%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">商铺负责人：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="mer_owner" value="{$info.mer_owner}" style="width:35%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">商铺地址：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="mer_stree" value="{$info.mer_stree}" style="width:35%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">经营类型：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="mer_trade" value="{$info.mer_trade}" style="width:60%">
+                </div>
+            </div>
+             <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商铺状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="mer_status" type="radio" value="1" >
+                    <label for="sex-1">正常</label>
+                </div>
+                <div class="radio-box">
+                    <input name="mer_status" type="radio" value="0"  >
+                    <label for="sex-2">未上线</label>
+                </div>
+            </div>
+        </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">添加时间：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{$info.mer_add_time}" disabled style="width:60%">
+                </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">详细内容：</label>
+                <div class="formControls col-xs-8 col-sm-9"> 
+                    <textarea id="editor" type="text/plain" name="mer_detail" style="width:100%;height:400px;">
+                        {$info.mer_detail|raw}
+                    </textarea>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <button onclick="return xiugai();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="big">
+    </div>
+    {include file="public/_footer" /}
+    <script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+    <script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript">
+    $('.form input[name="mer_status"][value=' + "{$info['mer_status']}" + ']').attr("checked", true);
+
+    $(function(){       
+        var ue = UE.getEditor('editor');
+    })
+    /*---修改*/
+    function xiugai() {
+        $.post('{:url("edit")}', $('#form-article-add').serialize()).success(function(data) {
+            layer.msg(data.msg);
+            if (data.code) {
+                setTimeout(function() {
+                    location.href = '';
+                }, 1000);
+            }
+        });
+        return false;
+    }
+
+    /*---上传图片*/
+    function eee(dada) {
+        var data = new FormData();
+        data.append('file', dada[0].files[0]);
+        var index = layer.load(1, { shade: false }); //0代表加载的风格，支持0-2
+        $.ajax({
+            url: '{:url("every/upload")}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data.code) {
+                    $('.logo').attr('src',data.data);
+                    $('input[name="mer_pic"]').val(data.data);
+                }else{
+                    layer.msg(data.msg);
+                }
+                layer.close(index);
+            },
+            error: function() {
+                layer.close(index);
+                layer.msg('上传出错');
+            }
+        });
+    }
+    </script>
+</body>+
+
+</html>

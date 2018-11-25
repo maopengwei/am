@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>店铺记录</title>
+		<link rel="stylesheet" type="text/css" href="/static/mall/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/mall/css/dae_list.css"/>
+		<script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.jyjl_ul li div:nth-of-type(1)>p:nth-of-type(1){
+				font-size: 0.26rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<a href="javascript:history.go(-1);" class="left">
+				<img src="/static/mall/img/return.png" />
+			</a>
+			<span class="center">申请记录</span>
+			<a href="javascript:void(0);" class="right"></a>
+		</div>
+		<div class="con_jyjl">
+			<div class="xian"></div>
+		    <ul class="jyjl_ul">
+		    	{volist name="list" id="vo"}
+		    	<li>
+		    		<div class="jyjl_left">
+		    			<p>{$vo.apply_add_time} </p>
+		    			
+		    		</div>
+		    		<div class="jyjl_center">
+		    			<p><span>成为店铺</span></p>
+		    		</div>
+		    		<div class="jyjl_right">
+
+		    			<p>{$vo.status_text}</p>
+		    			
+		    		</div>
+		    		<a href="{:url('apply_detail')}?id={$vo.id}"></a>
+		    	</li>
+		    	{/volist}
+		    </ul>
+		
+		
+		</div>
+		
+	</body>
+	
+</html>

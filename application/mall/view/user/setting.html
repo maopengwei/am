@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)setting.html -->
+<html><script>
+//# sourceURL=chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/inpage.js
+</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>AMFC</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script>
+<script src="/static/mobile/js/swiper.min.js"></script>
+<style type="text/css">
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+<body>
+<div class="content_div">
+  
+    <!--header-->   
+  <div class="header">
+      <a href="index" class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>账户设置</p>
+    </div>
+  <!--header-->
+  <div class="xinxi_con">
+  <div class="xinxi_one xinxi_touone">
+      <div class="touxinag_one">
+          <img class="logo" src="{$mine['us_head_pic']?:'/static/mobile/img/logo.png'}">
+          <input type="file" class="shangchuan" onchange="uploads($(this))" value="">
+          <input type="hidden" name="us_head_pic">
+            <!-- <div class="genghuan">
+              更换头像
+            </div> -->
+        </div>
+         
+    </div>
+    
+    
+    <div class="shezhi_con">
+    
+        <div class="xinxi_one">
+            <span>用户名</span>
+            <p>{$mine['us_account']}</p>
+        </div>
+         <div class="xinxi_one">
+           <a href="setting.html#">
+              <span>手机号码</span>
+              <i class="iconfont icon-you"></i>
+              <p>{$mine['us_tel']}</p>
+           </a>
+        </div>
+        <div class="xinxi_one">
+            <a href="account">
+            <span>个人信息</span>
+            <i class="iconfont icon-you"></i>
+          </a>
+        </div>
+        <!-- <div class="xinxi_one">
+          <a href="setting.html#">
+            <span>真实姓名</span>
+            <i class="iconfont icon-you"></i>
+            <p>{$mine['us_real_name']}</p>
+            </a>
+        </div> -->
+<!--         <div class="xinxi_one">
+          <a href="#">
+            <span>生日</span>
+            <i class="iconfont icon-you"></i>
+            <p>1970-01-01</p>
+           </a>
+        </div> -->
+       
+<!--        <div class="xinxi_one">
+            <span>等级</span>
+            <p>A1</p>
+        </div> -->
+       <!-- <div class="xinxi_one"> -->
+      <!--  <a href="#">
+            <span>昵称</span>
+           <i class="iconfont icon-you"></i>
+             <p>张三角</p>
+           </a>
+        </div> -->
+        <!-- <div class="xinxi_one">
+            <a href="#">
+            <span>我的银行账号</span>
+            <i class="iconfont icon-you"></i>
+            </a>
+        </div> -->
+       <!--  <div class="xinxi_one">
+            <a href="#">
+            <span>支付宝账户</span>
+            <i class="iconfont icon-you"></i>
+          </a>
+        </div> -->
+        <div class="xinxi_one">
+            <a href="pass">
+            <span>登录密码</span>
+            <i class="iconfont icon-you"></i>
+          </a>
+        </div>
+        <div class="xinxi_one">
+            <a href="safe">
+            <span>交易密码</span>
+            <i class="iconfont icon-you"></i>
+          </a>
+        </div>
+       <!--  <div class="xinxi_one">
+            <a href="#">
+            <span>广告属性资料<em>(必填)</em></span>
+            <i class="iconfont icon-you"></i>
+          </a>
+        </div> -->
+    
+    </div>
+    
+</div>
+<div class="tuichu">
+  <a href="/mall/login/logout">退出</a>
+</div>  
+ 
+</div>
+<div id="cli_dialog_div"></div></body></html>
+
+<script src="/static/mine/layer/layer.js"></script>
+<script type="text/javascript">
+  
+  function uploads(dada){
+      var data = new FormData();
+        data.append('file', dada[0].files[0]);
+        var index = layer.load(1, { shade: false }); //0代表加载的风格，支持0-2
+        $.ajax({
+            url: '{:url("user/head")}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+              layer.msg(data.msg);
+                if (data.code) {
+                    $('.logo').attr('src',data.data);
+                    $('input[name="us_head_pic"]').val(data.data);
+                }
+                layer.close(index);
+            },
+            error: function() {
+                layer.close(index);
+                layer.msg('上传出错');
+            }
+        });
+  }
+
+</script>

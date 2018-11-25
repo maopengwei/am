@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>全部商品</title>
+        <link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mobile/css/base.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mobile/css/index.css" />
+         <link rel="stylesheet" type="text/css" href="/static/mine/dist/dropload.css" />
+    </head>
+    <style>
+        .header {
+            border-bottom: 1px solid #ccc;
+        }
+        
+        .swiper-wrapper {
+            height: 0.8rem;
+            line-height: 0.8rem;
+            font-size: 0.28rem;
+            color: #666666;
+            margin-left: 3%;
+        }
+        
+        .swiper-slide {
+            /*width: 1.5rem !important;*/
+            text-align: center;
+        }
+        
+        .xuanzhong {
+            color: #d81e06;
+            border-bottom: 1px solid #d81e06;
+            box-sizing: border-box;
+        }
+        
+        .spxq li:nth-child(2n+1) {
+            margin-right: 0;
+        }
+        
+        .price_li {
+            width: 48%;
+            margin: 0 1%;
+            margin-top: 0.1rem;
+        }
+        
+        .spxq li:nth-of-type(1)>div,
+        .spxq li:nth-of-type(2)>div {
+            padding-top: 4%;
+        }
+        
+        .scroll {
+            max-width: 560px;
+            height: 3.6rem;
+            position: relative;
+        }
+        
+        .scroll_box {
+            overflow: hidden;
+            visibility: hidden;
+            position: relative;
+            height: 3.6rem;
+        }
+        
+        .scroll_wrap {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .scroll_wrap li {
+            position: relative;
+            display: block;
+            width: 100%;
+            float: left;
+        }
+        
+        .scroll_wrap li a {
+            display: block;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .scroll_position {
+            position: absolute;
+            left: 45%;
+            z-index: 400px;
+            bottom: 5px;
+        }
+        
+        .scroll_position li {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background: #fff;
+        }
+        
+        .scroll_position li a {
+            font-size: 0;
+        }
+        
+        .scroll_position li.on {
+            background-color: #ffd800;
+        }
+        
+        .scroll_position_bg {
+            position: absolute;
+            bottom: 5px;
+            left: 42%;
+            padding: 0 10px;
+            z-index: 380px;
+            height: 26px;
+            border-radius: 26px;
+        }
+        
+        .scroll_wrap li img {
+            width: 7.5rem;
+            height: 3.6rem;
+        }
+        .swiper-wrapper2 img{
+            width: 0.7rem;
+        }
+        .swiper-wrapper2{
+            line-height: 0.5rem;
+        }
+        .swiper-slide a{
+    color: #333;
+}
+ .xuanzhong a{
+    color: #d81e06 ;
+}
+    </style>
+
+    <body>
+        <div class="header">
+            <a href="{:url('index')}" class="left">
+                <img src="/static/mobile/img/return.png" />
+            </a>
+            <span class="center">{$type}</span>
+            <a href="javascript:void(0);" class="right"></a>
+        </div>
+
+        <!--分类导航-->
+        <div class="swiper-container">
+            <ul class="swiper-wrapper">
+                 <li class="swiper-slide" data-cate="0"><a href="{:url('home')}">首页</a></li>
+                {volist name="catelist" id="vo"}
+                <li class="swiper-slide pcate{$vo.id}"><a href="{:url('shop')}?pcate={$vo.id}">{$vo.cate_name}</a></li>
+                {/volist}
+            </ul>
+        </div>
+        <!--轮播图-->
+        <div class="scroll relative">
+            <div class="search_wrap" style="width: 100%;height: 1rem;position: absolute;left: 0;top: 0;z-index: 100;border: 0;">
+            
+            </div>
+            <div class="scroll_box" id="scroll_img">
+                <ul class="scroll_wrap" id="contentDiv">
+                    {volist name="shuffling" id="v"}
+                     <li><a href="#">
+                         <img class="img lb_img" src="/uploads/title/{$v.pic_name}" />
+                    </a></li> {/volist}
+                </ul>
+            </div>
+            <span class="scroll_position_bg opacity6"></span>
+            <ul class="scroll_position" id='scroll_position'>
+                {volist name="shuffling" id="v"}
+                <li>
+                    <a href="javascript:void(0);">1</a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+        
+        <div class="swiper-container2 swiper-container">
+            <ul class="swiper-wrapper swiper-wrapper2" style="height: 1.2rem;margin-top: 0.2rem;">
+                {volist name="cate_zi" id="v"}
+                <li class="swiper-slide"><img src="/static/mobile/img/tb2.png" alt="" /><p>{$v.cate_name}</p><a href="{:url('home')}?type=5"></a></li>
+                {/volist}
+            </ul>
+        </div>
+        <!--正常的商品展示-->
+        <div style="margin-bottom: 1rem;">
+             <!--正常的商品展示-->
+            <div class="inner">
+                <ul class="spxq">
+                </ul>
+            </div>
+        </div>
+        <!--底部-->
+        {include file="layout/footer"}
+    </body>
+    <script src="/static/mobile/js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/mobile/js/base.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/mobile/js/swiper.jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/mobile/js/swiper_lb.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/mine/dist/dropload.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        // 第一个小点变亮
+        $(".scroll_position li").eq(0).addClass("on");
+        // 最上面导航栏选中
+        $(function(){
+            var cate = {$Request.get.pcate};
+            $('.pcate'+cate).addClass("xuanzhong");
+            //上拉加载 下拉刷新
+            var page = 0;
+            // dropload
+            $('.inner').dropload({
+                scrollArea : window,
+                domUp : {
+                    domClass   : 'dropload-up',
+                    domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+                    domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>'
+                },
+                domDown : {
+                    domClass   : 'dropload-down',
+                    domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+                    domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>',
+                    domNoData  : '<div class="dropload-noData">已到底部</div>'
+                },
+                loadUpFn : function(me){
+                    page=1;
+                    $.ajax({
+                        type: 'post',
+                        url: '{:url("shop")}',
+                        data:{p:page,pcate:cate},
+                        dataType: 'json',
+                        success: function(data){
+                            console.log(data);
+                            // var data  = eval(data);
+                            // console.log(data);                   
+                            var arrLen = data.length;
+                            if(arrLen == ''){
+                                // 锁定
+                                me.lock();
+                                // 无数据
+                                me.noData();
+                            }
+                            // 为了测试，延迟1秒加载
+                            setTimeout(function(){
+                                // 插入数据到页面，放到最后面
+                                $('.spxq').html(data);
+                                // 每次数据插入，必须重置
+                                me.resetload();
+                            },1000);
+                        },
+                        error: function(xhr, type){
+                            // alert('Ajax error!');
+                            me.resetload();
+                        }
+                    });
+                },
+                loadDownFn : function(me){
+                    page++;
+                    $.ajax({
+                        type: 'post',
+                        url: '{:url("shop")}',
+                        data:{p:page,pcate:cate},
+                        dataType: 'json',
+                        success: function(data){
+                            // console.log(data);
+                            // var data  = eval(data);
+                            // console.log(data);                   
+                            var arrLen = data.length;
+                            if(arrLen == ''){
+                                // 锁定
+                                me.lock();
+                                // 无数据
+                                me.noData();
+                            }
+                            // 为了测试，延迟1秒加载
+                            setTimeout(function(){
+                                // 插入数据到页面，放到最后面
+                                $('.spxq').append(data);
+                                // 每次数据插入，必须重置
+                                me.resetload();
+                            },1000);
+                        },
+                        error: function(xhr, type){
+                            // alert('Ajax error!');
+                            me.resetload();
+                        }
+                    });
+                },
+                threshold : 50
+            });
+        })
+        //分类导航
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 5,
+            spaceBetween: 20,
+            freeMode: true,
+        });
+        var swiper = new Swiper('.swiper-container2', {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            freeMode: true,
+        });
+        $(".swiper-slide").click(function() {
+            $(this).addClass("xuanzhong").siblings().removeClass("xuanzhong");
+            var cate = $(this).attr('data-cate');
+            if(cate == 0) {
+                $(".spxq").children().show();
+                return true;
+            }
+            $.each($(".spxq").children(),
+                function(index, value) {
+
+                    if($(this).attr("data-cate") == cate) {
+                        console.log($(this).attr("data-cate"));
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                        $(this).attr("style", "display:none");
+                    }
+                }
+            );
+        });
+
+    </script>
+    
+</html>

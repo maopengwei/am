@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://vip5.gxbbwrj.com/y8908cs/public/Index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>AMFC</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+<link id="layuicss-laydate" rel="stylesheet" href="/static/mobile/css/laydate.css" media="all">
+<link id="layuicss-layer" rel="stylesheet" href="/static/mobile/css/layer.css" media="all">
+<link id="layuicss-skincodecss" rel="stylesheet" href="/static/mobile/css/code.css" media="all">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script>
+<script src="/static/mobile/js/swiper.min.js"></script>
+</head>
+<body>
+  <style type="text/css">
+    .wrapper{
+    	width: 100%;
+    	height: 100%;
+    	background: #f5f5f5;
+    }
+    .main{
+        width: 100%;
+        height: auto;
+        font-size: 14px;
+        line-height: 32px;
+        margin-top: 50px;
+        /*text-indent: 2em;*/
+    }
+    .main .biaoti{
+        width: 100%;
+        height: auto;
+        text-align: center;
+        font-size: 18px;
+        padding-top: 15px;
+    }
+    .main p{
+        padding: 0 20px;
+        line-height: 25px;
+        font-size: 16px;
+        /*font-family: '微软雅黑';*/
+        /*text-indent: 2em;*/
+    }
+    .main p img{
+        width: 70%;
+        height: auto;
+        display: block;
+        margin:0 auto;
+    }
+    /*.main img, object{
+        width: 50px;
+        height: auto;
+    }*/
+  </style>
+
+</body>
+
+<div class="content_div">
+  
+    <!--header-->   
+
+	<div class="wrapper">
+		  	<div class="header">
+      <a href="news_list" tppabs="" class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>新闻详情</p>
+    </div>
+       
+		<div class="main">
+             <div class="biaoti">
+            {$info['me_title']}
+        </div>
+			{$info['me_content']|raw}
+		</div>
+	</div>
+</div>
+</html>

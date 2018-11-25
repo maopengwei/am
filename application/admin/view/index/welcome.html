@@ -1,0 +1,83 @@
+﻿{include file="public/_meta" /}
+<title>我的桌面</title>
+</head>
+
+<body>
+	<div class="page-container">
+		<div class="f-14 c-error" style="margin:20px auto;">提示：为避免一些兼容问题，建议您使用Chrome浏览器、及含有急速内核的浏览器等打开本后台。</div>
+		<!-- <table class="table table-border table-bordered table-bg">
+			<thead>
+				<tr>
+					<th colspan="8" scope="col">会员统计</th>
+				</tr>
+				<tr class="text-c">
+					<th>会员数</th>
+					<th>商家数</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-c">
+					<td>0</td>
+					<td>0</td>
+				</tr>
+			</tbody>
+		</table> -->
+
+		<table class="table table-border table-bordered table-bg mt-20">
+			<thead>
+				<tr>
+					<th colspan="2" scope="col">服务器信息</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>服务器IP地址</td>
+					<td>{$request->ip()}</td>
+				</tr>
+				<tr>
+					<td>服务器域名</td>
+					<td>{$request->domain()}</td>
+				</tr>
+				<tr>
+					<td>服务器PHP版本 </td>
+					<td>{:PHP_VERSION}</td>
+				</tr>
+				<tr>
+					<td>本文件所在文件夹 </td>
+					<td>{:__DIR__}</td>
+				</tr>
+				<tr>
+					<td>服务器操作系统 </td>
+					<td>{:PHP_OS}</td>
+				</tr>
+				<tr>
+					<td>服务器当前时间 </td>
+					<td>{:date("Y-m-d H:i")}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer class="footer mt-20">
+		<div class="container">
+			<p><br> Copyright &copy;{:config('WEB_BQ')}<br> 
+				<a href="http://www.jugekeji.cn" target="_blank" title=""></a></p>
+		</div>
+	</footer>
+	<script type="text/javascript" src="/static/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
+	<!-- <script type="text/javascript" src="/static/admin/static/h-ui/js/H-ui.min.js"></script>  -->
+
+</body>
+
+</html>
+<script>
+	var obj = document.getElementsByClassName('container');
+	console.log(obj);
+	// console.log(obj[0].innerText);
+	// console.log(obj.length);
+	var b = {};
+	console.log(obj.__proto__);
+	console.log(obj.__proto__.__proto__);
+	console.log(b);
+	console.log(b.__proto__);
+</script>

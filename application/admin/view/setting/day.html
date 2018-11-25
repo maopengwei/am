@@ -1,0 +1,100 @@
+{include file="public/_meta"/}
+<title>图片展示</title>
+<link href="/static/admin/lib/lightbox2/2.8.1/css/lightbox.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	input{
+        border:none;
+        text-align:center;
+    }
+</style>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+    	<i class="Hui-iconfont">&#xe67f;</i> 后台 
+    	<span class="c-gray en">&gt;</span>  AMFC价格记录
+		<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="page-container">
+		<div class="text-c">
+		<form class="Huiform">
+		
+		<input type="text" class="input-text" style="width:150px" name="price" value="">
+		<button type="submit" onclick="return eee()" class="btn btn-success radius"><i class="Hui-iconfont"></i> 添加</button>
+		</form>
+		</div>
+	</div>
+	</div>
+		<div class="portfolio-content">
+			<table class="table table-border  table-hover table-bg table-sort">
+				<thead>
+					<tr class="text-c">
+						<th>id</th>
+						<th>价格</th>
+						<th>时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					{volist name="list" id="vo"}
+						<tr class="text-c">
+							<td>{$vo.id}</td>
+							<td><input type="text" value="{$vo.price}" onchange="fff($(this).val(),'price','{$vo.id}',3)"></td>
+							<td>{$vo.price_time}</td>
+						</tr>
+					{/volist}
+				</tbody>
+			</table>
+	    </div>
+	</div>
+    {include file="public/_footer"/}
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="/static/admin/lib/lightbox2/2.8.1/js/lightbox.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $(".portfolio-area li").Huihover();
+    });
+   	function eee(){
+   		var price = $('input[name="price"]').val();
+   		
+   		if(!price){
+   			layer.msg('价格不能为空'); return false;
+   		}
+
+   		$.post("{:url('day')}",{price:price}).success(function(data){
+			layer.msg(data.msg);
+			if(data.code){
+				setTimeout(function(){
+					location.href='';
+				},500);
+			}
+		});
+   		return false;
+   	}
+
+
+   	 function fff(val,key,i,type){
+        // console.log(val);
+        // console.log(key);
+        // console.log(i);
+        layer.confirm(
+            '确定要更改么？', 
+            { btn: ['确定', '取消'] }, 
+            function(index, layero){
+                $.ajax({
+                    type: "post",
+                    url: "{:url('system')}",
+                    data: {val:val,key:key,i:i,type:type},
+                    success: function(data) {
+                        layer.msg('修改成功');
+                    }
+                })
+            },
+            function(index,layero){
+               location.href = ''; 
+            }
+        );
+    }
+    </script>
+</body>
+
+</html>

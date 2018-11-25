@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>地址管理</title>
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/dizhi.css" />
+    <script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="header">
+        <a href="{:url('user/account')}" class="left">
+                <img src="/static/mall/img/return.png" />
+            </a>
+        <span class="center">地址管理</span>
+        <a href="javascript:void(0);" class="right"></a>
+    </div>
+    <div style="margin-bottom: 1rem;">
+        <div class="main">
+            <p>常用地址列表</p>
+            <form action="" method="post">
+                <ul class="dz_ul">
+                    {volist name="list" id="vo"}
+                    <li>
+                        <div class="dz_input">
+                            <input type="radio" name="a" date_id="{$vo.id}" value="{$vo.addr_default}" />
+                        </div>
+                        <div class="dz_div">
+                            <p><span>姓名：{$vo.addr_name}</span><span>电话：{$vo.addr_tel}</span></p>
+                            <p>地址：{$vo.addr_province_text}{$vo.addr_city_text}{$vo.addr_area_text}{$vo.addr_stree}</p>
+                            <a><img src="/static/mall/img/moren.png" class="defaul" onclick="def({$vo.id})" /></a>
+                            <a href="{:url('edit')}?id={$vo.id}"><img src="/static/mall/img/xiugai.png"/></a>
+                            <a><img src="/static/mall/img/close.png" class="del" onclick="del({$vo.id})" /></a>
+                        </div>
+                    </li>
+                    {/volist}
+                </ul>
+                <div class="imga">
+                    <a href="{:url('add')}"><img src="/static/mall/img/add.png"/></a>
+                </div>
+            </form>
+        </div>
+        {if condition="session('arrid') neq ''"}
+        <div class="ddBtn0">
+            <a>
+                <p class="ddBtn" onclick="queding()">确定</p>
+            </a>
+        </div>
+        {/if} {if condition="session('shop') neq ''"}
+        <div class="ddBtn0">
+            <a>
+                <p class="ddBtn" onclick="queque()">确定</p>
+            </a>
+        </div>
+        {/if}
+    </div>
+</body>
+<script src="/static/mall/js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(".close_img").click(function() {
+    $(this).parents("li").remove();
+})
+$(function() {
+    $('input[name="a"][value=' + "1" + ']').attr("checked", true);
+})
+//删除
+function del(data) {
+    layer.confirm('确定删除该地址么？', {
+        btn: ['确定', '取消'] //可以无限个按钮
+    }, function(index, layero) {
+        $.ajax({
+            type: "post",
+            url: "{:url('del')}",
+            data: { id: data },
+            success: function(data) {
+                console.log(data);
+                if (data.code == '1') {
+                    setTimeout(function() {
+                        location.href = data.url;
+                    }, 1000);
+                    layer.msg(data.msg);
+                } else {
+                    layer.msg(data.msg);
+                }
+                return false;
+            }
+        });
+    });
+}
+
+function def(data) {
+    layer.confirm('确定将该地址设为默认么？', {
+        btn: ['确定', '取消'] //可以无限个按钮
+    }, function(index, layero) {
+        $.ajax({
+            type: "post",
+            url: "{:url('def')}",
+            data: { id: data },
+            success: function(data) {
+                console.log(data);
+                if (data.code == '1') {
+                    setTimeout(function() {
+                        location.href = data.url;
+                    }, 1000);
+                    layer.msg(data.msg);
+                } else {
+                    layer.msg(data.msg);
+                }
+                return false;
+            }
+        });
+    });
+}
+
+function queding() {
+    var addr_id = $('input[name="a"]:checked').attr('date_id');
+    console.log(addr_id);
+    location.href = "{:url('cart/submit')}?addr_id=" + addr_id;
+}
+
+//这是提交界面
+function queque() {
+    var addr_id = $('input[name="a"]:checked').attr('date_id');
+    console.log(addr_id);
+    location.href = "{:url('pay/sub')}?addr_id=" + addr_id;
+}
+</script>
+
+</html>

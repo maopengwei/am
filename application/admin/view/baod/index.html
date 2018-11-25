@@ -1,0 +1,195 @@
+{include file="public/_meta" /}
+<title></title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 
+	<span class="c-gray en">&gt;</span>报单管理 
+	<span class="c-gray en">&gt;</span> 订单列表 
+	<a class="btn btn-success radius r" style="margin-left:2px" href="javascript:location.replace(location.href);" title="刷新" >
+		<i class="Hui-iconfont">&#xe68f;</i>
+	</a>
+</nav>
+<div class="page-container">
+	<form class="Huiform" method="get" action="">
+	<div class="text-c">
+		状态：
+		<span class="select-box inline">
+			<select name="status" class="select">
+				<option value="">全部</option>
+				<option value="-1">已取消</option>
+				<option value="0">待付款</option>
+				<option value="1">已付款</option>
+				<option value="2">已发货</option>
+				<option value="3">已完成</option>
+			</select>
+		</span>
+		<input type="text" class="input-text" style="width:200px" placeholder="店铺名称" name="mer_name" value="{$Request.get.mer_name|default=''}">
+		<input type="text" class="input-text" style="width:200px" placeholder="订单号" name="order_number" value="{$Request.get.order_number|default=''}">
+		<input type="text" class="input-text" style="width:200px" placeholder="产品名称" name="prod_name" value="{$Request.get.prod_name|default=''}">
+	</div>
+	<div class="text-c" style="margin-top:20px;">
+		日期范围：
+		<input type="text" class="input-text Wdate" name="start" id="countTimestart" placeholder="开始" onfocus="selecttime(1)" value="{$Request.get.start|default=''}" size="17" class="date" readonly style="width:140px;"> 
+		- 
+		<input type="text" class="input-text Wdate" name="end" id="countTimeend" placeholder="结束" onfocus="selecttime(2)" value="{$Request.get.end|default=''}" size="17"  class="date" readonly style="width:140px;">
+
+		<input type="text" class="input-text" style="width:200px" placeholder="账户名,手机号" name="keywords" value="{$Request.get.keywords|default=''}">
+		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	</form>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>{$list->total()}</strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border  table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th>订单编号</th>
+				<th>客户账号</th>
+				<th>产品</th>
+				<th>金额</th>
+				<th>类型</th>
+				<th>状态</th>
+				<th>添加时间</th>
+				<th>操&nbsp;&nbsp;作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="list" id="vo" key="k"}
+				<tr class="text-c">
+					<td><a onclick="create('{$vo.id}','/admin/order/detail','详情')" >{$vo.order_number}</a></td>
+					<td>{$vo.order.user.us_account}</td>
+					<td>{$vo.kuai.prod_name}</td>
+					<td>{$vo.order_money}</td>
+					<td>
+                        {if condition="$vo.prod_type eq 0"}
+                            报单
+                        {else}
+                            复投
+                        {/if}
+                    </td>
+					<td>{$vo.status_text}</td>
+					<td>{$vo.detail_add_time}</td>
+					<td class="td-manage">
+						<a onclick="del('{$vo.id}')" style="text-decoration:none"><i class="Hui-iconfont">&#xe60b;删除</i></a>
+					</td>
+				</tr>
+			{/volist}
+		</tbody>
+	</table>
+		<div class="pages" style="margin:20px;float: right; ">{$list|raw}</div>
+	</div>
+</div>
+{include file="public/_footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript">
+$('select[name="status"]').val('{$Request.get.status}');
+
+
+function create(id,url,key){
+	var url = url+"?id="+id;
+	creatIframe(url,key);
+}
+
+function selecttime(flag){
+    if(flag==1){
+        var endTime = $("#countTimeend").val();
+        if(endTime != ""){
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:endTime})}else{
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})}
+    }else{
+        var startTime = $("#countTimestart").val();
+        if(startTime != ""){
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:startTime})}else{
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})}
+    }
+ }
+function downdo(){
+	var url = window.location.href;
+	$.ajax({
+		type:'get',
+		url:url,
+		data:{a:1},
+		success:function(data){
+			console.log(data);
+			window.location.href = data;
+		}
+	})
+}
+
+function optOrder(obj,id,type){
+	// 发货
+	if(type){
+		$.post("{:url('Order/optOrder')}",{id:id,type:type}).success(function(data){
+			layer.msg(data.msg);
+			if(data.code){
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">发货中</span>');
+				$(obj).remove();
+			}
+		});
+	}
+}
+function quxiao(data){
+	layer.confirm('确定要取消该订单么？', {
+      btn: ['确定', '取消'] //可以无限个按钮
+    }, function(index, layero){
+        $.ajax({
+            type:"post",
+            url:"{:url('quxiao')}",
+            data:{id:data},
+            success:function(data){
+                console.log(data);
+                layer.msg(data.msg);
+                if(data.code){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000);
+                }
+            }
+        })
+    });
+}
+
+function tongguo(data){
+	layer.confirm('确定要审核通过么？', {
+      btn: ['确定', '取消'] //可以无限个按钮
+    }, function(index, layero){
+        $.ajax({
+            type:"post",
+            url:"{:url('pass')}",
+            data:{id:data},
+            success:function(data){
+                layer.msg(data.msg);
+                if(data.code){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000);
+                }
+            }
+        })
+    });
+}
+
+
+/*--删除*/
+function del(id){
+    layer.confirm('确定要删除么？', {
+      btn: ['确定', '取消']
+    }, function(index, layero){
+        $.ajax({
+            type: "post",
+            url: "del",
+            data: {id:id},
+            success: function(data) {
+                layer.msg(data.msg);
+                if(data.code){
+                    setTimeout(function(){
+                        location.href = '';
+                    },1000);
+                }
+            }
+        });
+    });
+}	
+</script> 
+</body>
+</html>

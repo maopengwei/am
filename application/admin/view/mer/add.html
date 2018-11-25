@@ -1,0 +1,199 @@
+{include file="public/_meta" /}
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+
+.lbwxq_mImg {
+    width: 110px;
+    height: 110px;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.lbwxq_mImg img {
+    width: 110px;
+    height: 110px;
+}
+
+
+.big img{
+    width: 1000px;
+    height: 1000px;
+}
+
+/*大图*/
+
+.lbwxq_lImg {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    left: 540px;
+    top: 25px;
+    display: none;
+    overflow: hidden;
+}
+
+.lbwxq_lImg img {
+    width: 1000px;
+    height: 1000px;
+}
+
+
+.pic {
+    display: inline-block;
+}
+
+.pic img {
+    width: 110px;
+    height: 110px;
+}
+body,html{
+position: relative;
+}
+.big{
+   position: absolute;
+    right: 25%;
+    top: 120px;
+    width: 300px;
+    height: 300px;
+}
+.big img{
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 
+        <span class="c-gray en">&gt;</span>商城管理 
+        <span class="c-gray en">&gt;</span> 添加店铺 
+        <a class="btn btn-success radius r" style="margin-left:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <form class="form form-horizontal" id="form-article-add">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="门店名称" name="mer_name" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店logo：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                        <img src="/static/admin/img/add0.png" alt="" class="logo" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                        <input type="file" name="file" onchange="eee($(this))" class="input-text" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0;">
+                    </div>
+                </div>
+            </div>
+            <div style="display:none" class="ttt">
+                <input type="text" name="mer_pic">
+                <input type="text" name="us_id" class="us_id">
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">关联用户：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="用户名" onkeyup="get_us($(this).val())" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">手机号：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text us_tel" style="width:20%" disabled>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <button onclick="return add();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="big" >
+        <!-- <img src="/static/admin/img/add0.png" /> -->
+    </div>
+    {include file="public/_footer" /}
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript">
+
+
+    function add() {
+        $.post('{:url("add")}', $('#form-article-add').serialize()).success(function(data) {
+            layer.msg(data.msg);
+            if (data.code) {
+                setTimeout(function() {
+                    location.href = '';
+                }, 1000);
+            }
+        });
+        return false;
+    }
+
+
+    function eee(dada) {
+        var data = new FormData();
+        data.append('file', dada[0].files[0]);
+        var index = layer.load(1, { shade: false }); //0代表加载的风格，支持0-2
+        $.ajax({
+            url: '{:url("every/upload")}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data.code) {
+                    $('.logo').attr('src',data.data);
+                    $('input[name="mer_pic"]').val(data.data);
+                }else{
+                    layer.msg(data.msg);
+                }
+                layer.close(index);
+
+                
+            },
+            error: function() {
+                layer.close(index);
+                layer.msg('上传出错');
+            }
+        });
+    }
+   
+    function ccc(data){
+        console.log(data);
+        var path = $(data).attr('src');
+        var html = '<img src="' + path + '" alt="">';
+        $('.big').html(html);
+        $('.big').show();
+        console.log(path);
+    }
+    function ddd(){
+        $('.big').hide();
+    }
+
+    /*---查询关联人是谁*/
+    function get_us(data){
+        console.log(data);
+         $.post('{:url("get_us")}', {us_account:data}).success(function(data) {
+            console.log(data);
+            if (data.code==1) {
+                $('.us_tel').val(data.data.us_tel);                                       
+                $('.us_id').val(data.data.id);
+            }else{
+                $('.us_tel').val('');
+                $('.us_id').val('')
+            }
+            if(data.code==2){
+                layer.msg(data.msg);
+            }
+        });
+        return false;
+    }
+    </script>
+</body>
+
+</html>

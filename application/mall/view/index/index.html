@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://vip5.gxbbwrj.com/y8908cs/public/Index.html -->
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="apple-themes-web-app-capable" content="yes">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <meta name="format-detection" content="telephone=no">
+  <title>{:cache('setting')['web_name']}</title>
+  <meta name="keywords" content="{:cache('setting')['web_keys']}">
+  <meta name="description" content="{:cache('setting')['web_detail']}">
+  <link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+  <link id="layuicss-laydate" rel="stylesheet" href="/static/mobile/css/laydate.css" media="all">
+  <link id="layuicss-layer" rel="stylesheet" href="/static/mobile/css/layer.css" media="all">
+  <link id="layuicss-skincodecss" rel="stylesheet" href="/static/mobile/css/code.css" media="all">
+  <script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script>
+  <script src="/static/mobile/js/swiper.min.js"></script>
+</head>
+
+<body>
+  <style type="text/css">
+    .text p {
+      margin-top: 10px;
+    }
+
+    .swiper-slide {
+      width: 375px;
+      height: 175px;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .lefticon {
+      float: left;
+    }
+
+    .dingdan_one .dingdan_nav ul li:nth-child(1) {
+      background: none;
+      background-size: none;
+    }
+
+    .dingdan_one .dingdan_nav ul li {
+      width: 100%;
+      float: left;
+      text-align: left;
+      padding: 15px 15px;
+    }
+  </style>
+  <div class="content_div">
+    <header>
+      <div class="touxiang">
+        <a href="#">
+          <div class="touxiang_con">
+            <img src="/static/mobile/img/logo.png">
+          </div>
+          <!--  <div class="dengji">
+                  A1
+                </div> -->
+        </a>
+      </div>
+      <div class="tubiao_con">
+        <div class="zhongying">
+          <a lang="cn" class="btn">中文</a>/<a lang="en" class="btn">英文</a>
+        </div>
+        <!--  <div class="liaotian">
+              <img src="/y8908cs/public/static/module/all/images/duihua.png"/>
+            </div> -->
+      </div>
+    </header>
+
+    <div class="banner">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          {volist name="$shuff" id="vo"}
+          <div class="swiper-slide" style="width: 640px;"><img src="{$vo.shuff_pic}"></div>
+          {/volist}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <div class="shuju_con">
+      <ul>
+        <li>
+          <p>总资产</p>
+          <span id="daibixx">{$mine['us_wal']+$mine['us_dong']}</span>
+        </li>
+        <li>
+          <p>已奖励</p>
+          <span id="pdbxx">{$mine['us_msc']|default=0}</span>
+        </li>
+        <li>
+          <a href="jiji">
+            <p>基金</p>
+            <span id="cintegral">{$mine['us_jijin']|default=0}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="main" style="width: 100%;height:220px;margin-top: 20px;background: #f5f5f5">
+
+    </div>
+    <div class="dingdan_con">
+
+      <div class="dingdan_one">
+        <div class="title">
+          <div class="con">
+            <i class="iconfont icon-jilu"></i>
+            <!-- <i class="lefticon icon bell outline"></i> -->
+            <p>新闻公告</p>
+            <a href="news_list">更多&gt;&gt;</a>
+          </div>
+        </div>
+        <div class="dingdan_nav">
+          <ul>
+            {volist name="news" id='vo'}
+            <li>
+              <a href="/mall/index/news?id={$vo.id}">{$vo.me_title}  </a>
+            </li>
+            {/volist}
+          </ul>
+        </div>
+      </div>
+
+
+      <!-- footer-->
+      <style type="text/css">
+        .footer ul li p {
+          font-size: 12px;
+          color: #fff;
+        }
+
+        .footer ul li i {
+          font-size: 18px;
+          color: #fff;
+        }
+
+        .footer ul li {
+          width: 25%;
+          float: left;
+          padding: 5px;
+          text-align: center;
+        }
+      </style>
+      <div style="width:100%;height:auto;margin:20px 0 65px 0;padding:0 130px;">
+        <img style="width:100%;height: 100%;" src="/static/mobile/img/momo.png">
+      </div>
+
+
+      <div class="footer" style="background: #1a181b;">
+        <ul>
+          <li class="on">
+            <a href="/mall/index/index">
+              <i><img src="/static/mobile//img/shouye1.png" width="30%"></i>
+                <p>首页</p>
+            </a>
+          </li>
+
+
+          <li>
+            <a href="/mall/shop/index">
+              <!-- <a href="/mall/trad/index" onclick="layer.msg(&#39;开发中...&#39;); return false"> -->
+              <i><img src="/static/mobile/img/shop.png" width="30%"></i>
+              <p>商城</p>
+            </a>
+          </li>
+          <li class="">
+            <a href="/mall/trad/index">
+              <!-- <a href="/mall/trad/index" onclick="layer.msg(&#39;开发中...&#39;); return false"> -->
+              <i><img src="/static/mobile/img/jiaoyi.png" width="30%"></i>
+              <p>交易</p>
+            </a>
+          </li>
+          <li>
+            <a href="/mall/user/index">
+              <i><img src="/static/mobile/img/grzx.png" width="30%"></i>
+                <p>我的</p>
+            </a>
+          </li>
+          <!--  <li>
+          <a href="#">
+              <i class="iconfont icon-jifenshangcheng"></i>
+                <p>商城</p>
+            </a>
+        </li> -->
+        </ul>
+      </div>
+      <!--footer-->
+      <!--使用layui-->
+
+      <!--<script src="js/countUp.js"></script>-->
+      <script src="/static/mobile/js/layui.all.js" charset="utf-8"></script>
+      <script src="/static/mobile/js/common.js"></script>
+      <script src="/static/mobile/js/echarts.common.min.js" type="text/javascript" charset="utf-8"></script>
+    </div>
+
+    <script>
+      var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        autoplay: 2000,
+      });
+
+
+
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main'));
+
+      // 指定图表的配置项和数据
+      var option = {
+
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,  //是否从坐标0开始
+
+          data: ["{$pri[4]['price_time']}", "{$pri[3]['price_time']}", "{$pri[2]['price_time']}", "{$pri[1]['price_time']}", "{$pri[0]['price_time']}"],
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: 'black'
+            }
+          },
+          //控制x轴线是否显示
+          axisLine: {
+            show: true
+          },
+          // 控制网格线是否显示
+          splitLine: {
+            show: true,
+            lineStyle: {
+              // 使用深浅的间隔色
+              // color: ['#987929']
+            }
+          },
+          // 去除x轴上的刻度线
+          axisTick: {
+            show: true
+          }
+        },
+        
+        yAxis: {
+          type: 'value',
+          //控制y轴线是否显示
+          axisLabel: {
+            formatter: '{value}',
+            textStyle: {
+              color: '#987929'
+            }
+          },
+          axisLine: {
+            show: true
+          },
+          // 控制网格线是否显示
+          splitLine: {
+            show: false
+          },
+          // 去除y轴上的刻度线
+          axisTick: {
+            show: true
+          }
+        },
+
+        grid: {
+          left: '15%',
+          top: '10%',
+          right: '10%',
+          bottom: '10%',
+
+        },
+        // var bb = 
+        series: [{
+          symbol: 'circle',
+          smooth: true,
+          symbolSize: 8, //设置点的大小
+          data: ["{$pri[4]['price']}", "{$pri[3]['price']}", "{$pri[2]['price']}", "{$pri[1]['price']}", "{$pri[0]['price']}"],
+          type: 'line',
+          itemStyle: {
+            normal: {
+              label: { show: true },
+              color: " #987929", //点的颜色
+              lineStyle: {
+                color: "rgba(227,210,105,1)" //折线颜色
+              }
+            }
+          },
+          //折线区域颜色渐变 #E3D269
+          // areaStyle: {
+          //   normal: {
+          //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          //       {
+          //         offset: 1,
+          //         color: 'rgba(227,210,105,1)'
+          //       }])
+          //   }
+          // },
+        }]
+      };
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+
+    </script>
+
+  </div>
+</body>
+
+</html>

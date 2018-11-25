@@ -1,0 +1,127 @@
+{include file="public/_meta" /}
+<title></title>
+</head>
+<body>
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i> 首页 
+	<span class="c-gray en">&gt;</span>商城管理 
+	<span class="c-gray en">&gt;</span> 商铺申请 
+	<a class="btn btn-success radius r" style="margin-left:2px" href="javascript:location.replace(location.href);" title="刷新"> 
+		<i class="Hui-iconfont">&#xe68f;</i>
+	</a>
+</nav>
+<div class="page-container">
+	<div class="text-c">
+	<form class="Huiform" method="get" action="">
+		状态：
+		<span class="select-box inline">
+			<select name="status" class="select">
+				<option value="">全部</option> 
+				<option value="0">未审核</option>
+				<option value="1">已通过</option> 
+				<option value="2" style="color:red;">被驳回</option>
+			</select>
+		</span>
+		<!-- <input type="text" class="input-text" style="width:150px" placeholder="姓名、编号、手机号" id="" name="keywords" value="{$Request.get.keywords|default=''}"> -->
+
+		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+		</form>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="r">共有数据：<strong>{$list->total()}</strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border  table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">				
+				<th>用户名</th>
+				<th>真实姓名</th>
+				<th>手机号</th>
+				<th>状态</th>
+				<th>申请时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name='list' id="vo"}
+				<tr class="text-c">
+					<td>{$vo.user.us_account}</td>
+					<td>{$vo.user.us_real_name}</td>
+					<td>{$vo.user.us_tel}</td>
+					<td>{$vo.status_text}</td>					
+					<td>{$vo.apply_add_time}</td>								
+					<td class="td-manage">
+						
+						<a class="ml-5" style="text-decoration:none" onclick="create({$vo.id},'apply_edit','申请详情')" title="编辑">
+							<i class="Hui-iconfont">&#xe6df;</i>
+						</a>
+						<!-- {if condition="$vo.apply_status eq 0"}
+						<a class="ml-5" style="text-decoration:none" onclick="check({$vo.id},1,'审核通过')" title="审核通过">
+							<i class="Hui-iconfont">&#xe6e1;</i>
+						</a>
+                        <a class="ml-5" style="text-decoration:none" onclick="check({$vo.id},2,'驳回')" title="驳回">
+                        	<i class="Hui-iconfont">&#xe6e0;</i>
+                        </a>
+						{/if} -->
+						<!-- <a class="ml-5" style="text-decoration:none" onclick="del({$vo.id})" title="删除">
+							<i class="Hui-iconfont">&#xe609;</i>
+						</a> -->
+					</td>
+				</tr>
+			{/volist}
+		</tbody>
+	</table>
+	<div class="pages" style="margin:20px;float: right; ">{$list|raw}</div>
+	</div>
+</div>
+{include file="public/_footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+$('select[name="status"]').val({$Request.get.status});
+
+function create(id,url,key){
+	var url = "{:url('"+url+"')}?id="+id;
+	creatIframe(url,key);
+}
+
+/*--审核驳回*/
+function check(id,value,key){
+	layer.confirm('确定要'+key+'么？', {
+      btn: ['确定', '取消']
+    }, function(index, layero){
+        $.ajax({
+            type: "post",
+            url: "{:url('apply')}",
+            data: {id:id,apply_status:value},
+            success: function(data) {
+             	layer.msg(data.msg);
+             	setTimeout(function(){
+             		location.href = '';
+             	},500);
+            }
+        });
+    });
+}
+
+function del(id,key){
+    layer.confirm('确定要删除么？', {
+      btn: ['确定', '取消']
+    }, function(index, layero){
+        $.ajax({
+            type: "post",
+            url: "{:url('mer/apply_del')}",
+            data: {id:id,key,key},
+            success: function(data) {
+                layer.msg(data.msg);
+                if(data.code==1){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000);
+                }
+            }
+        });
+    });
+}	
+</script> 
+</body>
+</html>

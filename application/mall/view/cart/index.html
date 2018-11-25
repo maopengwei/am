@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>购物车</title>
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+    <link rel="stylesheet" href="/static/mall/css/gouwuche.css" />
+</head>
+<style>
+    .footer_p {
+        text-align: center;
+    }
+
+    .delete {
+        position: absolute;
+        top: 0px;
+        right: 0;
+        padding: 2rem 0px;
+        width: 3.75rem;
+        font-size: inherit;
+        line-height: 2.5rem;
+    }
+
+    .edit_container {
+        display: none;
+    }
+
+
+    .dibushanchu {
+        display: none;
+    }
+
+    .dibujiesuan {
+        display: block;
+    }
+
+    .count_num {
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .xianshi {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+</style>
+</head>
+
+<body>
+    <!--标题-->
+    <div class="header">
+        <a href="{:url('shop/index')}" class="left">
+				<img src="/static/mall/img/return.png" />
+			</a>
+        <span class="center">购物车  (<span>{$list->total()}</span>)</span>
+        <a href="{:url('user/index')}" class="right">我的</a>
+    </div>
+    <div class="gwc_wrap">
+        <form action="" method="post">
+            <!--选择购物-->
+            <ul class="shangpin shop-group-item">
+            	{volist name="list" id="vo"}
+                <li>
+                    <div class="shangpin_text">
+                        <p>
+                            <a onclick="del({$vo.id})">删除</a>
+                        </p>
+                    </div>
+                    <div class="shangpinxq shop-info">
+                        <div class="tiaojianlist03">
+                            <input type="checkbox" date-id="{$vo.id}" name="" id="" value="" class="goodsCheck" />
+                        </div>
+                        
+                        <div class="sp_img"><img src="{$vo.prod.pic_text[0]}" /></div>
+                        <div class="checkbox_text">
+                            <p class="xianshi">{$vo.prod.prod_name}</p>
+                            <!--三种购买价格形式-->
+                            <!--正常价格-->
+                          
+                            
+                            <p class="credit_price">
+                                <img src="/static/mall/img/xinyong.png" alt="" />
+                                <span class="cash" >{$vo.prod.prod_price}</span>
+                            </p>
+                            <p class="xjgwb">
+                                <span><span class="integral"></span></span>
+                                <span class="count_num">
+									<input type="text" value="-" class="jian" onclick="return jian(this,{$vo.id})"   onfocus="this.blur()"  /> 
+								    <input type="number" value="{$vo.cart_num}" class="val num0" onchange="val(this,{$vo.id})"  onafterpaste="this.value=this.value.replace(/\D/g,'')" /> 
+								    <input type="text" value="+"  class="jia" onclick="return jia(this,{$vo.id})"  onfocus="this.blur()" />
+								</span>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+        </form>
+    </div>
+    <!--底部结算-->
+    <form action="" method="post" class="dibujiesuan">
+        <div class="jiesuan">
+            <p class="tiaojianlist">
+                <input type="checkbox" name="" id="" value="" class="shopCheck" /><span>全选</span></p>
+            <div>
+                <p class="total">
+                    <img src="/static/mall/img/xinyong.png" alt="" />
+                    <span class="cash_sum">0</span>
+                </p>
+            </div>
+            <p onclick="jiesuan()">结算</p>
+        </div>
+    </form>
+</body>
+
+</html>
+<script src="/static/mall/js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	function jia(obj,cart_id) {
+	    var num = parseInt($(obj).prev().val());
+	    $.ajax({
+	        type: "post",
+	        url: "{:url('add')}",
+	        data: {
+	            'num': num,
+	            'id': cart_id
+	        },
+	        success: function(data) {
+	            console.log(data);
+	            if(data.code){
+                    if(data.code!=1){
+                        layer.msg(data.msg);
+                    }
+	            	$(obj).prev().val(data.num);
+	            }else{
+	            	layer.msg(data.msg);
+	            }
+	        }
+	    });
+	}
+	function jian(obj,cart_id) {
+	    var num = parseInt($(obj).next().val());
+	    $.ajax({
+	        type: "post",
+	        url: "{:url('reduce')}",
+	        data: {
+	            'num': num,
+	            'id': cart_id
+	        },
+	        success: function(data) {
+	            console.log(data);
+	            if(data.code){
+                    if(data.code!=1){
+                        layer.msg(data.msg);
+                    }
+	                $(obj).next().val(data.num);
+	            }else{
+	                layer.msg(data.msg);
+	            }
+	        }
+	    });
+	}
+
+
+	function val(obj,cart_id) {
+	    var num = parseInt($(obj).val());
+
+	    $.ajax({
+	        type: "post",
+	        url: "{:url('val')}",
+	        data: {
+	            'num': num,
+	            'id': cart_id
+	        },
+	        success: function(data) {
+	            if(data.code){
+	                
+	            }else{
+	                layer.msg(data.msg);
+	                $(obj).val(data.num);
+	            }
+	        }
+	    });
+	}
+	
+	//删除
+    function del(data){
+
+        layer.confirm('确定要从购物车删除么？', {
+          btn: ['确定', '取消'] //可以无限个按钮
+        }, function(index, layero){
+            $.ajax({
+                type: "post",
+                url: "{:url('del')}",
+                data: {id:data},
+                success: function(data) {
+                    console.log(data);
+                    if(data.code=='1'){
+                        setTimeout(function(){
+                            location.href = data.url;
+                        },1000);
+                        layer.msg(data.msg);
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                    return false;
+                }
+            });
+        });
+    }
+    var arrid='';
+     //计算总价
+    function TotalPrice() {
+        var cash_all = 0; //定义总价(现金)
+        var credit_all = 0; //定义总价(信用)
+        var integral_all = 0; //定义总价(Doken)
+        arrid = "";
+        $(".shop-group-item").find(".goodsCheck").each(function() { //循环购物车里面的商品
+
+            var num0 = parseInt($(this).parents(".shop-info").find(".num0").val()); //得到商品的数量
+
+            var cash = parseFloat($(this).parents(".shop-info").find(".cash").text()); //得到商品的单价（现金）   
+            var credit = parseFloat($(this).parents(".shop-info").find(".credit").text()); //得到商品的单价（信用）
+            var integral = parseFloat($(this).parents(".shop-info").find(".integral").text()); //得到商品的单价（Doken）
+            var id = parseInt($(this).attr('date-id'));
+            console.log(id);
+            var cash_total = cash * num0; //计算单个商品的总价（现金）
+            var credit_total = credit * num0; //计算单个商品的总价（信用）
+            var integral_total = integral * num0; //计算单个商品的总价（Doken）
+
+            if (this.checked == true) { //如果当前商品被选中
+                cash_all += cash_total; //计算购物车里选中商品的总价（现金）
+                credit_all += credit_total; //计算购物车里选中商品的总价（信用）
+                integral_all += integral_total; //计算购物车里选中商品的总价（Doken）
+                arrid += id+',';
+                console.log(arrid);
+            }
+
+            $(".cash_sum").text(cash_all.toFixed(0)); //显示被选中商品的总价（现金）
+            $(".credit_sum").text(credit_all.toFixed(0)); //显示被选中商品的总价（信用）
+            $(".integral_sum").text(integral_all.toFixed(0)); //显示被选中商品的总价（Doken）
+        });
+    }
+    //单个商品点击事件
+    $(".goodsCheck").click(function() {
+
+        var goods = $(this).closest(".shop-group-item").find(".goodsCheck"); //获取购物车中所有商品
+
+        var goodsC = $(this).closest(".shop-group-item").find(".goodsCheck:checked"); //获取购物车所有被选中的商品
+
+        var goodsC0 = $(this).is("input:checked");
+
+        if (goodsC0 == true) {
+            $(this).parent(".tiaojianlist03").siblings(".checkbox_text").find(".count_num").children().attr("disabled", "disabled");
+        } else {
+            $(this).parent(".tiaojianlist03").siblings(".checkbox_text").find(".count_num").children().removeAttr("disabled");
+        }
+
+        var Shops = $('.jiesuan').find(".shopCheck"); //获取购物车的全选按钮
+        var aa = $(".dibujiesuan").css("display");
+        if (goods.length == goodsC.length) { //如果选中的商品等于所有商品
+            Shops.prop('checked', true); //购物车全选按钮被选中 
+            if (aa == 'block') {
+                TotalPrice(); // 计算           
+            }
+        } else { //如果选中的商品不等于所有商品
+            Shops.prop('checked', false); //购物车全选按钮不被选中    
+            if (aa == 'block') {
+                TotalPrice(); // 计算           
+            }
+        }
+    });
+	$(function() {
+	    
+	    //全选按钮点击事件
+	    $(".shopCheck").click(function() {
+	        var goodsC0 = $(this).is("input:checked");
+
+	        if (goodsC0 == true) {
+	            $(".count_num").children().attr("disabled", "disabled");
+	        } else {
+	            $(".count_num").children().removeAttr("disabled");
+	        }
+	        var aa = $(".dibujiesuan").css("display"); //=="block"
+	        if ($(this).prop("checked") == true) { //如果购物车全选按钮被选中
+	            $(".shop-group-item").find(".goodsCheck").prop('checked', true); //购物车内的所有商品按钮也被选中     
+	            if (aa == 'block') {
+	                TotalPrice(); // 计算           
+	            }
+	        } else { //如果购物车全选按钮不被选中
+	            $(".shop-group-item").find(".goodsCheck").prop('checked', false); //购物车内的所有商品也不被全选    
+	            if (aa == 'block') {
+	                TotalPrice(); // 计算           
+	            }
+	        }
+	    });
+	    //超出两行显示省略号
+	});
+	function jiesuan(){
+        if(arrid==""){
+            layer.msg('您没有选中任何产品');
+            return;
+        }
+        location.href = "{:url('submit')}?arrid="+arrid;
+    }
+</script>

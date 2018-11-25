@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>申请商家</title>
+    <link rel="stylesheet" type="text/css" href="/static/mobile/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/mobile/css/apply_shop.css" />
+</head>
+
+<body>
+    <div class="header">
+        <a href="{:url('index')}" class="left">
+                <img src="/static/mobile/img/return.png" />
+            </a>
+        <span class="center">申请商家</span>
+        <a href="{:url('merchant_list')}" class="right" style="color:#333;">申请记录</a>
+    </div>
+    <div style="margin-bottom: 1rem;">
+        <form>
+            <div class="xinxi_wrap">
+                <p><span>会员等级:</span><span>普通会员</span></p>
+                <p><span>申请类型</span><span>商家</span></p>
+                <!--服务期限为一年，动态的时间-->
+                <p><span>服务期限</span><span>一年</span></p>
+                <p><span>需要支付</span><span>0元(活动中)</span></p>
+            </div>
+            <p class="money1_con_p" style="margin-left: 3%;">请上传资料</p>
+            <div class="con_file">
+                <div class="file0">
+                    <p style="margin-left: 0.28rem;">上传身份证</p>
+                    <div class="file0_input0">
+                        <p>
+                            <img src="/static/mobile/img/add0.png" />
+                            <span>正面</span>
+                        </p>
+                        <input type="file" class="tupian" name="" multiple/>
+                        <div id='dd0'>
+                        </div>
+                    </div>
+                    <div class="file0_input1">
+                        <p>
+                            <img src="/static/mobile/img/add0.png" />
+                            <span>反面</span>
+                        </p>
+                        <input type="file" class="tupian" name="" multiple/>
+                        <div id='dd1'>
+                        </div>
+                    </div>
+                </div>
+                <div class="file0" style="margin-top: 0.2rem;">
+                    <p>上传营业执照</p>
+                    <div class="file0_input0">
+                        <p>
+                            <img src="/static/mobile/img/add0.png" />
+                            <span>上传</span>
+                        </p>
+                        <input type="file" class="tupian" name="" multiple/>
+                        <div id='dd2'>
+                        </div>
+                    </div>
+                </div>
+                <div class="file0" style="margin-top: 0.2rem;">
+                    <p style="margin-left: 0.28rem;">上传保证书</p>
+                    <div class="file0_input0">
+                        <p>
+                            <img src="/static/mobile/img/add0.png" />
+                            <span>上传</span>
+                        </p>
+                        <input type="file" class="tupian" name="" multiple/>
+                        <div id='dd3'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="pic0" name="pic0">
+            <input type="hidden" id="pic1" name="pic1">
+            <input type="hidden" id="pic2" name="pic2">
+            <input type="hidden" id="pic3" name="pic3">
+            <p class="xieyi">
+                <span class="confirm0_span">
+                <img src="/static/mobile/img/xuanzhong.png" class="choose-logo"/>
+            </span>
+                <span>我已阅读并接受
+                <a href="#">《康怡佰商家协议》</a>和<a href="#">《商家入驻须知》</a>
+            </span>
+            </p>
+            <div class="next">
+                <input type="submit" onclick="return shenqing()" value="申请" disabled/>
+            </div>
+        </form>
+    </div>
+</body>
+<script src="/static/mobile/js/base.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/jquery/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(function() {
+    var bol;
+    $(".confirm0_span").click(function() {
+        console.log(bol)
+        if (bol) {
+            $(".next input").attr("disabled", "disabled");
+            $(".choose-logo").hide();
+            bol = false;
+            $(".next input").removeClass("input_btn");
+        } else {
+            $(".next input").removeAttr("disabled");
+            $(".choose-logo").show();
+            $(".next input").addClass("input_btn");
+            bol = true;
+        }
+    });
+});
+$(".tupian").change(function() {
+    var data = new FormData();
+    $.each($(this)[0].files, function(i, file) {
+        data.append('merchant' + i, file);
+    });
+    var aa = $(this);
+    var fil = this.files;
+    var index = layer.load(1, {shade: false});
+    $.ajax({
+        url: '{:url("upload_merchant")}',
+        type: 'POST',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            
+            
+            layer.close(index);
+
+
+            
+            for (var i = 0; i < $(".tupian").length; i++) {
+                if (aa.val() == $(".tupian").eq(i).val()) {
+                    reads(fil[0], i, data.data);
+                }
+            }
+            aa.parent().find("p").hide();
+        },
+        error: function() {
+            layer.close(index);
+            layer.msg('上传出错');
+        }
+    });
+});
+
+function reads(fil, i, path) {
+    console.log(path);
+    var reader = new FileReader();
+    reader.readAsDataURL(fil);
+    reader.onload = function() {
+        $('#dd' + i).html("<img src='" + reader.result + "'>");
+        $('#dd' + i).show();
+        $('#pic' + i).val(path);
+    };
+}
+//申请
+function shenqing() {
+    $('input[type="submit"]').attr('disabled',true);
+    var pic0 = $('#pic0').val();
+    var pic1 = $('#pic1').val();
+    var pic2 = $('#pic2').val();
+    var pic3 = $('#pic3').val();
+    $.ajax({
+        type:"post",
+        url:'{:url("apply_merchant")}',
+        data:{pic0:pic0,pic1:pic1,pic2:pic2,pic3:pic3},
+        success:function(data){
+            console.log(data);
+            layer.msg(data.msg);
+            if(data.code){
+                setTimeout(function(){
+                    location.href =data.url;
+                },1000);
+            }else{
+               $('input[type="submit"]').removeAttr('disabled');
+            }
+        }
+    })
+    return false;
+    // layer.open({
+    //     content: '<input  class="ejmm" type="password"  placeholder="二级密码" />',
+    //     btn: ['确定', '取消'],
+    //     yes: function(index, layero) {
+    //         var ejmm = $('.ejmm').val();
+    //         $.ajax({
+    //          type:"post",
+    //          url:'{:url("apply_merchant")}',
+    //          data:{pic0:pic0,pic1:pic1,pic2:pic2,pic3:pic3,pay_pwd:ejmm},
+    //          success:function(data){
+    //              console.log(data);
+    //                 layer.msg(data.msg);
+    //                 if(data.code){
+    //                     setTimeout(function(){
+    //                         location.href ="{:url('pay/index')}?number="+data.number;
+    //                     },1000);
+    //                 }else{
+    //                    $('input[type="submit"]').removeAttr('disabled');
+    //                 }
+    //          }
+    //         })
+    //     },
+    // });
+    // return false;
+}
+
+</script>
+
+</html>

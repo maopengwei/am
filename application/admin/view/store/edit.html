@@ -1,0 +1,260 @@
+{include file="public/_meta" /}
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+
+.lbwxq_mImg {
+    width: 110px;
+    height: 110px;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.lbwxq_mImg img {
+    width: 110px;
+    height: 110px;
+}
+
+
+.big img{
+    width: 1000px;
+    height: 1000px;
+}
+
+/*大图*/
+
+.lbwxq_lImg {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    left: 540px;
+    top: 25px;
+    display: none;
+    overflow: hidden;
+}
+
+.lbwxq_lImg img {
+    width: 1000px;
+    height: 1000px;
+}
+
+
+.pic {
+    display: inline-block;
+}
+
+.pic img {
+    width: 110px;
+    height: 110px;
+}
+.big{
+   position: absolute;
+    right: 15%;
+    top: 120px;
+    width: 400px;
+    height: 400px;
+}
+.big img{
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>门店管理 <span class="c-gray en">&gt;</span> 添加门店 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="form form-horizontal" id="form-article-add">
+            <input type="hidden" name="__token__" value="{$Request.token}" />
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店编号：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="门店编号" value="{$info.st_serial_number}" disabled style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="门店名称" name="st_name" value="{$info.st_name}" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店logo：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                        <img src="{$info.st_logo}" alt="" class="logo" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                        <input type="file" name="file" onchange="eee($(this))" class="input-text" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0;">
+                    </div>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">门店主图：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <div class="pic" >
+                        {volist name="$info.st_pic" id="vo"}
+                      <li class="maomao" style="position: relative; list-style: none;float: left">
+                        <i class="Hui-iconfont ioc_x" onclick="remove_li(this)"  style="position: absolute;right: 0; top: 0;">&#xe6e2;</i>
+                        <img  src="{$vo}" onclick="ccc(this)"  alt="">
+                      </li>
+                        {/volist}
+                    </div>
+                    <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                        <img src="/static/admin/img/add0.png" alt="" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                        <input type="file" name="file" onchange="bbb($(this))" class="input-text" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0;">
+                    </div>
+                </div>
+            </div>
+            <div style="display:none" class="ttt">
+                {volist name="$info.st_pic" id="vo"}
+                <input type="text" name="st_pic[]" class="ppp" value="{$vo}">
+                {/volist}
+                <input type="text" name="st_logo" value="{$info.st_logo}">
+                <input type="text" name="id" value="{$info.id}">
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">手机号码：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="st_tel" value="{$info.st_tel}" style="width:35%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登录密码：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="不修改请留空" name="st_pwd" style="width:30%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>安全密码：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="不修改请留空" name="st_safe_pwd" style="width:30%">
+                </div>
+            </div>
+           
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">选择标签：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <dl class="permission-list">
+                       
+                        <dd>
+                            <dl class="cl permission-list2">
+                                <dd>
+                                    {volist name="label" id="vo"}
+                                    <label class="">
+                                        <input type="checkbox" value="{$vo}" name="st_label[]" id="user-Character-1-0-0" class="authrule" >{$vo}
+                                    </label>
+                                    {/volist}
+                                </dd>
+                            </dl>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <button onclick="return xiugai();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="big">
+    </div>
+    {include file="public/_footer" /}
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript">
+
+    $(function(){
+        //选中验证节点
+        var aa = "{$info.st_label}";
+        var rules=aa.split(",");
+        $('.authrule').each(function(){
+            if( $.inArray(this.value,rules)>-1){
+                $(this).attr('checked',true);
+            }
+        });
+    })
+
+    function xiugai() {
+        $.post('{:url("edit")}', $('#form-article-add').serialize()).success(function(data) {
+            layer.msg(data.msg);
+            if (data.code) {
+                setTimeout(function() {
+                    location.href = '';
+                }, 1000);
+            }
+        });
+        return false;
+    }
+    function eee(dada) {
+        var data = new FormData();
+        data.append('file', dada[0].files[0]);
+        var index = layer.load(1, { shade: false }); //0代表加载的风格，支持0-2
+        $.ajax({
+            url: '{:url("upload")}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                layer.msg(data.msg);
+                if (data.code) {
+                    $('.logo').attr('src',data.data);
+                    $('input[name="st_logo"]').val(data.data);
+                }
+                layer.close(index);
+            },
+            error: function() {
+                layer.close(index);
+                layer.msg('上传出错');
+            }
+        });
+    }
+    function bbb(dada) {
+        var data = new FormData();
+        data.append('file', dada[0].files[0]);
+        var index = layer.load(1, { shade: false }); //0代表加载的风格，支持0-2
+        $.ajax({
+            url: '{:url("upload")}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                layer.msg(data.msg);
+                if (data.code) {
+                    var html1 = '<li class="maomao" style="position: relative; list-style: none;float: left"><i  onclick="remove_li(this)" class="Hui-iconfont ioc_x" style="position: absolute;right: 0; top: 0;">&#xe6e2;</i><img src="' + data.data + '"  onclick="ccc(this)" alt=""></li>';
+                    var html2 = '<input name="st_pic[]" class="ppp" hidden="hidden" value="'+data.data+'">';
+                    $('.pic').append(html1);
+                    $('.ttt').append(html2);
+                }
+                layer.close(index);
+            },
+            error: function() {
+                layer.close(index);
+                layer.msg('上传出错');
+            }
+        });
+    }
+    function ccc(data){
+        var path = $(data).attr('src');
+        var html = '<img src="' + path + '" onclick="ddd()" alt="">';
+        $('.big').html(html);
+        $('.big').show();
+    }
+    function ddd(){
+        $('.big').hide();
+    }
+    ddd();
+    //删除主图
+    function remove_li(data){
+
+        var index = $('.maomao i').index(data);
+        $(data).parent().remove();
+        // var path = $(data).next('img').attr('src');
+        // var val = $('.ppp').eq(index).val();
+        $('.ppp').eq(index).remove();
+    }
+    </script>
+</body>+
+
+</html>

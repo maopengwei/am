@@ -1,0 +1,173 @@
+{include file="public/_meta" /}
+<title></title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>交易管理 <span class="c-gray en">&gt;</span> 交易中 
+	<a class="btn btn-success radius r" style="margin-left:2px" href="javascript:location.replace(location.href);" title="刷新" >
+		<i class="Hui-iconfont">&#xe68f;</i>
+	</a>
+	<a class="btn btn-success radius r" style="margin-left:2px" href="javascript:void(0);" onclick="downdo()" title="下载" >
+        <i class="Hui-iconfont">&#xe640;</i>
+    </a>
+</nav>
+<div class="page-container">
+	<div class="text-c">
+	<form class="Huiform" method="get" action="">
+		状态：
+		<span class="select-box inline">
+			<select name="status" class="select">
+				<option value="">全部</option>
+				<option value="0">待付款</option>
+				<option value="1">待收款</option>
+			</select>
+		</span>
+		日期范围：
+		<input type="text" class="input-text Wdate" name="start" id="countTimestart" onfocus="selecttime(1)" value="{$Request.get.start|default=''}" size="17" class="date" readonly style="width:140px;"> 
+		- 
+		<input type="text" class="input-text Wdate" name="end" id="countTimeend" onfocus="selecttime(2)" value="{$Request.get.end|default=''}" size="17"  class="date" readonly style="width:140px;">
+		
+		类型：
+		<span class="select-box inline">
+			<select name="type" class="select">
+				<option value="">全部</option>
+				<option value="0">买家</option>
+				<option value="1">卖家</option>
+			</select>
+		</span>
+		<input type="text" class="input-text" style="width:200px" placeholder="用户编号,手机号" name="keywords" value="{$Request.get.keywords|default=''}">
+		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</form>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">总数目：<strong>{$num}</strong></span> 
+		<span class="r">共有数据：<strong>{$list->total()}</strong> 条</span> 
+	</div>
+	<div class="mt-20">
+	<table class="table table-border  table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th>id</th>
+				<th>卖家账户</th>
+				<th>买家账户</th>
+				<th>数目</th>
+				<th>价格</th>
+				<th>实到</th>
+				<th>状态</th>
+				<th>添加时间</th>
+				<th>操&nbsp;&nbsp;&nbsp;作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="list" id="vo" key="k"}
+				<tr class="text-c">
+					<td>{$vo.id}</td>	
+					<td>{$vo.seller.us_account} | {$vo.seller.us_tel}</td>
+					<td>{$vo.buyer.us_account} | {$vo.buyer.us_tel}</td>
+					<td>{$vo.deal_num}</td>
+					<td>{$vo.deal_price}</td>
+					<td>{$vo.deal_yuan}</td>
+					<td>{$vo.status_text}</td>
+					<td>{$vo.deal_add_time}</td>
+					<td class="td-manage">
+						<a onclick="create({$vo.id},'xq','详情')" style="text-decoration:none"><i class="Hui-iconfont" title="详情">&#xe685;详情</i></a>
+						<a onclick="del({$vo.id},'Admin')" style="text-decoration:none"><i class="Hui-iconfont" title="删除">&#xe60b;删除</i></a>
+					</td>
+				</tr>
+			{/volist}
+		</tbody>
+	</table>
+		<div class="pages" style="margin:20px;float: right; ">{$list|raw}</div>
+	</div>
+</div>
+{include file="public/_footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript">
+$('select[name="status"]').val({$Request.get.status});
+$('select[name="type"]').val({$Request.get.type});
+
+
+function create(id,url,key){
+	var url = "{:url('"+url+"')}?id="+id;
+	creatIframe(url,key);
+}
+
+function selecttime(flag){
+    if(flag==1){
+        var endTime = $("#countTimeend").val();
+        if(endTime != ""){
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:endTime})}else{
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})}
+    }else{
+        var startTime = $("#countTimestart").val();
+        if(startTime != ""){
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:startTime})}else{
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})}
+    }
+ }
+function downdo(){
+	var url = window.location.href;
+	$.ajax({
+		type:'get',
+		url:url,
+		data:{a:1},
+		success:function(data){
+			window.location.href = data;
+		}
+	})
+}
+
+function optOrder(obj,id,type){
+	// 发货
+	if(type){
+		$.post("{:url('Order/optOrder')}",{id:id,type:type}).success(function(data){
+			layer.msg(data.msg);
+			if(data.code){
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">发货中</span>');
+				$(obj).remove();
+			}
+		});
+	}
+}
+function quxiao(data){
+	layer.confirm('确定要取消该订单么？', {
+      btn: ['确定', '取消'] //可以无限个按钮
+    }, function(index, layero){
+        $.ajax({
+            type:"post",
+            url:"{:url('quxiao')}",
+            data:{id:data},
+            success:function(data){
+                console.log(data);
+                layer.msg(data.msg);
+                if(data.code){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000);
+                }
+            }
+        })
+    });
+}
+function tongguo(data){
+	layer.confirm('确定要审核通过么？', {
+      btn: ['确定', '取消'] //可以无限个按钮
+    }, function(index, layero){
+        $.ajax({
+            type:"post",
+            url:"{:url('pass')}",
+            data:{id:data},
+            success:function(data){
+                layer.msg(data.msg);
+                if(data.code){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000);
+                }
+            }
+        })
+    });
+}
+</script> 
+</body>
+</html>

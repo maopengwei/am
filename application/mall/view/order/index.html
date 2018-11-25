@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>我的订单</title>
+        <link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+        <link rel="stylesheet" type="text/css" href="/static/mall/css/g_wodedingdan.css"/>
+        <link rel="stylesheet" href="/static/mine/dist/dropload.css" />
+        <script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+    </head>
+    <body>
+        <div class="header">
+            <a href="{:url('user/index')}" class="left">
+                <img src="/static/mall/img/return.png" />
+            </a>
+            <span class="center">我的订单</span>
+            <a href="javascript:void(0);" class="right"></a>
+        </div>
+        <div class="header_wrap">
+            <p class="quanbu xuanzhong"><a href="{:url('index')}?ji=4">全部</a></p>
+            <p class="wancheng"><a href="{:url('index')}?ji=3">已完成</a></p>
+            <p class="fahuo"><a href="{:url('index')}?ji=1">待发货</a></p>
+            <p class="shouhuo"><a href="{:url('index')}?ji=2">待收货</a></p>
+            <p class="quxiao"><a href="{:url('index')}?ji=0">已取消</a></p>
+        </div>
+        <div>
+            <ul class="shangpin">
+                <div class="inner">
+                    <ul class="spxq">
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </body>
+    <script src="/static/mall/js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/mine/dist/dropload.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var us_is_mer = {$mine.us_is_mer};
+        $('.header_wrap p').bind("click",function(){
+           $(this).addClass("xuanzhong").siblings().removeClass("xuanzhong");
+        });
+        $(function(){
+            var shoose = {$ji};
+            if(shoose==4){
+                $('.quanbu').addClass("xuanzhong").siblings().removeClass("xuanzhong");
+            }else if(shoose==0){
+                $('.quxiao').addClass("xuanzhong").siblings().removeClass("xuanzhong");
+            }else if(shoose==1){
+                $('.fahuo').addClass("xuanzhong").siblings().removeClass("xuanzhong");
+            }else if(shoose==2){
+                $('.shouhuo').addClass("xuanzhong").siblings().removeClass("xuanzhong");
+            }else if(shoose==3){
+                $('.wancheng').addClass("xuanzhong").siblings().removeClass("xuanzhong");
+            }
+            // 上拉加载更多 下拉刷新
+            // 页数
+            var page = 0;
+          
+            $('.inner').dropload({
+                scrollArea : window,
+                domUp : {
+                    domClass   : 'dropload-up',
+                    domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+                    domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>'
+                },
+                domDown : {
+                    domClass   : 'dropload-down',
+                    domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+                    domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>',
+                    domNoData  : '<div class="dropload-noData">已到底部</div>'
+                },
+                loadUpFn : function(me){
+                    page=1;
+                    // 拼接HTML
+                    var result = '';
+                    $.ajax({
+                        type: 'post',
+                        url: '{:url("index")}',
+                        data:{page:page,status:shoose},
+                        dataType: 'json',
+                        success: function(data){
+
+                            if(data.data.current_page>=data.data.last_page){
+                                me.lock();
+                                me.noData();
+                            }
+                            setTimeout(function(){
+                                $.each(data.data.data,
+                                    function(i,val){
+
+                                        if(us_is_mer!=0 && val.prod_zone==1){
+                                            var price = val.prod_price;
+                                        }else{
+                                            var price = val.prod_price_yuan;
+                                        }
+                                        var pp = "xinyong";
+                                        // if(val.prod_zone==3){
+                                        //     pp = "xianjin";
+                                        // }
+
+                                        var status = '未付款';
+                                        var caozuo = "<span><a onclick=\"fukuan('"+val.id+"')\">付款</a></span>";
+
+                                        if(val.detail_status==1){
+                                            status = '待发货'; 
+                                            caozuo = "<span><a onclick=\"quxiao('"+val.id+"')\">取消订单</a></span><span><a onclick=\"fahuo('"+val.id+"')\">提醒发货</a></span>";
+                                        }else if(val.detail_status==2){
+                                            status = '待收货';
+                                            caozuo = "<span><a onclick=\"shouhuo('"+val.id+"')\">确定收货</a></span>";
+                                        }else if(val.detail_status==3){
+                                            status = '已完成';
+                                            caozuo = '';
+                                        }else if(val.detail_status==0){
+                                            status = '已取消';
+                                            caozuo = '';
+                                        }
+
+                                        result += "<li><div class=\"shangpin_text\"><p>"+status+"</p></div><div class=\"shangpinxq\"><div style=\"width: 30%; text-align: center;\"><img src=\""+val.pic+"\" style=\"height:1.6rem\" /></div><div class=\"checkbox_text\"><p class=\"xianshi\">"+val.prod_name+"</p><div class=\"wddd_num\"><p class=\"normal_credit\"><img src=\"/static/mall/img/"+pp+".png\" alt=\"\" /><span class=\"cash\" >"+price+"</span></p><p>×"+val.prod_num+"</p></div></div></div><div class=\"li_bottom\">"+caozuo+"</div><a href=\"detail?id="+val.id+"\"></a></li>";
+                                    }
+                                );
+                                $('.spxq').append(result);
+                                me.resetload();
+                            },500);
+                        },
+                        error: function(xhr, type){
+                            // alert('Ajax error!');
+                            me.resetload();
+                        }
+                    });
+                    
+                },
+                loadDownFn : function(me){
+                    page++;
+                    // 拼接HTML
+                    var result = '';
+                     $.ajax({
+                        type: 'post',
+                        url: '{:url("index")}',
+                        data:{page:page,status:shoose},
+                        dataType: 'json',
+                        success: function(data){
+
+                            if(data.data.current_page>=data.data.last_page){
+                                me.lock();
+                                me.noData();
+                            }
+                            setTimeout(function(){
+                                //<span><a onclick="quxiao(' . $v['id'] . ')">取消订单</a></span><span><a onclick="fukuan(' . $fukuan . ')">付款</a></span>
+                               
+
+                                $.each(data.data.data,
+                                    function(i,val){
+                                        if(us_is_mer==1 && val.prod_zone==1){
+                                            var price = val.prod_price_yuan;
+                                        }else{
+                                            var price = val.prod_price;
+                                        }
+                                        var pp = "xinyong";
+                                        // if(val.prod_zone==3){
+                                        //     pp = "xianjin";
+                                        // }
+
+                                        var status = '未付款';
+                                        var caozuo = "<span><a onclick=\"fukuan('"+val.id+"')\">付款</a></span>";
+
+                                        if(val.detail_status==1){
+                                            status = '待发货'; 
+                                            caozuo = "<span><a onclick=\"quxiao('"+val.id+"')\">取消订单</a></span><span><a onclick=\"fahuo('"+val.id+"')\">提醒发货</a></span>";
+                                        }else if(val.detail_status==2){
+                                            status = '待收货';
+                                            caozuo = "<span><a onclick=\"shouhuo('"+val.id+"')\">确定收货</a></span>";
+                                        }else if(val.detail_status==3){
+                                            status = '已完成';
+                                            caozuo = '';
+                                        }else if(val.detail_status==0){
+                                            status = '已取消';
+                                            caozuo = '';
+                                        }
+
+                                        result += "<li><div class=\"shangpin_text\"><p>"+status+"</p></div><div class=\"shangpinxq\"><div style=\"width: 30%; text-align: center;\"><img src=\""+val.pic+"\" style=\"height:1.6rem\" /></div><div class=\"checkbox_text\"><p class=\"xianshi\">"+val.prod_name+"</p><div class=\"wddd_num\"><p class=\"normal_credit\"><img src=\"/static/mall/img/"+pp+".png\" alt=\"\" /><span class=\"cash\" >"+price+"</span></p><p>×"+val.prod_num+"</p></div></div></div><div class=\"li_bottom\">"+caozuo+"</div><a href=\"detail?id="+val.id+"\"></a></li>";
+                                    }
+                                );
+                                $('.spxq').append(result);
+                                me.resetload();
+                            },500);
+                        },
+                        error: function(xhr, type){
+                            // alert('Ajax error!');
+                            me.resetload();
+                        }
+                    });
+                },
+                threshold : 50
+            });
+        })
+        // 取消订单
+        function quxiao(data){
+            layer.confirm('确定要取消该订单么？', {
+              btn: ['确定', '取消'] //可以无限个按钮
+            }, function(index, layero){
+                $.ajax({
+                    type:"post",
+                    url:"{:url('quxiao')}",
+                    data:{id:data},
+                    success:function(data){
+                        console.log(data);
+                        layer.msg(data.msg);
+                        if(data.code){
+                            setTimeout(function(){
+                                location.href = data.url;
+                            },1000);
+                        }
+                    }
+                })
+            });
+        }
+        // 付款
+        function fukuan(data){
+            layer.confirm('确定要付款么？', {
+              btn: ['确定', '取消'] //可以无限个按钮
+            }, function(index, layero){
+                    layer.msg('正在跳转..');
+                    setTimeout(function(){
+                        location.href = "{:url('pay/index')}?type=2&id="+data;
+                    },1000);
+                }
+            );
+        }
+        function fahuo(){
+            layer.msg('提醒发货成功');
+        }
+        function shouhuo(data){
+            layer.confirm('确定要收货么？', {
+              btn: ['确定', '取消'] //可以无限个按钮
+            }, function(index, layero){
+                $.ajax({
+                    type:"post",
+                    url:"{:url('receive')}",
+                    data:{id:data},
+                    success:function(data){
+                        console.log(data);
+                        layer.msg(data.msg);
+                        if(data.code){
+                            setTimeout(function(){
+                                location.href = data.url;
+                            },1000);
+                        }
+                    }
+                })
+            });
+        }
+    </script>
+</html>

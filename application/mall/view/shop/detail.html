@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>商品详情</title>
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/style.css" />
+      <link rel="stylesheet" type="text/css" href="/static/mall/css/goods_detail.css" />
+   <script src="/static/mall/js/tween.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <style type="text/css">
+    .collect {
+        display: none;
+    }
+    .goods_imgs img{
+        width: 100%;
+    }
+    .scroll{max-width:560px;height:7rem;position: relative;} 
+    .scroll_box{overflow:hidden;visibility:hidden;position:relative;height: 7rem;}
+    .scroll_wrap{overflow:hidden; position:relative;}
+    .scroll_wrap li{position:relative;display:block;width:100%;float:left;}
+    .scroll_wrap li a{display:block;margin:0 auto;position:relative;}
+    .scroll_position{position:absolute;left:45%;z-index:400px;bottom:5px;}
+    .scroll_position li{display:inline-block;width:10px;height:10px;border-radius:10px;background:#ccc;}
+    .scroll_position li a{font-size:0;}
+    .scroll_position li.on{background-color:#ffd800;}
+    .scroll_position_bg{position:absolute;bottom:5px;left:42%;padding:0 10px;z-index:380px;height:26px;border-radius:26px;}
+    .scroll_wrap li img{
+        width: 7.5rem;
+        height: 7rem;
+    }
+   
+    </style>
+</head>
+
+<body>
+    <div style="margin-bottom: 1rem;">
+        <!-- <div class="wrap_img" style="position: relative;"> -->
+        <div class="wrap_img" >
+           <div class="scroll relative">
+                    <div class="scroll_box" id="scroll_img">
+                        <ul class="scroll_wrap" id="contentDiv">
+                            {volist name="info['prod_pic']" id="v"}
+                            <li><a><img class="img lb_img" src="{$v}" /> /></a></li>
+                            {/volist}
+                        </ul>
+                    </div>
+                    <span class="scroll_position_bg opacity6"></span>
+                    <ul class="scroll_position" id='scroll_position'>
+                        {volist name="info['prod_pic']" id="v"}
+                        <li><a></a></li>
+                        {/volist}
+                    </ul>
+                </div>
+          <!--   <p class="promotion" style="position:absolute;width:80%; height:0.6rem;left: 0.4rem;bottom:0;line-height: 0.6rem;font-size: 0.3rem;">进货价：100</p> -->
+            <div class="wrap_top0">
+                <a href="{:url('index')}"><img src="/static/mall/img/goods_return.png" /></a>
+                <a href="{:url('cart/index')}">
+						<img src="/static/mall/img/goods_cart.png" />
+					</a>
+            </div>
+        </div>
+        <div class="spxiangqing">
+            <p class="spname">{$info['prod_name']}</p>
+            <p class="price">
+                <!--三种购买价格形式-->
+                <!--正常价格-->
+                   
+
+                    <span class="credit_price">
+                         <img src="/static/mall/img/xinyong.png" alt="" />
+                        <span>{$info['prod_price']}</span>
+                    </span>
+                    <span>活动中...</span>
+                   
+                
+                <!-- <span>
+						可得益联DokenDoken100
+					</span> -->
+            </p>
+            <!--原价-->
+           <!--  <p class="original_price">
+                <span>原价</span>
+                <span>{$info['prod_price_yuan']}</span>
+            </p> -->
+            <!--会员价-->
+            <!-- <p class="vip_price">
+                <span>会员价：</span>
+                <span>¥369</span>
+            </p> -->
+            <!--安全保障-->
+            <p class="safety">
+                <span><img src="/static/mall/img/right.png" alt="" />正品保证</span>
+                <span><img src="/static/mall/img/right.png" alt="" />赠送费险</span>
+                <span><img src="/static/mall/img/right.png" alt="" />极速退款</span>
+                <span><img src="/static/mall/img/right.png" alt="" />七天退换</span>
+            </p>
+        </div>
+        <div class="xuanze cd-popup-trigger2">
+            选择产品参数
+        </div>
+        <!--产品详情-->
+        <p class="goods_xq">
+            <span></span>
+            <span>产品详情</span>
+            <span></span>
+        </p>
+        <ul class="goods_imgs">
+            {$info.prod_describe|raw}
+        </ul>
+        <div class="goumai">
+            <p>
+                <img src="/static/mall/img/wei_collect.png" class="wei_collect" />
+                <img src="/static/mall/img/collect.png" class="collect" />
+                <span>收藏</span>            
+            </p>
+            <a href="javascript:void(0)" class="imggn" onclick="cart()">
+                <p>加入购物车</p>
+            </a>
+            <a href="javascript:void(0)" onclick="shop()">
+                <p>立即购买</p>
+            </a>
+        </div>
+    </div>
+    <!--弹框-->
+    <div class="cd-popup2">
+        <div class="cd-popup-container2">
+            <div class="wrap">
+                <div class="wrap1">
+                    <div class="left_top">
+                        <img src="{$info['prod_pic'][0]}" /></div>
+                    <div class="right_top">
+                        <!--三种购买价格形式-->
+                        <!--正常价格-->
+                        <p class="normal_credit"  style="margin-top: 0.1rem;">
+    					
+                            <img src="/static/mall/img/xinyong.png" alt="" />
+                            <span class="cash">0</span>
+                           
+					    </p>
+                        <p id="shu">库存20件</p>
+                        <p>已选：
+                        	{volist name="list" id="vo"}
+                        	<span class="attribute yansetext{$vo.i}"></span>
+                        	 {/volist}
+                        </p>
+                        <!-- <p><span>活动中...</span><span class="yilian">100</span></p> -->
+                        <!-- <p><span>可得Doken</span><span>{$info['prod_price']}</span></p> -->
+                        
+                    </div>
+                </div>
+                <img src="/static/mall/img/cha.png" class="cd-popup-close" />
+                {volist name="list" id="vo"}
+	                <div class="canshu0">
+	                    <p>{$vo.key}</p>
+	                    <ul id="yanseul{$vo.i}" class="aa">
+	                        {volist name="$vo.son" id="v"}
+	                        <li onclick="tianjia(this,{$vo.i})">{$v}</li>
+	                        {/volist}
+	                    </ul>
+	                </div>
+               {/volist}
+                <div class="goumai_num">
+                    <span>购买数量</span>
+                    <form action="" method="post">
+                        <input type="text" value="-" style="width:0.6rem;height: 0.5rem;" id="jian" onfocus="this.blur()" />
+                        <input type="text" value="0" style="width:1rem;height: 0.5rem;" id="val" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+                        <input type="text" value="+" style="width:0.6rem;height:0.5rem;" id="jia" onfocus="this.blur()" />
+                    </form>
+                </div>
+                <div class="wrap_wc">
+                    完成
+                </div>
+                <!--点击完成进入的界面-->
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/static/mall/js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mall/js/swiper_lb.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+ $(".scroll_position li").eq(0).addClass("on");//第一个小点变亮
+/*弹框JS内容*/
+var  aa  //从哪个地方打开弹窗
+var  prod_id={$info['id']};
+var  prod_zone = {$info['prod_zone']};
+var  us_is_mer = {$us_is_mer};
+if(us_is_mer && prod_zone==1){
+    var price = {$info['prod_price_yuan']};
+}else{
+    var price = {$info['prod_price']};
+}
+jQuery(document).ready(function($) {
+    var col = {$collect};
+   
+    if(col){
+        $(".wei_collect").hide();
+        $(".collect").show();
+    }else{
+        $(".collect").hide();
+        $(".wei_collect").show(); 
+    }
+    //打开窗口
+    $('.cd-popup-trigger2').on('click', function(event) {
+        event.preventDefault();
+        aa = 1;
+        $('.cd-popup2').addClass('is-visible2');
+    });
+    //关闭窗口
+    $('.cd-popup-close').on('click', function(event) {
+       close(); 
+    });
+    $('.wrap_wc').on('click', function(event) {
+        close();
+        var cash = $('.cash').html();
+        if(aa == 2 && cash!=0 ){
+            cart_add();
+        }else if(aa == 3 && cash!=0){
+            buy();
+        }
+    });
+    //ESC关闭
+    $(document).keyup(function(event) {
+        close();
+    });
+    function close(){
+        event.preventDefault();
+        $('.cd-popup2').removeClass('is-visible2');
+    }
+
+
+    //-------------------加减数量--------------------------------------
+    $('#jia').click(function() {
+        var jia = parseInt($(this).prev().val());
+        jia++;
+        //				if(jia <= str){
+        $(this).prev().val(jia);
+        var cash = jia*price;
+        // var intergity = jia*{$info['prod_price']|default=0};
+        // var yilian = jia*{$info['prod_price']};
+        $('.cash').html(cash);
+        // $('.intergity').html(intergity);
+        // $('.yilian').html(yilian);
+    });
+    $('#jian').click(function() {
+        var jian = parseInt($(this).next().val());
+        jian--;
+        if (jian >= 0) {
+            $(this).next().val(jian);
+            var cash = jian*price;
+            // var intergity = jian*{$info['prod_price']|default=0};
+            // var yilian = jian*{$info['prod_price']};
+            $('.cash').html(cash);
+            // $('.intergity').html(intergity);
+            // $('.yilian').html(yilian);
+        }
+    });
+    $('#val').blur(function() {
+        var val = $('#val').val();
+     	var cash = val*price;
+        // var intergity = val*{$info['prod_price']|default=0};
+        // var yilian = val*{$info['prod_price']};
+        $('.cash').html(cash);
+        // $('.intergity').html(intergity);
+        // $('.yilian').html(yilian);
+    })
+});
+
+
+//-------------------添加属性--------------------------------------
+function tianjia(data,i) { 
+    $(data).addClass("xuanzhong").siblings().removeClass("xuanzhong");        
+    var colortext = $(data).text();
+    $(".yansetext"+i).text(colortext);
+}
+//-------------------加入购物车--------------------------------------
+function cart(){
+	var cash = $('.cash').html();
+    var intergity = $('.intergity').html();
+    if(cash==0){
+        event.preventDefault();
+        aa = 2;
+        $('.cd-popup2').addClass('is-visible2');
+        return 
+	}
+	cart_add();
+}
+function cart_add(){
+    var attr="";
+    $('.aa .xuanzhong').each(
+        function(){
+            attr +=$(this).html()+",";
+        }
+    )
+   
+    var num = $('#val').val();
+    $.ajax({
+        type:"post",
+        url:"{:url('cart/cart_add')}",
+        data:{prod_id:prod_id,num:num,attr:attr},
+        success:function(data){
+            layer.msg(data.msg);
+            if(data.code){
+                setTimeout(function(){
+                    location.href = '/mall/cart/index';
+                },1000)
+            }else{
+                if(data.url){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000)
+                }
+            }
+        }
+    })
+}
+//直接购买-----------------------------------------------------------------
+function shop(){
+    var cash = $('.cash').html();
+    console.log(cash);
+    if(cash==0){
+        event.preventDefault();
+        aa = 3;
+        $('.cd-popup2').addClass('is-visible2');
+        return
+    }
+    buy();
+}
+function buy(){
+    var attr="";
+    var num = $('#val').val();
+    $('.aa .xuanzhong').each(
+        function(){
+            attr+=$(this).html()+",";
+        }
+    )
+   
+    layer.msg('正在购买..');
+    setTimeout(function(){
+        location.href="{:url('pay/sub')}?prod_id="+prod_id+"&num="+num+"&attr="+attr;
+    },1000)
+}
+
+
+
+/*---收藏*/
+$(".wei_collect").click(function() {
+    $.ajax({
+        type:"post",
+        data:{prod_id:prod_id,type:1},
+        url:"{:url('user/coll')}",
+        success:function(data){
+           layer.msg(data.msg);
+           $(".wei_collect").hide();
+            $(".collect").show();
+        }
+    })
+});
+$(".collect").click(function() {
+    
+    $.ajax({
+        type:"post",
+        data:{prod_id:prod_id,type:0},
+        url:"{:url('user/coll')}",
+        success:function(data){
+            layer.msg(data.msg);
+            $(".collect").hide();
+            $(".wei_collect").show();
+        }
+    })
+});
+
+function scroll(scrollTo, time) {
+    var scrollFrom = parseInt(document.body.scrollTop),
+        i = 0,
+        runEvery = 5; // run every 5ms
+
+    scrollTo = parseInt(scrollTo);
+    time /= runEvery;
+
+    var interval = setInterval(function () {
+        i++;
+
+        document.body.scrollTop = (scrollTo - scrollFrom) / time * i + scrollFrom;
+
+        if (i >= time) {
+            clearInterval(interval);
+        }
+    }, runEvery);
+}
+</script>
+
+</html>

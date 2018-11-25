@@ -1,0 +1,221 @@
+{include file="public/_meta" /}
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>交易管理 <span class="c-gray en">&gt;</span> 订单详情 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form-article-add">
+        {if condition="$info.seller"}
+        <h3>卖家信息</h3>
+             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">卖家：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{$info.seller.us_account}" style="width:20%" disabled>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">头像：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                            <img src="{$info.seller.us_head_pic}" class="logo" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">真实姓名：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" name="us_real_name" value="{$info.seller.us_real_name}" class="input-text" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">手机号码：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{$info.seller.us_tel}" name="us_tel" style="width:20%">
+                </div>`
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">支付宝：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_alipay" value="{$info.seller.us_alipay}" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">微信：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_wechat" value="{$info.seller.us_wechat}" style="width:20%">
+                </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">银行名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_bank_name" value="{$info.seller.us_bank_name}" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">银行账户：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_bank_number" value="{$info.seller.us_bank_number}" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">银行账户：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_bank_person" value="{$info.seller.us_bank_person}" style="width:20%">
+                </div>
+            </div>
+        {/if}
+         {if condition="$info.buyer"}
+        <h3>买家信息</h3>
+             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">买家：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{$info.buyer.us_account}" style="width:20%" disabled>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">头像：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                            <img src="{$info.buyer.us_head_pic}" class="logo" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">真实姓名：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" name="us_real_name" value="{$info.buyer.us_real_name}" class="input-text" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">手机号码：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{$info.buyer.us_tel}" name="us_tel" style="width:20%">
+                </div>`
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">支付宝：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_alipay" value="{$info.buyer.us_alipay}" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">微信：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_wechat" value="{$info.buyer.us_wechat}" style="width:20%">
+                </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">银行名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_bank_name" value="{$info.buyer.us_bank_name}" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">银行账户：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_bank_number" value="{$info.buyer.us_bank_number}" style="width:20%">
+                </div>
+            </div>
+             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">银行账户：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="us_bank_person" value="{$info.buyer.us_bank_person}" style="width:20%">
+                </div>
+            </div>
+        {/if}
+        <h3>订单信息</h3>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">订单数目：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$info.deal_num}" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">价格：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$info.deal_price}" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">实际金额：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="us_bank" value="{$info.deal_yuan}" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">添加时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="us_bank" value="{$info.deal_add_time}" style="width:30%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">付款时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="us_bank" value="{$info.deal_pay_time}" style="width:30%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">打款凭证：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                        <img src="{$info.deal_pic}" class="logo" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">收款时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="us_bank" value="{$info.deal_finish_time}" style="width:30%">
+            </div>
+        </div>
+
+	</form>
+</div>
+
+{include file="public/_footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+
+<script type="text/javascript">
+function savePro(){
+    $.post('{:url("edit")}',$('#form-article-add').serialize()).success(function(data){
+    	layer.msg(data.msg);
+    	if(data.code){
+    		setTimeout(function(){
+    			location.href = '';
+    		},500);
+    	}
+    });
+    return false;
+}
+function eee(dada) {
+        var data = new FormData();
+        data.append('file', dada[0].files[0]);
+        var index = layer.load(1, { shade: false }); //0代表加载的风格，支持0-2
+        $.ajax({
+            url: '{:url("store/upload")}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                layer.msg(data.msg);
+                if (data.code) {
+                    $('.logo').attr('src',data.data);
+                    $('input[name="us_head_pic"]').val(data.data);
+                }
+                layer.close(index);
+            },
+            error: function() {
+                layer.close(index);
+                layer.msg('上传出错');
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)login.html -->
+<html><script>
+</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>登录</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link href="/static/mobile/css/layui.css" rel="stylesheet">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script><style type="text/css" abt="234"></style>
+<link href="/static/mobile/css/style(1).css" rel="stylesheet">
+<script type="text/javascript" src="/static/mobile/js/tn_code.js"></script>
+<!-- <script src="/y8908cs/public/static/module/admin/ext/background/login_qt.js"></script> -->
+<link id="layuicss-laydate" rel="stylesheet" href="/static/mobile/css/laydate.css" media="all">
+<link id="layuicss-layer" rel="stylesheet" href="/static/mobile/css/layer.css" media="all">
+<link id="layuicss-skincodecss" rel="stylesheet" href="/static/mobile/css/code.css" media="all">
+
+
+<style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+<body>
+  <style type="text/css">
+      body{
+        background-color: #000;
+        overflow: hidden;
+      }
+
+
+      .content_div {
+          width: 100%;
+          max-width: 100%;
+          background:none;
+          left: 50%;
+          margin: auto auto auto -50%;
+          position: absolute;
+          text-align: center;
+          top: 0;
+      }
+      .denglu {
+          max-width:640px;
+          height: 100vh;
+          padding: 60px 0 0;
+          box-sizing: border-box;
+          background: none;
+          background-size: 100% 100%;
+          margin: auto;
+      }
+      .tncode {
+        color: #c9a887;
+        border: 1px solid #c9a887;
+        width: 100% !important;
+      }
+
+      .denglu .denglu_kuang .kuang_one i {
+        float: left;
+        font-size: 20px;
+        line-height: 20px;
+         color: #c9a887; 
+        width: 30px;
+        border-right: 1px solid #c9a887;
+        display: block;
+    }
+
+      .languages a {
+          color: #c9a887 !important;
+      }
+      .tncodes{
+        color: #c9a887 !important;
+      }
+      .cmxform{
+          margin-top: 10px; 
+      }
+      .rememberleft{
+        
+          float: left;
+          color: #c9a887;
+          display: block;
+          font-size: 14px;
+      }
+      .rememberright {
+          float: right;
+          display: block;
+          color: #c9a887;
+          font-size: 14px;
+      }
+      .denglu .logo {
+          width: 125px;
+          height: 125px;
+          margin: 0 auto;
+      }
+      .denglu .denglu_kuang {
+        width: 85%;
+        margin: 0 auto;
+        border-radius: 0px;
+        background: rgba(255,255,255,0.1);
+        margin-top: 0px; 
+        padding: 15px;
+        box-sizing: border-box;
+      }
+      .languages{
+        margin-top: 20px;
+        text-align: -webkit-right;
+        margin-right: 10%;
+        color: #fff;
+        font-size: 16px;
+      }
+      .languages a{
+        color: #fff;
+      }
+      .layui-layer-nobg{
+        top:35px !important;
+      }
+      .hides{
+        display: none;
+      }
+      .fatherhide canvas{
+        display: none;
+      }
+      .layui-layer-nobg canvas{
+        display: block !important;
+      }
+      .maomao{
+
+      }
+  </style>
+<!-- <canvas class='canvasbj'></canvas> -->
+<div class="content_div">
+  <div class="denglu">
+      <div class="logo">
+          <img src="/static/mobile/img/logo.png">
+        </div>
+        <div class="languages">
+            <div> <a lang="cn" class="btn">中文&nbsp;&nbsp;/</a>&nbsp;&nbsp;<a lang="en" class="btn">英文</a></div>
+        </div>
+        <form action="index/login/logon.html" method="post" id="admin_login" class="cmxform form-horizontal">
+          <div class="denglu_kuang">
+            <div class="kuang_one">
+                <i class="iconfont icon-zhanghao"></i>
+                  <input type="text" class="tncodes username" value="" name="username" placeholder="请输入用户名">
+              </div>
+              <div class="kuang_one">
+                <i class="iconfont icon-mimasuo"></i>
+                  <input type="password" class="tncodes password" value="" name="userpassword" placeholder="请输入密码">
+              </div>
+               <div class="kuang_one" style="position: relative;">
+                <i class="iconfont icon-mimasuo"></i>
+                  <input type="number" class="tncodes password" value="" name="code" placeholder="请输入验证码">
+                  <img class="reloadverify" src="{:captcha_src()}" style="width:120px;position: absolute;top:5px;right: 8px;" alt="captcha" />
+              </div>
+              <!--  <div class="tncode" style="text-align: center;margin: 20px auto;">点击按钮进行验证</div> -->
+               <!-- <img id="verifyImg" src="/y8908cs/public/captcha.html" width="78" onClick="fleshVerify()" border="0" alt="点击刷新验证码" align="absmiddle"  style="cursor: pointer;position: absolute;top: 43%;left: 67%;" id="vcodeImg" /> -->
+              <a onclick="xzapp()" class="rememberleft"><!-- 下载app --></a>
+               <a href="fg" class="rememberright">忘记密码?</a>
+              <a class="remember" style="clear: both;">  </a>
+              <div class="denglu_button">
+                <a class="button_two ajax-post-login">登录</a>
+                <a href="reg.html" class="button_two">注册</a>
+              </div>
+          </div>
+        </form>
+    </div>
+    <div class="fatherhide">
+      <div id="qrcodeCanvas" class="hides"><canvas width="200" height="200"></canvas></div>
+    </div>
+    
+     
+</div>
+
+<script type="text/javascript" src="/static/mobile/js/jquery.qrcode.js"></script>
+<script type="text/javascript" src="/static/mobile/js/qrcode.js"></script> 
+<script type="text/javascript" src="/static/mobile/js/utf.js"></script>
+
+<!--使用layui-->
+
+<script src="/static/mobile/js/countUp.js"></script>
+<!-- <script src="/static/mobile/js/layui.all.js" charset="utf-8"></script> -->
+<script src="/static/mine/layer/layer.js"></script>
+<!-- <script src="/static/mobile/js/common.js"></script> -->
+<script>
+ $(function(){
+      $(".reloadverify").click(function () {
+            $(this).attr("src","{:captcha_src()}?t="+new Date().getTime())
+        });
+    })
+
+$(document).ready(function(){
+  $('.ajax-post-login').click(function(){
+    //   console.log(('.username').value)
+    // if(('.username').value == "" || ('.username').value == null || ('.username').value == undefined ){
+    //     layer.msg("请输入账号！", {icon: 0});
+    //     return false;
+    // }else if(('.password').value == "" || ('.password').value == null || ('.password').value == undefined){
+    //     layer.msg("请输入密码！", {icon: 0});
+    //     return false
+    // }else{
+    //     ajaxPost();
+    // }
+ ajaxPost();
+  })
+})
+
+
+
+function ajaxPost() {
+    $('.ajax-post-login').removeClass('button_two').addClass("button_one");
+    var target,query,form;
+    // var that = this;
+    form = $('.form-horizontal');
+    target = form.get(0).action;
+    query = form.serialize();
+    $.ajax({
+        type: "POST",
+        url: 'login',
+        data: query,
+        dataType: "json",
+        success: function(data) {
+          
+          $('.ajax-post-login').removeClass('button_one').addClass("button_two");
+          if(data.code){
+            layer.msg(data.msg, {icon: 1});
+            setTimeout(function(){
+                layer.closeAll();
+                location.href = '/mall/index/index';
+            }, 500);
+          }else{
+            layer.msg(data.msg, {icon: 2});
+          }
+
+          
+        }
+    });
+    return false;
+ 
+}
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>{:cache('setting')['web_name']}</title>
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+    <link rel="stylesheet" href="/static/mall/css/index.css" />
+    <link rel="stylesheet" href="/static/mall/css/pages.css" />
+    <link rel="stylesheet" href="/static/mine/dist/dropload.css" />
+</head>
+<style>
+.xuanzhong_fl {
+    color: #d81e06 !important;
+}
+.scroll{max-width:560px;height: 3.6rem;position: relative;} 
+.scroll_box{overflow:hidden;visibility:hidden;position:relative;height: 3.6rem;}
+.scroll_wrap{overflow:hidden; position:relative;}
+.scroll_wrap li{position:relative;display:block;width:100%;float:left;}
+.scroll_wrap li a{display:block;margin:0 auto;position:relative;}
+.scroll_position{position:absolute;left:45%;z-index:400px;bottom:5px;}
+.scroll_position li{display:inline-block;width:10px;height:10px;border-radius:10px;background:#fff;}
+.scroll_position li a{font-size:0;}
+.scroll_position li.on{background-color:#ffd800;}
+.scroll_position_bg{position:absolute;bottom:5px;left:42%;padding:0 10px;z-index:380px;height:26px;border-radius:26px;}
+.scroll_wrap li img{
+    width: 7.5rem;
+    height: 3.6rem;
+}       
+#backTop{
+                width: 0.8rem;
+                height: 0.8rem;
+                color:white;            
+                background-image:url(/static/mall/img/dingbu0.png);
+                background-size:100% 100%;
+                background-repeat: no-repeat;
+                border-radius:50%;
+                text-align: center;
+                display: none;
+    cursor: pointer;
+                position:fixed;
+                right: 0.3rem;
+                bottom:1.3rem;
+                transition: all 1s;
+                
+            } 
+            body{
+                /*height: 620px;*/
+                overflow-y:scroll;
+                position: relative;
+
+            } 
+</style>
+
+<body>
+    <div class="scroll relative">
+            <div class="search_wrap" style="width: 100%;height: 1rem;position: absolute;left: 0;top: 0;z-index: 100;border: 0;">
+            <div class="con1">
+                <form action="{:url('index')}" method="get">
+                    <input type="text" name="pd_name" value="{$Think.get.pd_name}" placeholder="输入商品名称" />
+                    <img src="/static/mall/img/search.png" alt="" />
+                    <input type="submit" name="" />
+                </form>
+            </div>
+    </div>
+    <div class="scroll_box" id="scroll_img">
+        <ul class="scroll_wrap" id="contentDiv">
+                {volist name="shuff" id="v"}
+                <li>
+                    <a href="{$v.shuff_href}">
+                        <img class="img lb_img" src="{$v.shuff_pic}" />
+                    </a>
+                </li> 
+                {/volist}
+        </ul>
+    </div>
+    <span class="scroll_position_bg opacity6"></span>
+      <ul class="scroll_position" id='scroll_position'>
+        {volist name="shuff" id="v"}
+          <li><a href="javascript:void(0);"></a></li>
+        {/volist}
+      </ul>
+    </div>
+
+    <!--各种专区-->
+    <div class="quyu_wrap">
+        <ul class="quyu">
+           
+            <li>
+                <img src="/static/mall/img/tb7.png" />
+                <p class="0">首页</p>
+                <a href="{:url('index')}?type=0"></a>
+            </li>
+            <li>
+                <img src="/static/mall/img/tb6.png" />
+                <p class="5">爆款热卖</p>
+                <a href="{:url('index')}?type=5"></a>
+            </li>
+             <li>
+                <img src="/static/mall/img/tb5.png" />
+                <p class="6">新品专区</p>
+                <a href="{:url('index')}?type=6"></a>
+            </li>
+             <li>
+                <img src="/static/mall/img/tb2.png" />
+                <p class="7">全部</p>
+                <a href="{:url('home')}"></a>
+            </li>
+           
+        </ul>
+        <!-- 新闻 -->
+      <div class="news_wrap">
+            <div>
+            <img src="/static/mall/img/new_icon.png"/>
+            <div id="demo">
+            <ul id="demo1">
+                {volist name="news" id="v"}
+                <li class="hiddenp">
+                    <a href="{:url('index/news')}?id={$v.id}">{$v.me_title}</a>
+                </li>
+                {/volist}
+            </ul>
+            </div>
+            </div>
+            <p>
+                <span></span>
+                <a></a>
+            </p>
+        </div>
+    </div>
+    <div style="margin-bottom: 1rem;border-top: 0.1rem solid #f5f5f5;">
+        <!--商品区域-->                                                                                                                         
+        <!--正常的商品展示-->
+        <div class="inner">
+            <ul class="spxq">
+            </ul>
+        </div>
+       
+        <!--底部-->
+        <!-- include file="layout/footer"-->
+        
+       
+
+         <div id="backTop">
+        </div>
+    </div>
+    <style type="text/css">
+      .footer ul li p {
+        font-size: 12px;
+        color: #fff;
+        margin:1px 0 4px;
+      }
+      .footer ul li i {
+        font-size: 25px;
+        color: #fff;
+      }
+      .footer ul li {
+        width: 25%;
+        float: left;
+        padding: 5px;
+        text-align: center;
+    }
+    .footer ul li.on p {
+        color: #f84b44;
+    }
+     </style>
+     <!-- <div style="height:50px;height: 50px;margin-bottom: 50px;"></div> -->
+     <div class="footer" style="background: #1a181b;">
+          <ul>
+              <li >
+                  <a href="/mall/index/index">
+                      <i><img src="/static/mobile/img/shouye.png" width="30%"></i>
+                        <p>首页</p>
+                    </a>
+                </li>
+                <li class="on">
+                    <a href="/mall/shop/index">
+                        <i><img src="/static/mobile/img/shop1.png" width="30%"></i>
+                        <p>商城</p>
+                    </a>
+                </li>
+                <li class="">
+                  <a href="/mall/trad/index">
+                     <!-- <a href="/mall/trad/index" onclick="layer.msg(&#39;开发中...&#39;); return false"> -->
+                        <i>
+                            <img src="/static/mobile/img/jiaoyi.png" width="30%">
+                        </i>
+                        <p>交易</p>
+                    </a>
+                </li>
+                <li class="">
+                  <a href="/mall/user/index">
+                      <i><img src="/static/mobile/img/grzx.png" width="30%"></i>
+                        <p>我的</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+</body>
+<script src="/static/mall/js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mall/js/swiper_lb.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mall/js/tween.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/dist/dropload.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/layer/layer.js"></script>
+<script type="text/javascript">
+    $(".scroll_position li").eq(0).addClass("on");//第一个小点变亮
+    
+$(function(){
+    // 专区选中
+    var type = {$Request.get.type|default='0'};
+    if (type == 0) {
+        $(".quyu li .0").addClass("xuanzhong_fl");
+    }else if (type == 6) {
+        $(".quyu li .6").addClass("xuanzhong_fl");
+    }else if (type == 5) {
+        $(".quyu li .5").addClass("xuanzhong_fl");
+    }
+    // 上拉加载更多 下拉刷新
+    // 页数
+    var page = 0;
+    var prod_name="{$Request.get.pd_name|default=0}"
+    $('.inner').dropload({
+        scrollArea : window,
+        domUp : {
+            domClass   : 'dropload-up',
+            domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+            domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>'
+        },
+        domDown : {
+            domClass   : 'dropload-down',
+            domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+            domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>',
+            domNoData  : '<div class="dropload-noData">已到底部</div>'
+        },
+        loadUpFn : function(me){
+            page =1;
+            var result = '';
+            $.ajax({
+                type: 'post',
+                url: '{:url("index")}',
+                data:{page:page,type:type,prod_name:prod_name},
+                dataType: 'json',
+                success: function(data){
+                    var arrLen = data.length;
+                    if(arrLen == ''){
+                        // 锁定
+                        me.lock();
+                        // 无数据
+                        me.noData();
+                    }
+                    setTimeout(function(){
+                        $('.spxq').append(data);
+                        me.resetload();
+                    },500);
+                },
+                error: function(xhr, type){
+                    me.resetload();
+                }
+            });
+            
+        },
+        loadDownFn : function(me){
+            page++;
+            var result = '';
+            $.ajax({
+                type: 'post',
+                url: '{:url("index")}',
+                data:{page:page,type:type,prod_name:prod_name},
+                dataType: 'json',
+                success: function(data){
+                    var arrLen = data.length;
+                    if(arrLen == ''){
+                        // 锁定
+                        me.lock();
+                        // 无数据
+                        me.noData();
+                    }
+                    setTimeout(function(){
+                        $('.spxq').append(data);
+                        me.resetload();
+                    },500);
+                },
+                error: function(xhr, type){
+                    me.resetload();
+                }
+            });
+        },
+        threshold : 50
+    });
+});   
+
+
+// 返回顶部
+window.onscroll=function(){
+    if($(window).scrollTop()>100){
+         $('#backTop').show();
+    }else{
+         $('#backTop').hide();
+    }
+} 
+$('#backTop').click(function(){
+$('body,html').animate({scrollTop:0},200);
+});
+
+function scroll(scrollTo, time) {
+    var scrollFrom = parseInt(document.body.scrollTop),
+        i = 0,
+        runEvery = 5; // run every 5ms
+
+    scrollTo = parseInt(scrollTo);
+    time /= runEvery;
+
+    var interval = setInterval(function () {
+        i++;
+
+        document.body.scrollTop = (scrollTo - scrollFrom) / time * i + scrollFrom;
+
+        if (i >= time) {
+            clearInterval(interval);
+        }
+    }, runEvery);
+}
+//各种专区分类
+$('.quyu_wrap li').bind("click", function() {           
+    $(this).find("p").addClass("xuanzhong_fl");
+    $(this).siblings().find("p").removeClass("xuanzhong_fl");
+    $(this).parent().siblings().find("p").removeClass("xuanzhong_fl");        
+});
+//新闻换
+    function xx(){
+        var container=document.getElementById("demo1");
+        container.appendChild(container.firstChild);
+    }
+    setInterval("xx()",1500);
+</script>
+
+</html>

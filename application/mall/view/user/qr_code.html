@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)rechargees.html -->
+<html><script>
+</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>AMFC-推广</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script><style type="text/css" abt="234"></style>
+<script src="/static/mobile/js/swiper.min.js"></script>
+<link id="layuicss-laydate" rel="stylesheet" href="/static/mobile/css/laydate.css" media="all">
+<link id="layuicss-layer" rel="stylesheet" href="/static/mobile/css/layer.css" media="all">
+<link id="layuicss-skincodecss" rel="stylesheet" href="/static/mobile/css/code.css" media="all">
+<style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+<body>
+<style type="text/css">
+.content_div{
+    background: white;
+    background-image: url(/static/mobile/img/amfc.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+  .dqiput{
+    border: none;
+    width: 100%;
+    padding:20px 0px;
+  }  
+  .invite_btn{
+    background-color: #2185d0;
+    border: none;
+    padding: 0 18px;
+    color: #fff;
+    border-radius: 10px;
+    float: right;
+  }
+  .ljchongzhi {
+    float: left;
+    height: 38px;
+    display: block;
+    background-color: #4183c4;
+    border-radius: 10px;
+    color: #fff;
+    line-height: 38px;
+    padding: 0px 18px;
+  }
+  .shezhi_xiangqing{
+    background: none;
+    margin-top: 270px;
+  }
+  #copy_value2{
+    background: none;
+    color: white;
+  }
+  #qrcode img{
+    border: 10px solid white;
+  }
+</style>
+<div class="content_div">
+
+    <!--header-->   
+    <div class="header">
+        <a href="index" class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>推广</p>
+    </div>
+    <!--header-->
+    <div class="shezhi_xiangqing" style="padding-bottom: 50px;">
+       <!--  <p style="color:#db2828;padding-top:10px">温馨提示：<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;数字资产是创新的投资产品，价格波动较大，具有较高的投资风险，请您投资前对数字资产充分认知，理性判断自己的投资能力，审慎做出投资决策。 ETH充币无法及时到帐，实际到帐时间取决于区块链确认速度</p> -->
+        <div style="margin:0 auto;width:50%" id="qrcode">
+                      <!-- <img src="/static/mobile/img/4a06f4448a75d8f94be3328d807fb520.png"> -->
+                  </div>
+       <input type="text" name="password" lay-verify="password" autocomplete="off" value="{$url}" id="copy_value2" placeholder="" class="dqiput" readonly="">
+       <button class="invite_btn layui-btn layui-btn-normal" onclick="copy2()">复制</button>
+       <!-- <a href="index/financial/immediate_recharge.html" class="ljchongzhi">立即充值</a> -->
+
+    </div>
+    
+   <!--  <div class="tuichu">
+        <a href="#">保存信息</a>
+    </div>  
+  -->
+</div>
+
+
+
+<!--使用layui-->
+
+<script src="/static/mobile/js/countUp.js"></script>
+<script src="/static/mobile/js/layui.all.js" charset="utf-8"></script>
+<script src="/static/mobile/js/common.js"></script>
+<script src="/static/mine/erweima/qrcode.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+// document.oncontextmenu = function () { return false; };
+document.onkeydown = function () {
+    if (window.event && window.event.keyCode == 123) {
+        event.keyCode = 0;
+        event.returnValue = false;
+        return false;
+    }
+};
+$('.ajax-post').click(function() {
+    ajaxPost();
+});
+// ajax post提交
+function ajaxPost() {
+    var target,query,form;
+    // var that = this;
+    form = $('.form-horizontal');
+    target = form.get(0).action;
+    query = form.serialize();
+    var index = layer.load(2, {shade: false}); //0代表加载的风格，支持0-2
+    $.ajax({
+        type: "POST",
+        url: target,
+        data: query,
+        dataType: "json",
+        success: function(data) {
+            if (data.url) {
+                $('.ajax-post').attr('disabled', true).addClass('verify-disabled');
+                layer.msg(data.msg, {icon: 1});
+                setTimeout(function() {
+                    layer.closeAll();
+                    if (data.url) {
+                        location.href = data.url;
+                    } else {
+                        location.reload();
+                    }
+                }, 2000);
+            } else {
+                layer.msg(data.msg, {icon: 2});
+                setTimeout(function(){
+                    layer.closeAll();
+                    if (data.url) {
+                        location.href = data.url;
+                    } else {
+                        // location.reload();
+                    }
+                }, 2000);
+            }
+        }
+    });
+}
+
+
+function CountUpeses(objid,objmoney,numbers){
+    var options = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.', 
+    };
+    var demo = new CountUp(objid, 0, objmoney, numbers,2, options);
+        if (!demo.error) {
+        demo.start();
+        } else {
+        console.error(demo.error);
+    }
+}
+function CountUpes(objid,objmoney){
+    var options = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.', 
+    };
+    var demo = new CountUp(objid, 0, objmoney, 4,2, options);
+        if (!demo.error) {
+        demo.start();
+        } else {
+        console.error(demo.error);
+    }
+}
+var qrcode = new QRCode(document.getElementById("qrcode"), {
+    width: 280,
+    height: 280,
+});
+function makeCode() {
+    var url = "{$url}";
+    qrcode.makeCode(url);
+}
+makeCode();
+</script>
+<script>
+     function copy2(){
+        var copy_val = $('#copy_value2');
+        copy_val.select();  
+        document.execCommand("Copy");  
+        copy_val.blur();
+        layer.msg('复制成功');    
+    }
+</script>
+
+<div id="cli_dialog_div"></div></body></html>

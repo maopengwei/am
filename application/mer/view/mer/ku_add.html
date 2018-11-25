@@ -1,0 +1,132 @@
+{include file="public/_meta" /}
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+
+.lbwxq_mImg {
+    width: 110px;
+    height: 110px;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.lbwxq_mImg img {
+    width: 110px;
+    height: 110px;
+}
+
+
+.big img{
+    width: 1000px;
+    height: 1000px;
+}
+
+/*大图*/
+
+.lbwxq_lImg {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    left: 540px;
+    top: 25px;
+    display: none;
+    overflow: hidden;
+}
+
+.lbwxq_lImg img {
+    width: 1000px;
+    height: 1000px;
+}
+
+
+.pic {
+    display: inline-block;
+}
+
+.pic img {
+    width: 110px;
+    height: 110px;
+}
+body,html{
+position: relative;
+}
+.big{
+   position: absolute;
+    right: 25%;
+    top: 120px;
+    width: 300px;
+    height: 300px;
+}
+.big img{
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 
+        <span class="c-gray en">&gt;</span>报单产品 
+        <span class="c-gray en">&gt;</span> 添加 
+        <a class="btn btn-success radius r" style="margin-left:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <form class="form form-horizontal" id="form-article-add">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">店铺编号：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" placeholder="店铺编号" value="{$mer.mer_account}"  style="width:20%">
+                </div>
+            </div>
+            <div style="display:none" class="ttt">
+                <input type="text" name="us_id" value="{$mer.us_id}">
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择商品：</label>
+                <div class="formControls col-xs-8 col-sm-9"> 
+                    <span class="select-box" style="width:20%">
+                        <select name="prod_id" class="select">
+                            {volist name="prod" id="vo"}
+                            <option value="{$vo.id}">{$vo.prod_name}</option>
+                            {/volist}
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">数量：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="number" class="input-text us_tel" name="num" style="width:20%">
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <button onclick="return add();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    {include file="public/_footer" /}
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript">
+
+    var id="{$mer['id']}";
+    function add() {
+        $.post('{:url("ku_add")}', $('#form-article-add').serialize()).success(function(data) {
+            layer.msg(data.msg);
+            if (data.code) {
+                setTimeout(function() {
+                    location.href = 'ku?id='+id;
+                }, 1000);
+            }
+        });
+        return false;
+    }
+    </script>
+</body>
+
+</html>

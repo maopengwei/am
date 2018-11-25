@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>申请店铺</title>
+		<link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/static/mall/css/apply_shop.css" />
+		<link rel="stylesheet" type="text/css" href="/static/mall/css/tankuang.css" />
+		<style type="text/css">
+			.file0_input0>img,
+			.file0_input1>img {
+				width: 100%;
+				height: 100%;
+			}
+			.tankuang_img{
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="header">
+			<a href="javascript:history.go(-1);" class="left">
+				<img src="/static/mall/img/return.png" />
+			</a>
+			<span class="center">申请记录</span>
+			<a href="javascript:void(0);" class="right"></a>
+		</div>
+		<div style="margin-bottom: 1rem;">
+			<div class="xinxi_wrap">
+				<p><span>申请状态:</span><span style="color: #FF8831;">{$info.status_text}</span></p>
+				<p><span>申请类型</span><span>店铺</span></p>
+				<p><span>申请金额</span><span>{$info.apply_jine}</span></p>
+				<p><span>申请时间</span><span>{$info.apply_add_time}</span></p>
+			</div>
+			<p class="money1_con_p" style="margin-left: 3%;">我的资料</p>
+			<form action="" method="post">
+
+				<div class="con_file">
+					<div class="file0">
+						<p style="margin-left: 0.28rem;">身份证</p>
+						<div class="file0_input0">
+							<img src="{$info.apply_card_front}" onclick="xianshi(this)" class="cd-popup-triggeraa"/>
+						</div>
+						<div class="file0_input1">
+							<img src="{$info.apply_card_back}" onclick="xianshi(this)" class="cd-popup-triggeraa"/>
+						</div>
+					</div>
+					<div class="file0" style="margin-top: 0.2rem;">
+						<p>营业执照</p>
+						<div class="file0_input0">
+							<img src="{$info.apply_trad}" onclick="xianshi(this)" class="cd-popup-triggeraa"/>
+						</div>
+					</div>
+					<div class="file0" style="margin-top: 0.2rem;">
+						<p>打款凭证</p>
+						<div class="file0_input0">
+							<img src="{$info.apply_pic}" onclick="xianshi(this)" class="cd-popup-triggeraa"/>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!--弹框-->
+		<div class="cd-popupaa">
+			<div class="cd-popup-containeraa">
+				<img src="/static/mall/img/sp.png" alt="" class="tankuang_img"/>
+			</div>
+		</div>
+	</body>
+	<script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/mall/js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+			//查看信息弹框
+			 /*弹框JS内容*/
+	function xianshi(data){
+		event.preventDefault();
+        $('.cd-popupaa').addClass('is-visibleaa');
+        var aa = $(data).attr('src');
+        $('.tankuang_img').attr('src',aa);
+	}
+    jQuery(document).ready(function($){
+
+		//打开窗口
+        // $('.cd-popup-triggeraa').on('click', function(event){
+        //     event.preventDefault();
+        //     $('.cd-popupaa').addClass('is-visibleaa');
+        //     //$(".dialog-addquxiao").hide()
+        // });
+        //关闭窗口
+        $('.cd-popupaa').on('click', function(event){
+            if( $(event.target).is('.cd-popup-closeaa') || $(event.target).is('.cd-popupaa')) {
+                event.preventDefault();
+                $(this).removeClass('is-visibleaa');
+            }
+        });
+        //ESC关闭
+        $(document).keyup(function(event){
+            if(event.which=='27'){
+                $('.cd-popupaa').removeClass('is-visibleaa');
+            }
+        });
+	
+    });
+	</script>
+
+</html>

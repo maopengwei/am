@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://vip5.gxbbwrj.com/y8908cs/public/dbhistory.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<titl>锁仓记录</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script>
+<script src="/static/mobile/js/swiper.min.js"></script>
+<style type="text/css">
+    .dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
+            text-align:center;
+        }
+        th{
+        height: 2rem;
+        background: #fff;
+        color: #999999;
+        font-size: 0.28rem;
+        border-bottom: 0;
+        text-align: center;
+        border-right: 0;
+        }
+        td{
+        height: 2rem;
+        color: #333333;
+        font-size: 0.28rem;
+        border-bottom: 0;
+        text-align: center;
+        border-right: 0;
+        }
+        th:last-of-type{
+        border-right: 0;
+        }
+        table{
+            width: 100%
+        }
+        .zhongzijilu_con {
+   
+            margin-top: 45px;
+        }
+</style>
+</head>
+<body>
+<div class="content_div">
+    
+    <!--header-->   
+    <div class="header">
+        <a href="/mall/user/index" class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>锁仓记录</p>
+    </div>
+    <!--header-->
+    <div class="zhongzijilu_con">
+        
+        <div class="geren_bottom tab">
+            <table>
+                <tr>
+                    <th>锁仓日期</th>
+                    <th>锁仓数量</th>
+                    <th>剩余释放量</th>
+                    <th>已释放总量</th>
+                </tr>
+                 {volist name='list' id="vo"}
+                    <tr>
+                       <td>{$vo.add_time}</td>
+                        <td>{$vo.suo_num}</td>
+                        <td>{$vo.sshi_num}</td>
+                        <td>{$vo.zshi_num}</td>
+                    </tr>
+                {/volist}
+            </table>
+        </div>
+    
+    </div>
+    
+
+</div>
+
+
+</body></html>
+<script src="/static/mine/jquery/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/dist/dropload.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    /*$(function(){
+        // 上拉加载更多 下拉刷新
+        // 页数
+        var page = 0;
+        $('.tab').dropload({
+            scrollArea : window,
+            domUp : {
+                domClass   : 'dropload-up',
+                domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+                domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>'
+            },
+            domDown : {
+                domClass   : 'dropload-down',
+                domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+                domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>',
+                domNoData  : '<div class="dropload-noData">已到底部</div>'
+            },
+            loadUpFn : function(me){
+                location.href ="{:url('tx_rec')}";
+            },
+            loadDownFn : function(me){
+                page++;
+                // 拼接HTML
+                var result = '';
+                $.ajax({
+                    type: 'post',
+                    url: '{:url("tx_rec")}',
+                    data:{page:page},
+                    dataType: 'json',
+                    success: function(data){
+
+                        if(data.data.current_page>=data.data.last_page){
+                            me.lock();
+                            me.noData();
+                        }
+                        setTimeout(function(){
+                            $.each(data.data.data,
+                                function(i,val){
+                                        var state = '未审核';
+
+                                        if(val.tx_status==1){
+                                            state = '已通过';
+                                        }else if(val.tx_status==2){
+                                            state = '被驳回';
+                                        }
+
+                                        result +=  "<li>" +
+                                                "<a href=\"#\">" +
+                                                    "<div class=\"con\">" +
+                                                        "<div class=\"top\">" +
+                                                            "<p>"+state+"</p>" +
+                                                            "<span>"+val.tx_num+"</span>" +
+                                                        "</div>" +
+                                                        "<div class=\"bottom\">" +
+                                                            "<p>"+val.tx_add_time+"</p>" +
+                                                            // "<span>0.0000</span>" +
+                                                        "</div>" +
+                                                    "</div>" +
+                                                   "<!--  <em class=\"iconfont icon-you\"></em> -->" +
+                                                "</a>" +
+                                            "</li>";
+
+                                    
+                                    // result += "<div class=\"sc\">" +
+                                    //     "<p>"+val.wal_note+"</p>" +
+                                    //     "<span>"+val.wal_add_time+"</span>" +
+                                    //     "<a href=\"javascript:void(0)\">"+val.wal_num+"</a>" +
+                                    // "</div>";
+
+
+
+                                    // result += "<li>" +
+                                    //             "<div class=\"jyjl_left\"><p>"+val.wal_note+"</p></div>" +
+                                    //             "<div class=\"jyjl_center\">" +
+                                    //                 "<p><span></span><span>"+val.wal_num+"</span></p>" +
+                                    //             "</div>" +
+                                    //             "<div class=\"jyjl_right\"><p>"+val.wal_add_time+"</p></div>" +
+                                    //         "</li>";
+                                }
+                            );
+                            $('.geren_bottom').append(result);
+                            me.resetload();
+                        },500);
+                       
+                       
+                        
+                    },
+                    error: function(xhr, type){
+                        me.resetload();
+                    }
+                });
+            },
+            threshold : 50
+        });
+    })*/
+</script>

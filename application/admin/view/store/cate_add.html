@@ -1,0 +1,82 @@
+{include file="public/_meta" /}
+<title></title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>门店管理 <span class="c-gray en">&gt;</span> 添加分类 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <article class="page-container">
+        <form class="form form-horizontal" id="form-admin-add">
+            <input type="hidden" name="__token__" value="{$Request.token}" />
+             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>门店编号：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text numb" onchange="chacha($(this).val())" style="width:20%">
+                </div>
+            </div>
+             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>门店名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text nana" readonly style="width:20%">
+                </div>
+            </div>
+             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" id="phone" name="ca_name" style="width:20%">
+                </div>
+            </div>
+            <input type="text" hidden="hidden" name="st_id">
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="return add()">
+                </div>
+            </div>
+        </form>
+    </article>
+    {include file="public/_footer"/}
+    <!--请在下方写此页面业务相关的脚本-->
+ 
+    <script type="text/javascript">
+
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+    });
+    function chacha(data){
+        $.ajax({
+            type:"post",
+            url:"{:url('get_store')}",
+            data:{'st_serial_number':data},
+            success:function(data){
+                if(data.code){
+                    $('.nana').val(data.data.st_name);
+                    $('input[name="st_id"]').val(data.data.id);
+                }else{
+                    var bb = '';
+                    $('.nana').val(bb);
+                    $('.numb').val(bb);
+                    layer.msg('查无此店');
+                }
+            }
+        });
+    }
+    function add(){
+        $.post("{:url('cate_add')}", $('form').serialize()).success(function(data) {
+            layer.msg(data.msg);
+            if (data.code) {
+                setTimeout(function() {
+                   location.href = '';
+                }, 500);
+            }
+        });
+        return false;
+    }
+    </script>
+</body>
+
+</html>

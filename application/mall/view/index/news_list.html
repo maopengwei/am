@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://vip5.gxbbwrj.com/y8908cs/public/dbhistory.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>新闻列表</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script>
+<script src="/static/mobile/js/swiper.min.js"></script>
+<style type="text/css">
+    .dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
+            text-align:center;
+        }
+</style>
+</head>
+<body>
+<div class="content_div">
+    
+    <!--header-->   
+    <div class="header">
+        <a href="/mall/index/index" class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>新闻列表</p>
+    </div>
+    <div class="zhongzijilu_con">
+        <div class="geren_bottom tab">
+            <ul class="UL_CON jyjl_ul">
+            </ul>
+        </div>
+    
+    </div>
+    
+
+</div>
+
+
+
+</body></html>
+<script src="/static/mine/jquery/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/dist/dropload.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    $(function(){
+        // 上拉加载更多 下拉刷新
+        // 页数
+        var page = 0;
+        $('.tab').dropload({
+            scrollArea : window,
+            domUp : {
+                domClass   : 'dropload-up',
+                domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+                domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>'
+            },
+            domDown : {
+                domClass   : 'dropload-down',
+                domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+                domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中</div>',
+                domNoData  : '<div class="dropload-noData">已到底部</div>'
+            },
+            loadUpFn : function(me){
+                location.href ="{:url('news_list')}";
+            },
+            loadDownFn : function(me){
+                page++;
+                // 拼接HTML
+                var result = '';
+                $.ajax({
+                    type: 'post',
+                    url: '{:url("news_list")}',
+                    data:{page:page},
+                    dataType: 'json',
+                    success: function(data){
+
+                        if(data.data.current_page>=data.data.last_page){
+                            me.lock();
+                            me.noData();
+                        }
+                        setTimeout(function(){
+                            $.each(data.data.data,
+                                function(i,val){
+
+                                        result +=  "<li>" +
+                                                "<a href=\"news?id="+val.id+"\">" +
+                                                    "<div class=\"con\">" +
+                                                        "<div class=\"top\">" +
+                                                            "<p>"+val.me_title+"</p>" +
+                                                            "<span></span>" +
+                                                        "</div>" +
+                                                        "<div class=\"bottom\">" +
+                                                            "<p>"+val.me_add_time+"</p>" +
+                                                            // "<span>0.0000</span>" +
+                                                        "</div>" +
+                                                    "</div>" +
+                                                   "<!--  <em class=\"iconfont icon-you\"></em> -->" +
+                                                "</a>" +
+                                            "</li>";
+                                }
+                            );
+                            $('.jyjl_ul').append(result);
+                            me.resetload();
+                        },500);
+                       
+                       
+                        
+                    },
+                    error: function(xhr, type){
+                        me.resetload();
+                    }
+                });
+            },
+            threshold : 50
+        });
+    })
+</script>

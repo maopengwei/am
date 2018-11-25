@@ -1,0 +1,150 @@
+{include file="public/_meta" /}
+<title></title>
+<style>
+	input{
+		border:none;
+	}
+</style>
+</head>
+<body>
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i> 首页 
+	<span class="c-gray en">&gt;</span> 商城管理 
+	<span class="c-gray en">&gt;</span> 属性列表 
+	<a class="btn btn-success radius r" style="margin-left:2px" href="javascript:location.replace(location.href);" title="刷新" >
+		<i class="Hui-iconfont">&#xe68f;</i>
+	</a>
+</nav>
+<div class="page-container">
+	<div class="text-c">
+		<form class="Huiform" method="get" action="{:url('index')}" target="_self">
+			<span class="select-box inline">
+			<select name="cate_id" class="select">
+				<option value="">全部分类</option>
+				{volist name="cate" id="v"}
+				<option value="{$v['id']}" class="c-green">{$v['cate_name']}</option>
+				{volist name="$v.son" id="vo"}
+				<option value="{$vo['id']}" class="c-green">|-{$vo['cate_name']}</option>
+				{/volist}
+				{/volist}
+			</select>
+			</span>
+			<input type="text" placeholder="属性类型名" name="attr_name" class="input-text" value="{$Think.get.attr_name}" style="width:200px">
+			<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe709;</i> 搜索</button>
+		</form>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+			<a href="javascript:;" onclick="create(0,'add','添加属性')" class="btn btn-primary radius">
+			<i class="Hui-iconfont">&#xe600;</i> 属性</a>
+		</span> 
+        <!-- <span class="r">共有数据：<strong>6</strong> 条</span>  -->
+    </div> 
+	
+	<div class="mt-20">
+		<table class="table table-border  table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th>属性名称</th>
+					<th>父级属性</th>
+					<th>分类名称</th>
+					<th >操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{volist name="list" id="vo"}
+					<tr class="text-c">
+						
+						<td><input type="text" value="{$vo.attr_name}" onchange="eee({$vo.id},$(this).val(),'attr_name')"></td>
+						<td>{$vo.par.attr_name}</td>
+						<td>{$vo.cate.cate_name}</td>
+						<td class="f-14 product-brand-manage">
+							<!-- <a style="text-decoration:none" onclick="create({$vo.id},'edit','编辑属性')" title="编辑">
+								<i class="Hui-iconfont">&#xe6df;</i>
+							</a> -->
+							<a style="text-decoration:none" onClick="cate_del({$vo.id})" href="javascript:;" title="删除">
+								<i class="Hui-iconfont">&#xe6a6;</i>
+							</a>
+						</td>
+					</tr>
+					{volist name="vo.son" id="v"}
+						<tr class="text-c">
+							<td>|--<input type="text" value="{$v.attr_name}" onchange="eee({$v.id},$(this).val(),'attr_name')"></a></td>
+							<td>{$vo.attr_name}</td>
+							<td>{$v.cate.cate_name}</td>
+							<td class="f-14 product-brand-manage">
+								<!-- <a style="text-decoration:none" onclick="create({$v.id},'edit','编辑属性')" title="编辑">
+									<i class="Hui-iconfont">&#xe6df;</i>
+								</a> -->
+								<a style="text-decoration:none" onclick="cate_del({$v.id})" href="javascript:;" title="删除">
+									<i class="Hui-iconfont">&#xe6a6;</i>
+								</a>
+							</td>
+						</tr>
+					{/volist}
+				{/volist}
+			</tbody>
+		</table>
+	</div>
+
+</div>
+{include file="public/_footer" /}
+<script type="text/javascript">
+$('select[name="cate_id"]').val({$Request.get.cate_id});
+
+/*----新建窗口*/
+function create(id,url,key){
+	var url = "{:url('"+url+"')}?id="+id;
+	creatIframe(url,key);
+}
+
+/*---修改属性名称*/
+function eee(id,val,key){
+	layer.confirm(
+	    '确定要更改么？', 
+	    { btn: ['确定', '取消'] }, 
+	    function(index, layero){
+	        $.ajax({
+	            type: "post",
+	            url: "{:url('index')}",
+	            data: {id:id,val:val,key:key},
+	            success: function(data) {
+	            	layer.msg(data.msg);
+	            	if(!data['code']){
+	            		setTimeout(function(){
+	            			location.href = ''; 
+	            		},500)
+	            	}
+	                
+	            }
+	        })
+	    },
+	    function(index,layero){
+	       location.href = ''; 
+	    }
+	);
+}
+
+/*属性删除*/
+function cate_del(data){
+    layer.confirm('确定要删除么？', {
+      btn: ['确定', '取消']
+    }, function(index, layero){
+        $.ajax({
+            type: "post",
+            url: "{:url('del')}",
+            data: {id:data},
+            success: function(data) {
+                layer.msg(data.msg);
+                if(data.code=='1'){
+                    setTimeout(function(){
+                        location.href = data.url;
+                    },1000);
+                }
+            }
+        });
+    });
+}
+</script>
+</body>
+</html>

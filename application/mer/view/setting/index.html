@@ -1,0 +1,231 @@
+{include file="public/_meta" /}
+<title>基本设置</title>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 系统管理
+        <span class="c-gray en">&gt;</span> 基本设置
+        <a class="btn btn-success radius r" style="margin-left:2px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+        <a class="btn btn-success radius r" style="margin-left:2px" onclick="ooo()" title="清楚缓存">
+            <i class="Hui-iconfont">&#xe706;</i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <form class="form form-horizontal" id="form-article-add">
+            <div id="tab-system" class="HuiTab">
+                <div class="tabBar cl">
+                    <span>基本设置</span>
+                    <!-- <span>参数设置</span> -->
+                    <!-- <span>奖励开关</span> -->
+                </div>
+                <div class="tabCon">
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>网站状态：</label>
+                        <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                            <div class="radio-box">
+                                <input name="status" type="radio" value="1" id="">
+                                <label for="sex-1">在线</label>
+                            </div>
+                            <div class="radio-box">
+                                <input type="radio" value="0" id="" name="status">
+                                <label for="sex-2" class="c-red">关闭</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 金卡会员业绩：
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="pv" value="{:cache('setting')['pv']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 代言会员业绩：
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="pb" value="{:cache('setting')['pb']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 报单中心奖励参数%
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="center" value="{:cache('setting')['center']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 大区见点层数
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="point_ceng" value="{:cache('setting')['point_ceng']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                     <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 大区见点参数%
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="point_calcu" value="{:cache('setting')['point_calcu']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                     <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 真实奖励Doken到账参数%
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="actual" value="{:cache('setting')['actual']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 一层的层碰奖励%
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="actual" value="{:cache('setting')['actual']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 多层的层碰奖励%
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="ceng_er" value="{:cache('setting')['ceng_er']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 提现手续费
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="recharge" value="{:cache('setting')['recharge']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 静态发放月金额
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="sta_money" value="{:cache('setting')['sta_money']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 静态发放参数
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="sta_calcu" value="{:cache('setting')['sta_calcu']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 推广每月发放金额
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="tui_money" value="{:cache('setting')['tui_money']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 推广每月几号发放
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="tui_day" value="{:cache('setting')['tui_day']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">
+                            <span class="c-red">*</span> 推广现金Doken封顶
+                        </label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="tui_top" value="{:cache('setting')['tui_top']}" class="input-text" style="width:20%">
+                        </div>
+                    </div>
+                </div>
+                <div class="tabCon">
+                    
+                </div>
+                 <div class="tabCon">
+                     
+                </div>
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                        <button onclick="return saveConfig();" class="btn btn-primary radius" type="submit"><i clsass="Hui-iconfont">&#xe632;</i> 保存</button>
+                        <button class="btn btn-default radius rst" type="reset">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+    {include file="public/_footer" /}
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript">
+    $('.form input[name="status"][value=' + "{:cache('setting')['status']}" + ']').attr("checked", true);
+   
+
+    $(function() {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $("#tab-system").Huitab({
+            index: 0
+        });
+    });
+    // /setting/saveinfo
+    function saveConfig() {
+        $.post("{:url('setting/index')}", $('.form').serialize()).success(function(data) {
+            layer.msg(data.msg);
+            if (!data.code) {
+                $('.rst').click();
+            }
+        });
+        return false;
+    }
+
+    function ooo() {
+        $.post("{:url('every/clear')}").success(function(data) {
+            layer.msg('清除成功');
+        });
+        return false;
+    }
+    $("#file_upload").change(function() {
+        //提交
+        var data = new FormData();
+        // console.log($(this)[0].files[0]);
+        data.append('img', $(this)[0].files[0]);
+        $.ajax({
+            url: '{:url("tupian")}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data.code) {
+                    $('#background').val(data.data);
+                    $('.preview').attr('src', data.data);
+                } else {
+                    layer.msg(data.msg);
+                }
+
+            },
+            error: function() {
+                layer.msg('上传出错');
+            }
+        });
+    });
+
+    </script>
+        <!--/请在上方写此页面业务相关的脚本-->
+</body>
+
+</html>

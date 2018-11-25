@@ -1,0 +1,146 @@
+{include file="public/_meta" /}
+
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<style>
+	.yincang{
+		display:none;
+	} 
+</style>
+</head>
+<body>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>订单管理 <span class="c-gray en">&gt;</span> 录入订单 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>关键字：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="keyword" class="input-text" value="" placeholder="编号、姓名、手机号" style="width:20%" >&nbsp;&nbsp;&nbsp;
+				<input class="btn btn-default radius" type="button" onclick="chaxun()" value="查询">
+			</div>
+		</div>
+		<input type="hidden" name="uid">
+		<div class="row cl yincang">
+			<label class="form-label col-xs-4 col-sm-2">编号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="number" class="input-text" style="width:20%">
+			</div>
+		</div>
+		<div class="row cl yincang">
+			<label class="form-label col-xs-4 col-sm-2">真实姓名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="real_name" class="input-text" style="width:20%">
+			</div>
+		</div>
+		<div class="row cl yincang">
+			<label class="form-label col-xs-4 col-sm-2">手机号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="mobile" placeholder="手机号" class="input-text" style="width:20%">
+			</div>
+		</div>
+		<div class="row cl yincang">
+			<label class="form-label col-xs-4 col-sm-2">账户余额：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="" value="{$admin.integral}" class="input-text" style="width:20%">&nbsp;&nbsp;&nbsp;
+			</div>
+		</div>
+		<div class="row cl yincang">
+			<label class="form-label col-xs-4 col-sm-2">选择福卡：</label>
+                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+				<select name="compo_id" class="select">
+					<option value="0">无</option>
+					<option value="1">金卡</option>
+					<option value="2">贵宾金卡</option>
+					<option value="3">vip金卡</option>
+					<option value="4">帝王金卡</option>
+					<option value="5">至尊金卡</option>
+				</select>
+			</span> </div>
+		</div>
+		<div class="row cl yincang">
+			<label class="form-label col-xs-4 col-sm-2">赠送福卡：</label>
+			 <div class="formControls col-xs-8 col-sm-9">
+			  <input type="text" name="num_song" placeholder="数量" class="input-text" style="width:10%">
+			  <span class="select-box" style="width:150px;">
+				<select name="compo_song" class="select">
+					<option value="0">无</option>
+					<option value="1">金卡</option>
+					<option value="2">贵宾金卡</option>
+					<option value="3">vip金卡</option>
+					<option value="4">帝王金卡</option>
+					<option value="5">至尊金卡</option>
+				</select>
+			</span> </div>
+			<!-- <label class="form-label col-xs-4 col-sm-2">选择福卡：</label>
+                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+				<select name="compo_id" class="select">
+					<option value="1">金卡</option>
+					<option value="2">贵宾金卡</option>
+					<option value="3">vip金卡</option>
+					<option value="4">帝王金卡</option>
+					<option value="5">至尊金卡</option>
+				</select>
+			</span> </div> -->
+		</div>
+		<div class="row cl yincang">
+			<label class="form-label col-xs-4 col-sm-2">订单备注：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="note" placeholder="订单备注" class="input-text" style="width:20%">
+			</div>
+		</div>
+		<div class="row cl yincang">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="return savePro();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 确认提交</button>
+			</div>
+		</div>
+	</form>
+</div>
+{include file="public/_footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="/static/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="/static/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/admin/lib/webuploader/0.1.5/webuploader.min.js"></script> 
+<script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+function chaxun(){
+	var keyword=$('input[name="keyword"]').val();
+	if(!keyword){
+		layer.msg("请输入一关键字");
+		$('.yincang').hide();
+	}
+	$.post('{:url("chaxun")}',{keyword:keyword}).success(function(data){
+		if(data.code){
+			$('.yincang').show();
+			$('#number').val(data.data.number);
+			$('#real_name').val(data.data.real_name);
+			$('#mobile').val(data.data.mobile);
+			$('input[name="uid"]').val(data.data.Id);
+		}else{
+			layer.msg("查无此人");
+			$('.yincang').hide();
+		}
+	})
+}
+function savePro(){
+    $.post('{:url("add")}',$('#form-article-add').serialize()).success(function(data){
+    	layer.msg(data.msg);
+    	if(data.code){
+    		setTimeout(function(){
+    			location.href = data.url;
+    		},500);
+    	}
+    });
+    return false;
+}
+
+function record(url,key){
+	id = $('input[name="uid"]').val();
+	var url = "{:url('"+url+"')}?id="+id;
+	creatIframe(url,key);
+}	
+
+</script>
+</body>
+</html>

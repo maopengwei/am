@@ -1,0 +1,299 @@
+{include file="public/_meta" /}
+<title>商品管理</title>
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+
+.lbwxq_mImg {
+    width: 110px;
+    height: 110px;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.lbwxq_mImg img {
+    width: 110px;
+    height: 110px;
+}
+
+
+.big img{
+    width: 1000px;
+    height: 1000px;
+}
+
+/*大图*/
+
+.lbwxq_lImg {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    left: 540px;
+    top: 25px;
+    display: none;
+    overflow: hidden;
+}
+
+.lbwxq_lImg img {
+    width: 1000px;
+    height: 1000px;
+}
+
+
+.pic {
+    display: inline-block;
+}
+
+.pic img {
+    width: 110px;
+    height: 110px;
+}
+.big{
+   position: absolute;
+    right: 15%;
+    top: 120px;
+    width: 400px;
+    height: 400px;
+}
+.big img{
+    width: 100%;
+    height: 100%;
+}
+</style>
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 订单管理
+        <span class="c-gray en">&gt;</span> 订单详情
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="page-container">
+        <form class="form form-horizontal" id="form-article-add">
+            <div id="tab-system" class="HuiTab">
+                <div class="tabBar cl">
+                    <span>订单信息</span>
+                    <span>产品信息</span>
+                    <span>物流</span>
+                    <span>操作</span>
+                </div>
+                <!-- 基础信息 -->
+                <div class="tabCon">
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">商家：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="商家" value="{$info['mer_text']}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">用户：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="用户" value="{$info.order.user.us_account}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">订单号：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="订单号" value="{$info['order_number']}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">总金额：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="总金额" value="{$info.order_money}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">订单备注：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="订单备注" value="{$info.order.order_note}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                   <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">状态：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="状态" value="{$info['status_text']}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">添加时间：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="添加时间" value="{$info['detail_add_time']}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">支付时间：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="添加时间" value="{$info['detail_pay_time']}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">发货时间：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="添加时间" value="{$info['detail_delive_time']}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+					<div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">收货时间：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="添加时间" value="{$info['detail_finish_time']}" disabled class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                </div>
+                <!-- 产品价格 -->
+                <div class="tabCon">
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">产品主图：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <div style="width:110px;height: 110px;position: relative;display: inline-block; ">
+                                <img src="{$info.prod_pic}" class="logo" onclick="click_file()" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">商品名称：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" class="input-text" name="prod_name" value="{$info.prod_name}" style="width:50%">
+                        </div>
+                    </div>
+                  
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">商品单价：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="prod_price_yuan" id="" placeholder="商品单价" value="{$info.prod_price}" class="input-text" style="width:50%"> 元
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">商品数量：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" name="prod_res" id="" placeholder="商品数量" value="{$info.prod_num}" class="input-text" style="width:50%">
+                        </div>
+                    </div>
+                   
+                   <!-- 
+			        <div class="row cl">
+			            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否新品：</label>
+			            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			                <div class="radio-box">
+			                    <input name="prod_is_new" type="radio" value="1" >
+			                    <label for="sex-1">是</label>
+			                </div>
+			                <div class="radio-box">
+			                    <input name="prod_is_new" type="radio" value="0" >
+			                    <label for="sex-2">否</label>
+			                </div>
+			            </div>
+			        </div> -->
+                </div>
+                <!-- 产品主图 -->
+                <div class="tabCon">
+                   
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">位置：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="街道" value="{$info.order.addr.addr_stree}" class="input-text" style="width:50%" disabled>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">电话：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="电话" value="{$info.order.addr.addr_tel}" class="input-text" style="width:50%" disabled>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">收货人：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="收货人" value="{$info.order.addr.addr_name}" class="input-text" style="width:50%" disabled>
+                        </div>
+                    </div>
+                	<div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">快递公司：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="快递公司" value="{$info.detail_delive_company}" class="input-text detail_delive_company" style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">快递单号：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" placeholder="快递单号" value="{$info.detail_delive_number}" class="input-text detail_delive_number" style="width:50%"> 
+                        </div>
+                    </div>
+            	</div>
+            	
+            	<!-- 详细内容 -->
+            	<div class="tabCon">
+                	<div class="row cl">
+		                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+		                    <button onclick="return delive();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i>发货</button>
+		                </div>
+		            </div>
+		            <div class="row cl">
+		                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+		                    <button onclick="return finish();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i>确认收货</button>
+		                </div>
+		            </div>
+            	</div>
+	            
+			</div>
+        </form>
+    </div>
+    {include file="public/_footer" /}
+    <script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+	<script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+	<script type="text/javascript" src="/static/admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript">
+    	
+	    $(function() {
+	        $('.skin-minimal input').iCheck({
+	            checkboxClass: 'icheckbox-blue',
+	            radioClass: 'iradio-blue',
+	            increaseArea: '20%'
+	        });
+	        $("#tab-system").Huitab({
+	            index: 0
+	        });
+	    }) 
+	    var id = '{$info.id}';
+
+		//发货
+	    function delive() {
+	    	var detail_delive_company = $('.detail_delive_company').val();
+	    	var detail_delive_number = $('.detail_delive_number').val();
+
+	    	if(!detail_delive_company){
+	    		layer.msg('请输入快递公司');return false;
+	    	}
+	    	if(!detail_delive_number){
+	    		layer.msg('请输入快递单号');return false;
+	    	}
+
+	        $.post("{:url('detail')}", {detail_delive_company:detail_delive_company,detail_delive_number:detail_delive_number,id:id}).success(function(data) {
+	            layer.msg(data.msg);
+	            if (data.code) {
+	               setTimeout(function(){
+	               		location.href = '';
+	               },1000)
+	            }
+	        });
+	        return false;
+	    }
+
+	   	//确认收货
+	    function finish() {
+	        $.post("{:url('finish')}", {id:id}).success(function(data) {
+	            layer.msg(data.msg);
+	            if (data.code) {
+	               setTimeout(function(){
+	               		location.href = data.url;
+	               },1000)
+	            }
+	        });
+	        return false;
+	    }
+    </script>
+    <!--/请在上方写此页面业务相关的脚本-->
+</body>
+
+</html>

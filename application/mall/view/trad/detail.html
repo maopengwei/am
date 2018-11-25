@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>订单详情</title>
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/style.css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css" tppabs="">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css" tppabs="">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css" tppabs="">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css" tppabs="">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js" tppabs=""></script>
+<script src="/static/mobile/js/swiper.min.js" tppabs=""></script>
+</head>
+<body>
+<div class="content_div">
+  
+    <!--header-->   
+  <div class="header">
+      <a href="index" tppabs="" class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>订单详情</p>
+    </div>
+  <!--header-->
+    <form action="" method="post" id="admin_login" class="cmxform form-horizontal">
+ <div class="tianjia_yhkcon">
+
+    <span style="font-size:16px;font-weight: bold; padding: 20px 0 10px;display: block; ">对方信息</span>   
+        <div class="xinxi_one">
+            <span>对方账号：</span>
+            <input type="text" class="input" value="{$info.user.us_account}" placeholder="请输入密码" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>手机号：</span>
+            <input type="text" class="input" value="{$info.user.us_tel}" placeholder="6-20位数字+字母组合" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>开户行：</span>
+            <input type="text" class="input" value="{$info.user.us_bank_name}" placeholder="开户行" disabled/>
+        </div>
+         <div class="xinxi_one">
+            <span>银行卡号：</span>
+            <input type="text" class="input" value="{$info.user.us_bank_number}" placeholder="银行卡号" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>银行卡姓名：</span>
+            <input type="text" class="input" value="{$info.user.us_bank_person}" placeholder="银行卡姓名" disabled/>
+        </div>
+         <div class="xinxi_one">
+            <span>微信：</span>
+            <input type="text" class="input" value="{$info.user.us_wechat}" placeholder="微信" disabled/>
+        </div>
+         <div class="xinxi_one">
+            <span>支付宝：</span>
+            <input type="text" class="input" value="{$info.user.us_alipay}" placeholder="支付宝" disabled/>
+        </div>
+
+    <span style="font-size:16px;font-weight: bold; padding: 20px 0 10px;display: block; ">订单信息</span>   
+    
+        <div class="xinxi_one">
+            <span>订单号：</span>
+            <input type="text" class="input" value="{$info.deal_number}" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>数目：</span>
+            <input type="text" class="input" value="{$info.deal_num}" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>价格：</span>
+            <input type="text" class="input" value="{$info.deal_price}" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>人民币：</span>
+            <input type="text" class="input" value="{$info.deal_yuan}" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>状态：</span>
+            <input type="text" class="input" value="{$info.status_text}" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>添加时间：</span>
+            <input type="text" class="input" value="{$info.deal_add_time}" disabled/>
+        </div>
+         <input type="hidden" name="id" value="{$info.id}">
+        {if condition="$info.deal_status eq 0 && $info.zt eq 1"}
+        <div class="xinxi_one">
+            <span>打款凭证：</span>
+            <img src="/static/mobile/img/add0.png" onclick="cli_pic()" class="looo" styLe="margin:30px 0 30px 50px;width:100px;">
+        </div>
+        <input type="file" hidden="hidden" class="shang" name="file" onchange="upload($(this))">
+        <input type="hidden" name="deal_pic" class="deal_pic">
+        <div class="xinxi_one">
+            <span>交易密码：</span>
+            <input type="password" name="us_safe_pwd" class="input" value="" />
+        </div>
+        {/if}
+
+        {if condition="$info.deal_status gt 0"}
+         <div class="xinxi_one">
+            <span>打款时间：</span>
+            <input type="text" class="input" name='pwd' value="{$info.deal_pay_time}" disabled/>
+        </div>
+        <div class="xinxi_one">
+            <span>打款凭证：</span>
+            <img src="{$info.deal_pic}" styLe="margin:20px 0 30px 30px;width:150px;">
+        </div>
+        {/if}
+        {if condition="$info.deal_status gt 1"}
+         <div class="xinxi_one">
+            <span>确认时间：</span>
+            <input type="text" class="input" name='pwd' value="{$info['deal_finish_time']}" disabled/>
+        </div>
+        {/if}
+      
+  </div>
+    
+    <div class="denglu_con">
+      <div class="tuichu">
+        {if condition="$info.deal_status eq 0 && $info.zt eq 0"}
+            <a>等待对方打款</a>
+        {/if}
+        {if condition="$info.deal_status eq 0 && $info.zt eq 1"}
+            <a onclick="dakuan()">确定</a>
+        {/if}
+        {if condition="$info.deal_status eq 1 && $info.zt eq 0"}
+            <a onclick="shou()">确认收款</a>
+        {/if}
+        {if condition="$info.deal_status eq 1 && $info.zt eq 1"}
+            <a>等待对方收款</a>
+        {/if}
+        {if condition="$info.deal_status eq 2"}
+            <a>交易完成</a>
+        {/if}
+      </div> 
+    </form>
+</div> 
+</body>
+</html>
+
+<!--使用layui-->
+<script src="/static/mobile/js/countUp.js" tppabs=""></script>
+<script src="/static/mine/layer/layer.js"></script>
+<script type="text/javascript">
+
+function cli_pic(){
+    $('.shang').click();
+}
+
+function upload(dada){
+    var data = new FormData();
+    data.append('file', dada[0].files[0]);
+    var index = layer.load(1, { shade: false }); //0代表加载的风格，支持0-2
+    $.ajax({
+        url: '{:url("every/upload")}',
+        type: 'POST',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            layer.msg(data.msg);
+            if (data.code) {
+                $('.looo').attr('src',data.data);
+                $('.deal_pic').val(data.data);
+            }
+            layer.close(index);
+        },
+        error: function() {
+            layer.close(index);
+            layer.msg('上传出错');
+        }
+    });
+}
+// ajax post提交
+function dakuan() {
+    var target,query,form;
+    // var that = this;
+    form = $('.form-horizontal');
+    target = form.get(0).action;
+    query = form.serialize();
+    var index = layer.load(2, {shade: false}); //0代表加载的风格，支持0-2
+    $.ajax({
+        type: "POST",
+        url: 'dak',
+        data: query,
+        dataType: "json",
+        success: function(data) {
+
+            $('.ajax-post-login').removeClass('button_one').addClass("button_two");
+            if(data.code){
+                layer.msg(data.msg, {icon: 1});
+                setTimeout(function(){
+                    layer.closeAll();
+                    location.href = '';
+                }, 500);
+            }else{
+                layer.closeAll();
+                layer.msg(data.msg, {icon: 2});
+            }
+                
+        }
+    });
+}
+function shou(){
+    var id = "{$info['id']}";
+    layer.confirm('确定收到款么？', {
+          btn: ['确定', '取消']
+    }, function(index, layero){
+        $.ajax({
+            type: "post",
+            url: "receive",
+            data: {id:id},
+            success: function(data) {
+                layer.msg(data.msg, {icon: 1});
+                if(data.code){
+                    setTimeout(function(){
+                        layer.closeAll();
+                        location.href = '';
+                    }, 500);
+                }
+            }
+        });
+    });
+}
+document.oncontextmenu = function () { return false; };
+document.onkeydown = function () {
+    if (window.event && window.event.keyCode == 123) {
+        event.keyCode = 0;
+        event.returnValue = false;
+        return false;
+    }
+};
+$('.ajax-post').click(function() {
+    ajaxPost();
+});
+// ajax post提交
+function ajaxPost() {
+    var target,query,form;
+    // var that = this;
+    form = $('.form-horizontal');
+    target = form.get(0).action;
+    query = form.serialize();
+    var index = layer.load(2, {shade: false}); //0代表加载的风格，支持0-2
+    $.ajax({
+        type: "POST",
+        url: 'pass',
+        data: query,
+        dataType: "json",
+        success: function(data) {
+              $('.ajax-post-login').removeClass('button_one').addClass("button_two");
+              if(data.code){
+                layer.msg(data.msg, {icon: 1});
+                setTimeout(function(){
+                    layer.closeAll();
+                    location.href = '';
+                }, 500);
+              }else{
+                layer.msg(data.msg, {icon: 2});
+              }
+        }
+    });
+}
+
+
+function CountUpeses(objid,objmoney,numbers){
+    var options = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.', 
+    };
+    var demo = new CountUp(objid, 0, objmoney, numbers,2, options);
+        if (!demo.error) {
+        demo.start();
+        } else {
+        console.error(demo.error);
+    }
+}
+function CountUpes(objid,objmoney){
+    var options = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.', 
+    };
+    var demo = new CountUp(objid, 0, objmoney, 4,2, options);
+        if (!demo.error) {
+        demo.start();
+        } else {
+        console.error(demo.error);
+    }
+}
+
+</script>
+<script type="text/javascript">   
+    function GetVerifying() {
+        var tel = document.getElementById("usertel").value;
+        var btn = document.getElementById("btn");
+        var userName=document.getElementById("userName").value;
+        if(tel == 0) {
+            // alert('用于登陆的手机号码不能为空...');
+            layer.msg('手机号码不能为空...', {icon: 2});
+            //获得焦点
+            document.getElementById("usertel").focus();
+            return;
+        }
+        if(/^1[3456789]\d{9}$/.test(tel)) {
+            $.ajax({
+                type: "POST",
+                url: "creatcode.html"/*tpa=http://vip5.gxbbwrj.com/y8908cs/public/creatcode.html*/,
+                data: 'mobile='+tel+'&userName='+userName,
+                dataType: "json",
+                success: function(data) {
+                    if(data.msg=='发送成功'){
+                      time(btn);
+                    }
+                    layer.msg(data.msg);
+                }
+            });
+
+        }else{
+            // alert('手机号码格式不正确请重新输入...');
+            layer.msg('手机号码格式不正确请重新输入...', {icon: 2});
+             document.getElementById("userTel").focus();
+            return;
+        }
+    }
+    var wait = 120;
+    function time(o) {
+        if(wait == 0) {
+            o.removeAttribute("disabled");
+            o.value = "获取验证码";
+            wait = 120;
+        } else {
+            o.setAttribute("disabled", true);
+            o.value = wait + "s";
+            wait--;
+            setTimeout(function() {
+                    time(o)
+                },
+                1000)
+        }
+    }
+</script>

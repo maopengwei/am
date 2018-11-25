@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>注册</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css"  type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css" >
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js" ></script>
+<!-- <script src="/static/mobile/js/web.js" ></script> -->
+<!-- <link href="/static/mobile/css/style-1.css"  rel="stylesheet" /> -->
+<!-- <script type="text/javascript" src="/static/mobile/js/tn_code.js" ></script> -->
+
+
+</head>
+<body>
+  <style type="text/css">
+    a.hidefocus{outline:none}
+    .logins{
+      width: 100%;
+      display: block;
+      border-radius: 45px;
+    }
+    .selectes{
+      line-height: 35px;
+      width: calc(100% - 80px);
+      border-width: 0px;
+      border-top-style: none; 
+      border-right-style: none; 
+      border-left-style: none; 
+      border-bottom-style: none;
+    }
+    .yzm{
+      float: right;
+      background:  no-repeat;
+      border:  0;
+      font-size: 1.5rem;
+      padding: 0.5rem 0;
+      margin-right: 3%;
+      width: 21%;}
+    
+
+  </style>
+<div class="content_div">
+  
+    <!--header-->   
+  <div class="header">
+      <a href="login.html"  class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>注册</p>
+    </div>
+  <!--header-->
+   <form action="" method="post" id="admin_login" class="cmxform form-horizontal">
+    <div class="zhuce_xincon">
+        <div class="xinxi_one">
+          <span>推荐人:</span>
+          <input type="text" class="input" value='{$Request.get.p_acc|default=""}' {if condition="$Request.get.p_acc"} readonly {/if} name='p_acc' placeholder="请输入推荐人"/>
+        </div>
+        <div class="xinxi_one">
+          <span>安置人:</span>
+          <input type="text" class="input" value='{$Request.get.a_acc|default=""}' {if condition="$Request.get.a_acc"} readonly {/if} name='a_acc' placeholder="请输入安置人"/>
+        </div>
+        <div class="xinxi_one">
+          <span>用户名:</span>
+          <input type="text" class="input" name='us_account' placeholder="请输入用户名"/>
+        </div>
+        <div class="xinxi_one">
+          <span>手机号码:</span>
+          <input type="text" class="input" name="us_tel" placeholder="请输入手机号码"/>
+        </div>
+        <!--<div class="xinxi_one">
+          <span>验证码:</span>
+          <button class="yzm">获取验证码</button>
+          <input type="text" class="input" name="yzm" placeholder="请输入验证码" style="  width: calc(100% - 46%);"/>
+          
+        </div>-->
+         <div class="xinxi_two">
+                <span>验证码：</span>
+                <input type="number" class="input" name='sode' value="" placeholder="手机验证码"/>
+                <input type="button" id="btn" class="gain" value="获取验证码"  onclick="gain()" />  
+            </div>
+        <div class="xinxi_one">
+          <span>登录密码:</span>
+          <input type="password" class="input" name='us_pwd' placeholder="6-20位数字+字母组合"/>
+        </div>
+        <div class="xinxi_one">
+          <span>交易密码:</span>
+          <input type="password" class="input" name='us_safe_pwd' placeholder="6-20位数字+字母组合"/>
+        </div>
+       <!--  <div class="xinxi_two">
+          <input type="checkbox" class="input"/><span>同意款</span>
+        </div> -->
+
+    </div>
+    <div class="zhuce_xinxi_three">
+        <div class="danxuan">
+             <div class="one">
+                  <input type="checkbox" name="radio1" class="radio1" >
+                  <i></i>
+             </div>
+        </div>
+        <p>我已阅读并同意<a href="#">《用户协议》</a></p>
+    </div>
+    <div class="tuichu">
+        <a href="#" class="ajax-post logins">注册</a>
+    </div>  
+  </form>
+</div>
+
+</body>
+</html>
+<!--使用layui-->
+
+<script src="/static/mobile/js/countUp.js" ></script>
+<!-- <script src="/static/mobile/js/layui.all.js"  charset="utf-8"></script> -->
+<script src="/static/mine/layer/layer.js"></script>
+<!-- <script src="/static/mobile/js/common.js" ></script> -->
+<script type="text/javascript">
+
+// document.oncontextmenu = function () { return false; };
+document.onkeydown = function () {
+    if (window.event && window.event.keyCode == 123) {
+        event.keyCode = 0;
+        event.returnValue = false;
+        return false;
+    }
+};
+$('.ajax-post').click(function() {
+  var aa = $("input[type='checkbox']").is(':checked')
+  if(!aa){
+    layer.msg('请勾选用户协议', {icon: 2});
+    return;
+  }
+  ajaxPost();
+});
+// ajax post提交
+function ajaxPost() {
+    var target,query,form;
+    // var that = this;
+    form = $('.form-horizontal');
+    target = form.get(0).action;
+    query = form.serialize();
+    var index = layer.load(2, {shade: false}); //0代表加载的风格，支持0-2
+    $.ajax({
+        type: "POST",
+        url: 'reg',
+        data: query,
+        dataType: "json",
+        success: function(data) {
+
+          $('.ajax-post-login').removeClass('button_one').addClass("button_two");
+          if(data.code){
+            layer.msg(data.msg, {icon: 1});
+            setTimeout(function(){
+                layer.closeAll();
+                location.href = 'login';
+            }, 500);
+          }else{
+            layer.msg(data.msg, {icon: 2});
+             setTimeout(function(){
+                layer.closeAll();
+            }, 1000);
+          }
+
+     
+        }
+    });
+}
+
+function gain() {
+
+   var us_tel=$('input[name="us_tel"]').val();
+   if(!us_tel){
+        layer.msg('请输入手机号',{icon: 2});
+        // layer.tips('手机号格式不正确', '.us_tel',{tips: [1, '#3595CC'],time:1000});
+        return;
+   }
+    if(!isPoneAvailable(us_tel)){
+        layer.msg('手机号格式不正确',{icon: 2});
+        // layer.tips('手机号格式不正确', '.us_tel',{tips: [1, '#3595CC'],time:1000});
+        return;
+   }
+   $('.gain').removeAttr('onclick');
+   code($('.gain'),us_tel);
+}
+
+function countDown(obj, sec, oritxt, info) {
+    if (sec == 0)
+    {
+        obj.val(oritxt);
+        obj.attr('onclick','gain()');
+    }
+    else
+    {
+        obj.val(sec + info);
+        sec--;
+        setTimeout(function(){
+            countDown(obj, sec, oritxt, info);
+        }, 1000);
+    }
+}
+function code(obj,us_tel) {
+    $.post("{:url('every/send')}",{us_tel:us_tel,type:'reg'}).success(function(data){
+        console.log(data);
+        layer.msg(data.msg);
+        if(data.code){
+            countDown(obj, 120, '获取验证码', '秒后获取'); 
+        }else{
+            obj.attr('onclick','gain()');
+        }
+     });
+}
+function isPoneAvailable(str) {
+        var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!myreg.test(str)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+</script>
+

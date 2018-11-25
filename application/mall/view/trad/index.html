@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://vip5.gxbbwrj.com/y8908cs/public/match.html -->
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+  <meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="apple-themes-web-app-capable" content="yes">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <meta name="format-detection" content="telephone=no">
+  <title>交易</title>
+  <link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+  <link href="/static/mobile/css/buyback.css" rel="stylesheet" type="text/css">
+  <link id="layuicss-laydate" rel="stylesheet" href="/static/mobile/css/laydate.css" media="all">
+  <link id="layuicss-layer" rel="stylesheet" href="/static/mobile/css/layer.css" media="all">
+  <link id="layuicss-skincodecss" rel="stylesheet" href="/static/mobile/css/code.css" media="all">
+</head>
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script>
+<script src="/static/mobile/js/swiper.min.js"></script>
+<script type="text/javascript" src="/static/mobile/js/jquery-1.10.2.min.js"></script>
+
+
+<body >
+  <style type="text/css">
+    .buyback {
+      background-color: white;
+    }
+
+    .buyback .menu_box {
+      border: none;
+    }
+
+    .buyback .menu_box .entrust {
+      background-color: white;
+    }
+
+    .buyback .menu_box .right #buy {
+      border-top: none;
+    }
+
+    .buyback .nav li {
+      width: 33% !important;
+    }
+
+    .buyback .menu_box .left {
+      width: 100% !important;
+    }
+
+    .buyback .menu_box .left .fg {
+      color: #c9a887;
+      width: 65%;
+      margin: 0 auto;
+      border-radius: 20px;
+      line-height: 45px;
+      text-align: center;
+      border: none !important;
+      margin-top: 28px;
+      background: #1a181b;
+      font-size: 1.3rem;
+    }
+
+    .buyback .menu_box .right #buy {
+      margin-top: 16px;
+    }
+
+    .data {
+      width: 100%;
+      height: auto;
+    }
+
+    .data li {
+      width: 100%;
+    }
+
+    .data li:nth-child(1) {
+      border-bottom: 1px solid #c5c5c5;
+    }
+
+    .zhm {
+      color: black !important;
+    }
+    .tow—money{
+      width: 50%;
+      float: left;
+      text-align: center;
+    }
+  
+  </style>
+
+  <!--回购资产-->
+  <div class="buyback">
+    <ul class="nav" id="nav_menu">
+      <li><a class="cur">卖出</a></li>
+      <li><a>交易大厅</a></li>
+      <li><a>我的交易</a></li>
+      <!-- <li><a>交易完成</a></li> -->
+    </ul>
+    <div class="menu_sub">
+      <div class="menu_box to" id="menu_box1">
+        <form id="dqtcbuy" class="cmxform form-horizontal-buy">
+          <div class="left">
+            <div>
+              <div class="tow—money"> 
+                <p>我的AMFC</p>
+                <p style="font-size: 2rem">{$mine['us_wal']}</p>
+              </div>
+              <div class="tow—money">
+                <p>当前价格</p>
+                <p style="font-size: 2rem">{$price}</p>
+              </div>
+              
+            </div>
+            <ul>
+              
+              <p>数量</p>
+              <li>
+                <input type="number" placeholder="最小交易量为10" name="issue_num" style="height: 40px;border: none; padding: 0px 30px 0px 8px;width: 100%;line-height: 40px;">
+              </li>
+              <!--<p>验证码</p>
+              <li>
+                <input type="number" placeholder="请输入验证码" name="yzm" style="height: 40px;border: none; padding: 0px 30px 0px 8px;width: 71%;line-height: 40px;">
+                <button style="padding: 1rem 0;border: 0px;text-align: center;width: 24%;background: no-repeat;">获取验证码</button>
+              </li>-->
+              <p>交易密码</p>
+              <li>
+                <input type="password" placeholder="请输入密码" id="jypswd" name="us_safe_pwd" style="height: 40px;border: none; padding: 0px 30px 0px 8px;width: 100%;line-height: 40px;">
+              </li>
+            </ul>
+
+          </div>
+          <!-- <div class="zhuyi">
+            <i class="iconfont icon-zhuyi"></i>
+            <p>最小交易量为10</p>
+          </div> -->
+          <div class="left">
+            <div class="fg ajax-post-buy">卖出</div>
+          </div>
+        </form>
+      </div>
+      <div class="menu_box" id="menu_box2">
+        <div class="right" style="width: 100%;height: auto;">
+          <ul class="data" id="buy">
+            <li style="line-height: 40px; font-size:40px;">
+              <font class="zhm">账户名</font><span>数目</span><span style="color:#4183C4">操作</span></li>
+            {volist name='sell' id="vo"}
+            <li onclick="window.location='ru?id={$vo.id}'" style="line-height: 36px;">
+              <font>{$vo.us_text}</font><span>{$vo.issue_num}</span><span>详情</span></li>
+            {/volist}
+          </ul>
+        </div>
+
+      </div>
+      <div class="menu_box" id="menu_box3">
+
+        <ul class="entrust">
+          {volist name="list" id='vo'}
+          <li class="{$vo.ru?'entrust_buy':'entrust_sell'}">
+            <dl>
+              <dt>{$vo.ru?'买':'卖'}：
+                <font>{$vo.deal_number}</font>
+              </dt>
+              <!-- <dt style="float: right;">成交：<font>QC--</font></dt> -->
+            </dl>
+            <dl style="border: none;">
+              <dd><em>{$vo.ru?'买':'卖'}</em>
+                <p>数量</p><span class="price">{$vo.deal_num}</span></dd>
+              <dd>
+                <p>状态</p><span>{$vo.status_text}</span></dd>
+              <dd style="width: 24%;">
+                <a href="detail?id={$vo.id}">查看详情</a>
+              </dd>
+            </dl>
+          </li>
+          {/volist}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <!-- footer-->
+  <style type="text/css">
+    .footer ul li p {
+      font-size: 12px;
+      color: #fff;
+    }
+
+    .footer ul li i {
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .footer ul li {
+      width: 25%;
+      float: left;
+      padding: 5px;
+      text-align: center;
+    }
+  </style>
+  <div style="height:50px;height: 50px;margin-bottom: 50px;"></div>
+  <div class="footer" style="background: #1a181b;">
+    <ul>
+      <li class="">
+        <a href="/mall/index/indexl">
+              <i><img src="/static/mobile/img/shouye.png" width="30%"></i>
+                <p>首页</p>
+            </a>
+      </li>
+      <li>
+        <a href="/mall/shop/index">
+              <i><img src="/static/mobile/img/shop.png" width="30%"></i>
+                <p>商城</p>
+            </a>
+      </li>
+      <li class="on">
+        <a href="/mall/trad/index">
+              <i><img src="/static/mobile/img/jiaoyi1.png" width="30%"></i>
+                <p>交易</p>
+            </a>
+      </li>
+      <li class="">
+        <a href="/mall/user/index">
+              <i><img src="/static/mobile/img/grzx.png" width="30%"></i>
+                <p>我的</p>
+            </a>
+      </li>
+    </ul>
+  </div>
+  <!--footer-->
+  <!--使用layui-->
+
+  <script src="/static/mobile/js/countUp.js"></script>
+  <!-- <script src="/static/mobile/js/layui.all.js" charset="utf-8"></script>
+<script src="/static/mobile/js/common.js"></script> -->
+  <script src="/static/mine/layer/layer.js"></script>
+  <script type="text/javascript">
+    // document.oncontextmenu = function () { return false; };
+    document.onkeydown = function () {
+      if (window.event && window.event.keyCode == 123) {
+        event.keyCode = 0;
+        event.returnValue = false;
+        return false;
+      }
+    };
+    $('.ajax-post').click(function () {
+      ajaxPost();
+    });
+    // ajax post提交
+    function ajaxPost() {
+      var target, query, form;
+      // var that = this;
+      form = $('.form-horizontal');
+      target = form.get(0).action;
+      query = form.serialize();
+      var index = layer.load(2, { shade: false }); //0代表加载的风格，支持0-2
+      $.ajax({
+        type: "POST",
+        url: target,
+        data: query,
+        dataType: "json",
+        success: function (data) {
+          if (data.url) {
+            $('.ajax-post').attr('disabled', true).addClass('verify-disabled');
+            layer.msg(data.msg, { icon: 1 });
+            setTimeout(function () {
+              layer.closeAll();
+              if (data.url) {
+                location.href = data.url;
+              } else {
+                location.reload();
+              }
+            }, 2000);
+          } else {
+            layer.msg(data.msg, { icon: 2 });
+            setTimeout(function () {
+              layer.closeAll();
+              if (data.url) {
+                location.href = data.url;
+              } else {
+                // location.reload();
+              }
+            }, 2000);
+          }
+        }
+      });
+    }
+
+
+    function CountUpeses(objid, objmoney, numbers) {
+      var options = {
+        useEasing: true,
+        useGrouping: true,
+        separator: ',',
+        decimal: '.',
+      };
+      var demo = new CountUp(objid, 0, objmoney, numbers, 2, options);
+      if (!demo.error) {
+        demo.start();
+      } else {
+        console.error(demo.error);
+      }
+    }
+    function CountUpes(objid, objmoney) {
+      var options = {
+        useEasing: true,
+        useGrouping: true,
+        separator: ',',
+        decimal: '.',
+      };
+      var demo = new CountUp(objid, 0, objmoney, 4, 2, options);
+      if (!demo.error) {
+        demo.start();
+      } else {
+        console.error(demo.error);
+      }
+    }
+
+  </script>
+  <script type="text/javascript">
+    $('#nav_menu a').click(function () {
+      $('#nav_menu a').removeClass('cur')
+      $(this).addClass('cur')
+    })
+
+    $('#nav_menu a:eq(0)').click(function () {
+      if ($('#menu_box1').hasClass('to1')) {
+        $('#menu_box1').removeClass('to1')
+        $('.menu_box').removeClass('to')
+        $('#menu_box2').removeClass('to1')
+        $('#menu_box3').removeClass('to1')
+        $('#menu_box1').addClass('to')
+      }
+    })
+
+    $('#nav_menu a:eq(1)').click(function () {
+      $('#menu_box1').addClass('to1')
+      $('#menu_box2').addClass('to')
+      if ($('#menu_box2').hasClass('to1')) {
+        $('#menu_box2').removeClass('to1')
+        $('#menu_box3').removeClass('to1')
+        $('.menu_box').removeClass('to')
+        $('#menu_box2').addClass('to')
+      }
+    })
+
+    $('#nav_menu a:eq(2)').click(function () {
+      $('#menu_box1').addClass('to1')
+      $('#menu_box2').addClass('to1')
+      $('#menu_box3').addClass('to')
+      if ($('#menu_box3').hasClass('to1')) {
+        $('#menu_box3').removeClass('to1')
+        $('.menu_box').removeClass('to')
+        $('#menu_box3').addClass('to')
+      }
+    })
+    $('#nav_menu a:eq(3)').click(function () {
+      $('#menu_box1').addClass('to1')
+      $('#menu_box2').addClass('to1')
+      $('#menu_box3').addClass('to1')
+      $('#menu_box4').addClass('to')
+      if ($('#menu_box4').hasClass('to1')) {
+        $('#menu_box4').removeClass('to1')
+        $('.menu_box').removeClass('to')
+        $('#menu_box4').addClass('to')
+      }
+    })
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    function dqtcxx(obj) {
+      var getgs = 0;
+      var getpdb = 0;
+      switch (obj) {
+        case '1':
+          getgs = 10;
+          getpdb = 0;
+          break;
+        case '2':
+          getgs = 2500;
+          getpdb = 0;
+          break;
+        case '3':
+          getgs = 1500;
+          getpdb = 2;
+          break;
+        case '4':
+          getgs = 1000;
+          getpdb = 3;
+          break;
+        case '5':
+          getgs = 600;
+          getpdb = 4;
+          break;
+        case '6':
+          getgs = 300;
+          getpdb = 5;
+          break;
+        default:
+          getgs = 0;
+          break;
+      }
+      // $('#gushu').val(getgs);
+      $('#pdbshuliang').val(getpdb);
+    }
+
+    $('.ajax-post-buy').click(function () {
+      ajaxPostBuy();
+    });
+    // ajax post提交
+    function ajaxPostBuy() {
+      var target, query, form;
+      // var that = this;
+      form = $('.form-horizontal-buy');
+      // target = form.get(0).action;
+      query = form.serialize();
+      var index = layer.load(2, { shade: false }); //0代表加载的风格，支持0-2
+      $.ajax({
+        type: "POST",
+        url: 'sell',
+        data: query,
+        dataType: "json",
+        success: function (data) {
+          $('.ajax-post-login').removeClass('button_one').addClass("button_two");
+          if (data.code) {
+            layer.msg(data.msg, { icon: 1 });
+            setTimeout(function () {
+              layer.closeAll();
+              location.href = '';
+            }, 500);
+          } else {
+
+            layer.msg(data.msg, { icon: 2 });
+            setTimeout(function () {
+              layer.closeAll();
+            }, 500);
+          }
+
+
+
+          // if (data.url) {
+          //     $('.ajax-post-buy').attr('disabled', true).addClass('verify-disabled');
+          //     layer.msg(data.msg, {icon: 1});
+          //     setTimeout(function() {
+          //         layer.closeAll();
+          //         if (data.url) {
+          //             location.href = data.url;
+          //         } else {
+          //             location.reload();
+          //         }
+          //     }, 2000);
+          // } else {
+          //     layer.msg(data.msg, {icon: 2});
+          //     setTimeout(function(){
+          //         layer.closeAll();
+          //         if (data.url) {
+          //             location.href = data.url;
+          //         } else {
+          //             // location.reload();
+          //         }
+          //     }, 2000);
+          // }
+        }
+      });
+    }
+
+    $('.ajax-post-sell').click(function () {
+      ajaxPostSell();
+    });
+    // ajax post提交
+    function ajaxPostSell() {
+      var target, query, form;
+      // var that = this;
+      form = $('.form-horizontal-sell');
+      target = form.get(0).action;
+      query = form.serialize();
+      var index = layer.load(2, { shade: false }); //0代表加载的风格，支持0-2
+      $.ajax({
+        type: "POST",
+        url: target,
+        data: query,
+        dataType: "json",
+        success: function (data) {
+          if (data.url) {
+            $('.ajax-post-sell').attr('disabled', true).addClass('verify-disabled');
+            layer.msg(data.msg, { icon: 1 });
+            setTimeout(function () {
+              layer.closeAll();
+              if (data.url) {
+                location.href = data.url;
+              } else {
+                location.reload();
+              }
+            }, 2000);
+          } else {
+            layer.msg(data.msg, { icon: 2 });
+            setTimeout(function () {
+              layer.closeAll();
+              if (data.url) {
+                location.href = data.url;
+              } else {
+                // location.reload();
+              }
+            }, 2000);
+          }
+        }
+      });
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+{include file="public/_meta" /}
+<link href="/static/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>用户管理 <span class="c-gray en">&gt;</span> 添加会员 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-article-add">
+        <input type="text" hidden="hidden" name="us_aid" value="{$ainfo['id']}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">推荐人(手机号)：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="不填请留空" name="p_tel" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">报单中心(手机号)：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="不填请留空" name="us_center" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">节点人(手机号)：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$ainfo['us_tel']}" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分区：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="us_qu" type="radio" value="0" id="">
+                    <label for="sex-1">左区</label>
+                </div>
+                <div class="radio-box">
+                    <input name="us_qu" type="radio" value="1" id="">
+                    <label for="sex-2">右区</label>
+                </div>
+            </div>
+        </div>
+         <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择类型：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="us_type" type="radio" checked value="0" id="">
+                    <label for="sex-1">代言金卡</label>
+                </div>
+                <div class="radio-box">
+                    <input name="us_type" type="radio" value="1" id="">
+                    <label for="sex-2">金卡会员</label>
+                </div>
+               
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">账户名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" name="us_account" class="input-text" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">真实姓名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" name="us_real_name" class="input-text" style="width:20%">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">手机号码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="us_tel" style="width:20%">
+            </div>
+        </div>
+        
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登录密码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="us_pwd" style="width:20%">
+            </div>
+        </div>
+        
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>安全密码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="us_safe_pwd" style="width:20%">
+            </div>
+        </div>
+        
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button onclick="return add();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i>确认提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="public/_footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+
+<script type="text/javascript">
+ $('.form input[name="us_qu"][value=' + "{$us_qu}" + ']').attr("checked", true);
+function add(){
+    $.post('{:url("add")}',$('#form-article-add').serialize()).success(function(data){
+        layer.msg(data.msg);
+        if(data.code){
+            setTimeout(function(){
+                location.href = 'tupu?id='+data.id;
+            },1000);
+        }
+    });
+    return false;
+}
+
+</script>
+</body>
+</html>

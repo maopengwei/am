@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)http://vip5.gxbbwrj.com/y8908cs/public/putforwarded.html -->
+<html><script>
+</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>提现</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script><style type="text/css" abt="234"></style>
+<script src="/static/mobile/js/swiper.min.js"></script>
+<link id="layuicss-laydate" rel="stylesheet" href="/static/mobile/css/laydate.css" media="all">
+<link id="layuicss-layer" rel="stylesheet" href="/static/mobile/css/layer.css" media="all">
+<link id="layuicss-skincodecss" rel="stylesheet" href="/static/mobile/css/code.css" media="all">
+<script>//remove 17173 video ad
+doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                // var handler = this.animationsHandler.bind(this);
+                // document.body.addEventListener('webkitAnimationStart', handler, false);
+                // document.body.addEventListener('msAnimationStart', handler, false);
+                // document.body.addEventListener('oAnimationStart', handler, false);
+                // document.body.addEventListener('animationstart', handler, false);
+                // this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+//remove baidu search ad
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+            all = document.body.querySelectorAll('.result.c-container[id="1"]');
+            //if(all.length == 1) return;
+            for(var i = 0; i < all.length; i++){
+                if(all[i].innerHTML && all[i].innerHTML.indexOf('广告')>-1){
+                    all[i].style.display= "none";all[i].style.visibility='hidden';
+                }
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',aa)
+    };
+}
+//remove sohu video ad
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+//remove 56.com video ad
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+//fore iqiyi enable html5 player function
+if (document.URL.indexOf("iqiyi.com") >= 0){
+    if (document.cookie.indexOf("player_forcedType=h5_VOD")==-1){
+        document.cookie='player_forcedType=h5_VOD'
+        if(localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime)<60000){
+            console.log('no reload')
+        }else{
+            location.reload()
+            localStorage.reloadTime = Date.now();
+        }
+    }
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+<body>
+
+<div class="content_div">
+  
+    <!--header-->   
+  <div class="header">
+      <a href="/mall/user/index" class="back"><i class="iconfont icon-xiangzuo"></i></a>
+        <p>提现</p>
+    </div>
+  <!--header-->
+  <form action="http://vip5.gxbbwrj.com/y8908cs/public/putforwardtj.html" method="post" id="admin_login" class="cmxform form-horizontal">
+  <div class="maichuzhongzi">
+      <div class="mairu_top" style="min-height: 150px;">
+
+        </div>
+        
+        <div class="mairu_center">
+          <ul>
+              <li>
+                  <p>{$mine['us_msc']}</p>
+                    <span>Doken</span>
+          
+                </li>
+                                  <li>
+                  <p>{:cache('setting')['cal_tx']}%</p>
+                  <span>手续费</span>
+                </li>
+                            </ul>
+        </div>
+        
+        <div class="mairu_bottom">
+          <div class="bottom_con">
+                <div class="bottom_one">
+                    <span>提现到</span>
+                    <select name="tx_type">
+                      <option value="">请选择提现类型</option>
+                      <option value="1">银行卡</option>
+                      <option value="2">支付宝</option>
+                      <option value="3">微信</option>
+                    </select>
+                    <i class="iconfont icon-you"></i>
+                </div>
+                <div class="bottom_one">
+                    <span>提现数量</span>
+                    <input type="text" value="" name="tx_num" placeholder="请输入数量" onkeyup="this.value=this.value.replace(/[^\d]/g,&#39;&#39;) " onafterpaste="this.value=this.value.replace(/[^\d]/g,&#39;&#39;)">
+                </div>
+                <div class="bottom_one">
+                    <span>交易密码</span>
+                    <input type="password" value="" name="us_safe_pwd" placeholder="请输入交易密码">
+                </div>
+                  <div class="zhuyi">
+                    <i class="iconfont icon-zhuyi"></i>
+                      <p style="color: #f00;font-size: 15px;">提现的最低数量为10，倍数为10，手续费为{:cache('setting')['cal_tx']}%。</p>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="quit ajax-post">
+         <a>提交</a>
+    </div>
+
+  </form>
+    
+</div>
+<!--使用layui-->
+
+<script src="/static/mobile/js/countUp.js"></script>
+<!-- <script src="/static/mobile/js/layui.all.js" charset="utf-8"></script>
+<script src="/static/mobile/js/common.js"></script> -->
+<script src="/static/mine/layer/layer.js"></script>
+<script type="text/javascript">
+
+document.oncontextmenu = function () { return false; };
+document.onkeydown = function () {
+    if (window.event && window.event.keyCode == 123) {
+        event.keyCode = 0;
+        event.returnValue = false;
+        return false;
+    }
+};
+$('.ajax-post').click(function() {
+    ajaxPost();
+});
+// ajax post提交
+function ajaxPost() {
+    var target,query,form;
+    // var that = this;
+    form = $('.form-horizontal');
+    target = form.get(0).action;
+    query = form.serialize();
+    var index = layer.load(2, {shade: false}); //0代表加载的风格，支持0-2
+    $.ajax({
+        type: "POST",
+        url: 'tx',
+        data: query,
+        dataType: "json",
+        success: function(data) {
+
+            if(data.code){
+                layer.msg(data.msg, {icon: 1});
+                setTimeout(function() {
+                    layer.closeAll();
+                    location.reload();
+                }, 2300);
+            }else{
+                 layer.msg(data.msg, {icon: 2});
+                setTimeout(function() {
+
+                     $('.ajax-post').attr('disabled', true).addClass('verify-disabled');
+                        layer.closeAll();
+                }, 2300);
+               
+            }
+
+        }
+    });
+}
+
+
+function CountUpeses(objid,objmoney,numbers){
+    var options = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.', 
+    };
+    var demo = new CountUp(objid, 0, objmoney, numbers,2, options);
+        if (!demo.error) {
+        demo.start();
+        } else {
+        console.error(demo.error);
+    }
+}
+function CountUpes(objid,objmoney){
+    var options = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.', 
+    };
+    var demo = new CountUp(objid, 0, objmoney, 4,2, options);
+        if (!demo.error) {
+        demo.start();
+        } else {
+        console.error(demo.error);
+    }
+}
+
+</script>
+
+
+
+
+<div id="cli_dialog_div"></div></body></html>

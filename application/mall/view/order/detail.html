@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>交易详情</title>
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/g_jiaoyichenggong.css" />
+    <script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+    body {
+        background-color: #f5f5f9;
+    }
+    .header {
+        background-color: #fff;
+        border-bottom: 1px solid #ccc;
+    }
+    .normal_credit>img, .total>img {
+    width: 0.4rem;
+    vertical-align: text-bottom;
+}
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="javascript:history.go(-1);" class="left">
+			<img src="/static/mall/img/return.png" />
+		</a>
+        <span class="center">订单详情</span>
+        <a href="javascript:void(0);" class="right"></a>
+    </div>
+    <div>
+        <div class="shangpin">
+            <div class="shangpin_text">
+                <p><span>收货人：{$addr.addr_name}</span><span>{$addr.addr_tel}</span></p>
+                <div class="header_dz">
+                    <div><img src="/static/mall/img/dz.png" /></div>
+                    <div><span>{$addr.addr_province_text}{$addr.addr_city_text}{$addr.addr_area_text}{$addr.addr_stree}</span></div>
+                </div>
+            </div>
+            <div class="shangpinxq">
+                <div style="width: 30%; text-align: center;"><a href="/mall/index/detail?id={$info.prod_id}"><img style="height:1.5rem" src="{$info.prod_pic}" /></a></div>
+                <div class="checkbox_text">
+                    <p class="xianshi">{$info.prod_name}</p>
+                    <!--三种购买价格形式-->
+                    <!--正常价格-->
+                    <div class="wddd_num">
+                        <p class="normal_credit">
+                            <img src="/static/mall/img/xinyong.png" alt="" />
+                            <span class="cash">{$info.prod_price}</span>
+                       </p>
+                        <p>×{$info.prod_num}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="li_bottom">
+                <p><span>运费</span><span>&nbsp;¥0.00</span></p>
+                <div>
+                    <p>订单编号:{$info.order_number}</p>
+                    <p>商品属性:{$info.prod_attr}</p>
+                    <p>备注信息:{$info.order.order_note}</p>
+                    <p>创建时间:{$info.detail_add_time}</p>
+                    {if	condition="$info.detail_pay_time"}<p>付款时间:{$info.detail_pay_time}</p>{/if}
+                    {if	condition="$info.detail_status egt 2"}
+                        <p>发货时间:{$info.detail_delive_time}</p>
+                        <p>物流公司:{$info.detail_delive_company}</p>
+                        <p>物流单号:{$info.detail_delive_number}</p>
+                    {/if}
+                    {if	condition="$info.detail_finish_time"}<p>收货时间:{$info.detail_finish_time}</p>{/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

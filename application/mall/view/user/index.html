@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)User.html -->
+<html><script>
+</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-themes-web-app-capable" content="yes">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta name="format-detection" content="telephone=no">
+<title>AMFC</title>
+<link rel="stylesheet" href="/static/mobile/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/static/mobile/css/semantic.css">
+<link id="layuicss-laydate" rel="stylesheet" href="/static/mobile/css/laydate.css" media="all">
+<link id="layuicss-layer" rel="stylesheet" href="/static/mobile/css/layer.css" media="all">
+<link id="layuicss-skincodecss" rel="stylesheet" href="/static/mobile/css/code.css" media="all">
+<script type="text/javascript" src="/static/mobile/js/jquery.min.js"></script>
+<script src="/static/mobile/js/swiper.min.js"></script>
+
+<style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+<body>
+<style type="text/css">
+  .UL_CON p{
+      padding: 0;
+      margin: 0;
+      line-height: 40px;
+   }
+  .dingdan_nav li{
+      width: 33.33% !important;
+   }
+  .titles{
+    padding: 0;
+    margin: 0;
+  }
+ /* .geren_con .geren_bottom .dingdan_con {
+    width: 100%;
+    background: #1a181b;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-bottom: 15px;
+ }*/
+</style>
+<div class="content_div">
+  
+    <!--header-->   
+  <div class="header">
+      <a href="#" class="back">
+      	<i class="iconfont icon-xiangzuo"></i></a>
+        <p class="titles">个人中心</p>
+        <a href="setting" class="em">
+        	<em class="iconfont icon-shezhi"></em>
+        </a>
+    </div>
+  <!--header-->
+  <div class="geren_con">
+      <div class="geren_top">  
+                
+            <div class="touxiang_con">
+              <div class="touxiang_img">
+                  <img src="{$mine['us_head_pic']?:'/static/mobile/img/logo.png'}">
+              </div>
+            </div>
+            <span>{$mine['us_account']}</span>
+        </div>
+        
+        <div class="geren_bottom">
+          <div class="dingdan_con">
+                <div class="dingdan_nav">
+                    <ul>
+                        <li>
+                            <a href="/mall/profit/index">
+                                <p>总资产</p>
+                                <p>AMFC</p>
+                                <p id="daibixx">{$mine['us_wal']+$mine['us_dong']}</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/mall/profit/wal">
+                                <p>可用资产</p>
+                                <p>AMFC</p>
+                                <p id="pdbxx">{$mine['us_wal']}</p>
+                            </a>
+                        </li>
+                         <li>
+                            <a href="/mall/profit/msc">
+                                <p>奖励</p>
+                                <p>Doken</p>
+                                <p id="pdbxx">{$mine['us_msc']}</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <p>冻结资产</p>
+                                <p>AMFC</p>
+                                <p id="pdbxx">{$mine['us_dong']}</p>
+                            </a>
+                        </li>
+                       <li>
+                            <a>
+                                <p>推广奖励</p>
+                                <p>AMFC</p>
+                                <p id="daibixx">{$tui}</p>
+                            </a>
+                        </li>
+                        
+                         <li>
+                            <a>
+                                <p>昨天算力增加</p>
+                                <p>AMFC</p>
+                                <p id="daibixx">{$kuang}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          <ul class="UL_CON">
+          	  
+                <li>
+                  <a href="node">
+                      <i class="iconfont icon-biaoqingjihuo"></i>
+                        <p>安置团队</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li>
+                <li>
+                  <a href="team">
+                      <i class="iconfont icon-tuandui"></i>
+                        <p>推荐团队</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li>
+                <li>
+                  <a href="/mall/profit/tx">
+                      <i class="iconfont icon-licaihover"></i>
+                        <p>提现</p>
+                        <em class="iconfont icon-you"></em>
+                        <!-- <span>0.380PCS</span> -->
+                    </a>
+                </li>
+                 <li>
+                  <a href="/mall/shop/apply">
+                      <i class="iconfont icon-baoming"></i>
+                        <p>申请店铺</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li>
+                 <li>
+                  <a href="/mall/profit/index">
+                      <i class="iconfont icon-diamond"></i>
+                        <p>资产管理</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li>
+                <li>
+                  <a href="back">
+                      <i class="iconfont icon-yun_f"></i>
+                        <p>留言</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li>
+                <li>
+                  <a href="qr_code.html">
+                      <i class="iconfont icon-dkw_jifen"></i>
+                        <p>分享推广</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li>
+                <li>
+                  <a href="/mall/order/index?ji=4">
+                       <i class="iconfont icon-wodedingdan0101" style="color: #ea6208;"></i>
+                        <p>我的订单</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li>
+                <!-- <li>
+                  <a href="#" onclick="layer.msg(&#39;开发中...&#39;); return false">
+                      <i class="icon sign-out" style="color: #ea6208;"></i>
+                        <p>实名认证</p>
+                        <em class="iconfont icon-you"></em>
+                    </a>
+                </li> -->
+            </ul>
+            
+          
+              
+        </div>
+        
+        <!--   <div class="quit">
+              <a href="/mall/login/login">退出</a>
+          </div> -->
+    
+    </div>
+<!-- footer-->
+<style type="text/css">
+  .footer ul li p {
+    font-size: 12px;
+    color: #fff;
+  }
+  .footer ul li i {
+    font-size: 18px;
+    color: #fff;
+  }
+  .footer ul li {
+    width: 25%;
+    float: left;
+    padding: 5px;
+    text-align: center;
+}
+</style>
+<div style="height:50px;height: 50px;margin-bottom: 50px;"></div>
+<div class="footer" style="background: #1a181b;">
+  <ul>
+      <li >
+          <a href="/mall/index/indexl">
+              <i><img src="/static/mobile/img/shouye.png" width="30%"></i>
+                <p>首页</p>
+            </a>
+        </li>
+
+
+        <li>
+          <a href="/mall/shop/index">
+          <!-- <a href="/mall/shop/index" onclick="layer.msg(&#39;开发中...&#39;); return false"> -->
+              <i><img src="/static/mobile/img/shop.png" width="30%"></i>
+                <p>商城</p>
+            </a>
+        </li>
+        <li class="">
+          <a href="/mall/trad/index">
+          <!-- <a href="/mall/trad/index" onclick="layer.msg(&#39;开发中...&#39;); return false"> -->
+              <i><img src="/static/mobile/img/jiaoyi.png" width="30%"></i>
+                <p>交易</p>
+            </a>
+        </li>
+        <li class="on">
+          <a href="/mall/user/index">
+              <i><img src="/static/mobile/img/grzx1.png" width="30%"></i>
+                <p>我的</p>
+            </a>
+        </li>
+       <!--  <li>
+          <a href="#">
+              <i class="iconfont icon-jifenshangcheng"></i>
+                <p>商城</p>
+            </a>
+        </li> -->
+    </ul>
+</div>
+<!--footer-->
+</div>
+
+
+
+<!--使用layui-->
+
+<script src="/static/mobile/js/layui.all.js" charset="utf-8"></script>
+<script src="/static/mobile/js/common.js"></script>
+<div id="cli_dialog_div"></div>
+
+</body></html>

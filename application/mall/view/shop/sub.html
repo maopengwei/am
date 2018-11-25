@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>提交订单</title>
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/mall/css/g_jiaoyichenggong.css" />
+    <script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+    body {
+        background-color: #f5f5f9;
+    }
+
+    .header {
+        background-color: #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .header_dz div:nth-child(3) {
+        display: inline-block;
+        width: 10%;
+        position: absolute;
+        left: 92%;
+        top: 0;
+        color: darkgray;
+    }
+
+    .header_dz div:nth-child(3)>a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+    }
+
+   .tijiao {
+                /*position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1rem;
+                background: #FFFDFD;
+                display: flex;
+                justify-content: space-between;
+                color: black;
+                font-size: 0.24rem;
+                line-height: 1rem;*/
+                    width: 40%;
+                    margin-left: 30%;
+                    height: 0.9rem;
+                    border: 1px solid #ff8831;
+                    padding-left: 0.15rem;
+                    box-sizing: border-box;
+                    outline: none;
+                    background-color: #FF8831;
+                    color: #fff;
+                    
+                    font-size: 0.24rem;
+                    letter-spacing: 0.05rem;
+                    margin-bottom: 0.2rem;
+                    margin-top: 1.5rem;
+                    border: 0;
+                    border-radius: 0.1rem;
+            }
+            
+            
+            
+            .tijiao p {
+                width: 100%;
+                height:  0.9rem;
+                line-height: 0.9rem;
+                /*background-color: #ec6941;*/
+                color: #fff;
+                text-align: center;
+                /*position: fixed;*/
+            }
+    .fukuan {
+        width: 100%;
+        background-color: #fff;
+    }
+
+    .fukuan>p:nth-of-type(1) {
+        height: 1rem;
+        line-height: 1rem;
+        font-size: 0.3rem;
+        margin-left: 5%;
+    }
+
+    .shangpin {
+        padding-bottom: 0;
+    }
+
+    .xianshi {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .shangpinxq div>img {
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+
+    .add_dizhi {
+        width: 100%;
+        height: 1rem;
+        background-color: #fff;
+        text-align: center;
+        line-height: 1rem;
+        border-bottom: 1px solid #f5f5f9;
+    }
+
+    .add_dizhi>a {
+        color: #333333;
+        font-size: 0.3rem;
+        padding: 0.05rem 0.5rem;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+    }
+
+    .checkbox_text div img {
+        width: 0.4rem;
+    }
+
+   select{
+    margin-left: 3%;
+    margin-top: 0.24rem;
+   }
+   input{
+    margin-left: 3%;
+    margin-top: 0.24rem;
+   }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="{:url('detail')}?id={$info.id}" class="left">
+                <img src="/static/mall/img/return.png" />
+            </a>
+        <span class="center">提交订单</span>
+        <a href="javascript:void(0);" class="right"></a>
+    </div>
+    <div>
+        <div class="shangpin">
+            {if condition="$addr neq ''"}
+            <div class="shangpin_text">
+                <p><span>收货人：{$addr['addr_name']}</span><span>手机号：{$addr['addr_tel']}</span></p>
+                <div class="header_dz">
+                    <div><img src="/static/mall/img/dz.png" /></div>
+                    <div><span>{$addr.addr_province_text}{$addr.addr_city_text}{$addr.addr_area_text}{$addr.addr_stree}</span></div>
+                    <div>
+                        <a href="{:url('address/index')}">
+                            <img src="/static/mall/img/next.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {else/}
+            <div class="add_dizhi">
+                <a href="{:url('address/index')}">＋添加地址</a>
+            </div>
+            {/if}
+            <div class="shangpinxq">
+                <div style="width: 30%; text-align: center;"><img src="{$info.prod_pic[0]}" /></div>
+                <div class="checkbox_text">
+                    <p class="xianshi">{$info.prod_name}</p>
+                    <!--三种购买价格形式-->
+                    <!--正常价格-->
+                    <div class="wddd_num">
+                        <p class="normal_credit">
+                            <img src="/static/mall/img/aa.png" alt="" />
+                            {if condition="$info.prod_zone eq 1 && $mine['us_is_mer']"}
+                            <span class="cash">
+                                {$info['prod_price_yuan']}
+                            </span>
+                            {else}
+                            <span class="cash">
+                                {$info['prod_price']}
+                            </span>
+                            {/if}
+                            <span></span>
+                            <!-- <img src="/static/mall/img/xinyong.png" alt="" /> -->
+                            <!-- <span class="credit">{$info['prod_price']}</span> -->
+                        </p>
+                        <p>x{$data.num}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="text" name="message" placeholder="请输入备注信息" style="width: 94%;margin-left:3%;margin-top: 0.24rem;height: 0.6rem;padding-left: 0.24rem;box-sizing: border-box;">
+        
+        {if condition="$info.prod_zone eq 1 && $mine.us_is_mer eq 0"}
+        <select name="mer" onchange="web($(this).val())" style="width: 94%;margin-left:3%;margin-top: 0.24rem;height: 0.6rem;padding-left: 0.24rem;box-sizing: border-box;">
+            <option value="">选择发货</option>
+            <option value="0">公司</option>
+            <option value="1">店铺</option>
+        </select>
+        {/if}
+        <input type="text" hidden="hidden" name="mer_account"  class="a" onchange="bbb($(this).val())" placeholder="请输入店铺编号" style="width: 94%;margin-left:3%;margin-top: 0.24rem;height: 0.6rem;padding-left: 0.24rem;box-sizing: border-box;" />
+        <input type="text" hidden="hidden" name="mer_account" class="b" placeholder="门店名称" style="width: 94%;margin-left:3%;margin-top: 0.24rem;height: 0.6rem;padding-left: 0.24rem;box-sizing: border-box;" disabled/>
+        <input type="password" name="us_safe_pwd" placeholder="请输入交易密码" style="width: 94%;margin-left:3%;margin-top: 0.24rem;height: 0.6rem;padding-left: 0.24rem;box-sizing: border-box;">
+        <input type="hidden" name="addr_id" value="{$addr.id}">
+        <input type="hidden" name="mer_id" class="c" value="0">
+         <div class="tijiao">
+        <p class="titi" onclick="tijiao()">提交订单</p>
+    </div>
+    </div>
+   
+</body>
+<script src="/static/mine/jquery/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script>
+        var prod_id = {$info['id']};
+        var num = {$data.num};
+
+
+        function web(dd){
+            if(dd==1){
+                $('.a').show();
+            }else{
+                $('.a').hide();
+                $('.b').hide();
+                $('.a').val('');
+                $('.b').val('');
+                $('.c').val(0);
+            }
+        }
+        function bbb(dd){
+            $.ajax({
+                type:"post",
+                data:{mer_account:dd,prod_id:prod_id,num:num},
+                url:'pro',
+                success:function(data){
+                    if(data.code){
+                        if(data.code==2){
+                            layer.msg('该商铺没有此报单产品或库存不足');
+                            $('.a').val('');
+                            $('.b').hide();
+                            $('.c').val(0);
+                        }else{
+                            $(".b").val(data.mer.mer_name);
+                            $('.b').show();
+                            $('.c').val(data.mer.id);
+                        }
+                    }else{
+                        layer.msg('该店铺不存在');
+                        $('.a').val('');
+                        $('.b').hide();
+                        $('.c').val(0);
+                    }
+                }
+            })
+        }
+function tijiao(data) {
+    $('.tijiao').attr('disabled', true);
+    var addr_id = $('input[name="addr_id"]').val();
+    var mer = $('select[name="mer"]').val();
+    var mer_id = $('input[name="mer_id"]').val();
+    if(!addr_id){
+        layer.msg('请先添加收货地址');
+        return;
+    }
+    var us_safe_pwd = $('input[name="us_safe_pwd"]').val();
+    if(!us_safe_pwd){
+        layer.msg('请输入交易密码');
+        return;
+    }
+    var message = $('input[name="message"]').val();
+    var pd_zone = {$info.prod_zone};
+    $.ajax({
+        type: "post",
+        url: "{:url('order/order_add')}",
+        data: { addr_id: addr_id, message: message,us_safe_pwd:us_safe_pwd,mer:mer,mer_id:mer_id},
+        success: function(data) {
+            console.log(data);
+            layer.msg(data.msg);
+            if (data.code) {
+                setTimeout(function() {
+                    location.href = data.url;
+                }, 1000)
+            } else {
+                $('#submit').removeAttr('disabled');
+            }
+        }
+    })
+    return false;
+}
+</script>
+
+</html>

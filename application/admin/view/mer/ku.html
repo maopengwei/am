@@ -1,0 +1,58 @@
+{include file="public/_meta" /}
+<title></title>
+</head>
+<body>
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i> 首页 
+	<span class="c-gray en">&gt;</span>商城管理 
+	<span class="c-gray en">&gt;</span> 报单产品 
+	<a class="btn btn-success radius r" style="margin-left:2px" href="javascript:location.replace(location.href);" title="刷新"> 
+		<i class="Hui-iconfont">&#xe68f;</i>
+	</a>
+</nav>
+<div class="page-container">
+	<div class="text-c">
+	
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a href="javascript:;" onclick="create({$mer.id},'ku_add','添加库存')" class="btn btn-primary radius">
+			<i class="Hui-iconfont">&#xe600;</i> 添加</a>
+		</span> 
+		<span class="r">共有数据：<strong>{$list->total()}</strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border  table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th>产品名称</th>				
+				<th>产品价格</th>
+				<th>库存</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name='list' id="vo"}
+				<tr class="text-c">
+					<td>{$vo.prod.prod_name}</td>
+					<td>{$vo.prod.prod_price}</td>
+					<td>{$vo.ku_num}</td>
+				</tr>
+			{/volist}
+		</tbody>
+	</table>
+	<div class="pages" style="margin:20px;float: right; ">{$list|raw}</div>
+	</div>
+</div>
+{include file="public/_footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+$('select[name="status"]').val({$Request.get.status});
+function create(id,url,key){
+	var url = "{:url('"+url+"')}?id="+id;
+	creatIframe(url,key);
+}
+
+
+</script> 
+</body>
+</html>

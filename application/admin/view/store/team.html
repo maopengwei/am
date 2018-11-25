@@ -1,0 +1,59 @@
+{include file="public/_meta" /}
+<link rel="stylesheet" href="/static/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<title></title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>团队管理 <span class="c-gray en">&gt;</span> 团队管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="text-c">
+	<form class="Huiform">
+		<input type="text" class="input-text" style="width:150px" placeholder="会员名" id="" name="name" value="{$Request.get.name|default=''}">
+		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+		</form>
+	</div>
+	<div class="mt-20">
+		<div class="tuandui_wrap">
+			 <div class="zTreeDemoBackground" style="margin-left:0.6rem;">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+		</div>
+	</div>
+</div>
+{include file="public/_footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script src="/static/ztree/js/jquery.ztree.core.js"></script>
+<script>
+	var setting = { 
+            view: { 
+                showLine: true 
+            }, 
+            data: { 
+                simpleData: { 
+                    enable: true 
+                } 
+            } 
+        }; 
+        $(function(){
+        	var id = {$id|default=0};
+            if(id){
+                $.ajax({
+                    type: "post",
+                    dataType : "json",
+                    global : false,
+                    url : "getTreeso",
+                    data:{id:id},
+                    success : function(data){
+                        if (data.status == 0){
+                            zNodes = data.data;
+                            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+                        }else{
+                            alert(data.data);
+                        }
+                        return ;
+                    }           
+                });
+            }
+        })
+</script> 
+</body>
+</html>

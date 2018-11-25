@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>添加地址</title>
+		<link rel="stylesheet" type="text/css" href="/static/mall/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/static/mall/css/tianjiadizhi.css"/>
+		<script src="/static/mall/js/base.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.city0{
+				width: 92%;
+				margin: auto;
+				margin-top: 0.1rem;
+				margin-bottom: 0.2rem;
+				display: flex;
+			}
+			.city0>select{
+				width:25%;
+				height: 0.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<a href="{:url('index')}" class="left">
+				<img src="/static/mall/img/return.png" />
+			</a>
+			<span class="center">添加地址</span>
+			<a href="javascript:void(0);" class="right"></a>
+		</div>
+		<form>
+		<ul class="jhmjy_ul">
+			<li>
+				<p>收货人</p>
+				<input type="text" name="addr_name" id="" value="" />
+			</li>
+			
+			<li>
+				<p>电话</p>
+				<input type="text" name="addr_tel" id="" value="" />
+				
+			</li>
+			<li>
+				<p>地址</p>
+				<div class="city0">
+					<select name="addr_province" class="province" onchange="province_change($(this).val())">
+						<option value="">请选择省</option>
+						{volist name="list" id="vo"}
+							<option value="{$vo.code}">{$vo.name}</option>
+						{/volist}
+					</select>
+                    <select name="addr_city" class="city" onchange="city_change($(this).val())" style="display:none" >
+                    	
+						
+                    </select>
+                    <select name="addr_area" class="area" style="display:none">
+                
+                    </select>
+				</div>
+				<textarea name="addr_stree" rows="" cols="" placeholder="请输入街道具体位置"></textarea>
+			</li>
+		</ul>
+		<a><p class="qr0" onclick="tianjia()">确认</p></a>
+		</form>
+	</body>
+	<script src="/static/mine/jquery/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/mine/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function province_change(data){
+			$('.city').show();
+			$('.area').hide();
+			$.ajax({
+				type:"post",
+				data:{code:data},
+				url:"{:url('getcity')}",
+				success:function(data){
+					var html = '<option value="">请选择市</option>';
+					$.each(data,function(index,value){
+						html +=  '<option value="'+value.code+'">'+value.name+'</option>';
+					})
+					$('.city').html(html)
+				}
+			})
+		}
+		function city_change(data){
+			$('.area').show();
+			$.ajax({
+				type:"post",
+				data:{code:data},
+				url:"{:url('getarea')}",
+				success:function(data){
+					var str = ''
+					data.map(function(result){
+						console.log(result)
+						var html  = `
+						<option value=${result.code}>${result.name}</option>'
+						` 
+						str+=html
+					})
+					
+					$('.area').html(str)
+				}
+			})
+		}
+		function tianjia(){
+			$('.qr0').attr('disabled',true);
+			$.ajax({
+				type:"post",
+				url:"{:url('add')}",
+				data:$('form').serialize(),
+				success:function(data){
+					console.log(data);
+					layer.msg(data.msg);
+					if(data.code){
+						setTimeout(function(){
+							location.href=data.url;
+						},1000)
+					}else{
+						$('.qr0').removeAttr('disabled');
+					}
+				}
+			})
+			return false;
+		}
+	</script>
+</html>
